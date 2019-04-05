@@ -4,7 +4,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebResourceError;
@@ -18,7 +17,10 @@ import android.widget.Toast;
 
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.helper.MyConstant;
+import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
+import com.gzeinnumer.class_koding.presenter.MainInterface;
+import com.gzeinnumer.class_koding.presenter.MainPresenter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,9 +29,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DetailMateri extends AppCompatActivity {
+public class DetailMateri extends MyFunction {
     public static String DATA = "data";
     ArrayList<DataMateriItem> list;
+    MainInterface.I_DetailMateri i_detailMateri;
+
     @BindView(R.id.gambar_detail_item)
     ImageView gambarDetailItem;
     @BindView(R.id.judul_detail_item)
@@ -59,43 +63,26 @@ public class DetailMateri extends AppCompatActivity {
         setContentView(R.layout.activity_detail_materi);
         ButterKnife.bind(this);
 
-        list = new ArrayList<>();
-        Intent intent = getIntent();
+        i_detailMateri = new MainPresenter(context);
 
+        list = new ArrayList<>();
+
+        Intent intent = getIntent();
         current = intent.getParcelableExtra(DATA);
 
-        Picasso.get().load(MyConstant.IMAGE_URL_MATERI + current.getMateriGambar()).placeholder(R.color.shimmerbag).resize(399, 399).into(gambarDetailItem);
+        initView();
 
+        i_detailMateri.videoViewFunction(videoDetailItem,current);
+
+    }
+
+    private void initView() {
+        Picasso.get().load(MyConstant.IMAGE_URL_MATERI + current.getMateriGambar()).placeholder(R.color.shimmerbag).resize(399, 399).into(gambarDetailItem);
         judulDetailItem.setText(current.getMateriNama());
         descDetailItem.setText(current.getMateriDeskripsi());
-
-        videoViewFunction();
         beliDetailItem.setVisibility(View.VISIBLE);
         mulaiDetailItem.setVisibility(View.VISIBLE);
     }
-
-    private void videoViewFunction() {
-        videoDetailItem.getSettings().setJavaScriptEnabled(true);
-        videoDetailItem.loadData("<iframe width=\"100%\" height=\"100%\" src=\""+current.getMateriVideo()+"\" frameborder=\"0\" allowfullscreen></iframe>","text/html","utf-8");
-        videoDetailItem.setWebViewClient(new WebViewClient() {
-            //TODO cek dulu
-            @Override
-            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
-                Toast.makeText(getApplicationContext(), "URL ERROR", Toast.LENGTH_SHORT).show();
-            }
-            //TODO start page
-            @Override
-            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-
-            }
-            //TODO finish page
-            @Override
-            public void onPageFinished(WebView view, String url) {
-                super.onPageFinished(view, url);
-            }
-        });
-    }
-
 
     @OnClick({R.id.beli_detail_item, R.id.mulai_detail_item})
     public void onViewClicked(View view) {
@@ -108,10 +95,8 @@ public class DetailMateri extends AppCompatActivity {
     }
 
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)
-    {
-        if ((keyCode == KeyEvent.KEYCODE_BACK))
-        {
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
             finish();
         }
         return super.onKeyDown(keyCode, event);
@@ -120,6 +105,6 @@ public class DetailMateri extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        videoViewFunction();
+        i_detailMateri.videoViewFunction(videoDetailItem,current);
     }
 }

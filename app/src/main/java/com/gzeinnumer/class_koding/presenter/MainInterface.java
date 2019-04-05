@@ -2,12 +2,14 @@ package com.gzeinnumer.class_koding.presenter;
 
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.RecyclerView;
+import android.webkit.WebView;
 import android.widget.EditText;
 
 import com.athkalia.emphasis.EmphasisTextView;
 import com.gzeinnumer.class_koding.activity.Login;
 import com.gzeinnumer.class_koding.activity.Register;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
+import com.gzeinnumer.class_koding.model.DataMateriItem;
 
 public interface MainInterface {
 
@@ -29,5 +31,9 @@ public interface MainInterface {
         void setAdapterFirst(AdapterLearn adapter);
         void startShimmer();
         void searchFunction(EditText edSearch);
+    }
+
+    interface I_DetailMateri{
+        void videoViewFunction(WebView videoDetailItem, DataMateriItem current);
     }
 }

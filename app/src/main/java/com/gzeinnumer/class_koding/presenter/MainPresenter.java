@@ -2,6 +2,7 @@ package com.gzeinnumer.class_koding.presenter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,6 +10,10 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -32,7 +37,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 //I_LearnFragment.Main
-public class MainPresenter implements MainInterface.I_Register, MainInterface.I_LearnFragment, MainInterface.I_Login{
+public class MainPresenter implements
+        MainInterface.I_Register,
+        MainInterface.I_LearnFragment,
+        MainInterface.I_Login,
+        MainInterface.I_DetailMateri{
 
     private Context context;
     private AdapterLearn adapterLearn;
@@ -55,8 +64,6 @@ public class MainPresenter implements MainInterface.I_Register, MainInterface.I_
     /**
      * end global function
      */
-
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_LOGIN
     @Override
@@ -181,7 +188,6 @@ public class MainPresenter implements MainInterface.I_Register, MainInterface.I_
     private ArrayList<DataMateriItem> list = new ArrayList<>();
     private RecyclerView rvLearn;
 
-
     @Override
     public void setAdapterLearn(AdapterLearn adapter) {
         this.adapterLearn = adapter;
@@ -281,4 +287,27 @@ public class MainPresenter implements MainInterface.I_Register, MainInterface.I_
         });
     }
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////I_DETAILMATERI
+    @Override
+    public void videoViewFunction(WebView videoDetailItem, DataMateriItem current) {
+        videoDetailItem.getSettings().setJavaScriptEnabled(true);
+        videoDetailItem.loadData("<iframe width=\"100%\" height=\"100%\" src=\""+current.getMateriVideo()+"\" frameborder=\"0\" allowfullscreen></iframe>","text/html","utf-8");
+        videoDetailItem.setWebViewClient(new WebViewClient() {
+            //TODO cek dulu
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                shortToast("URL ERROR");
+            }
+            //TODO start page
+            @Override
+            public void onPageStarted(WebView view, String url, Bitmap favicon) {
+
+            }
+            //TODO finish page
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                super.onPageFinished(view, url);
+            }
+        });
+    }
 }

@@ -85,7 +85,7 @@ public class AdapterLearn extends RecyclerView.Adapter<AdapterLearn.MyHolder> im
     @Override
     public int getItemCount() {
         //return list.size();
-        int SHIMMER_ITEM_COUNT = 5;
+        int SHIMMER_ITEM_COUNT = 9;
         return isShimmer? SHIMMER_ITEM_COUNT : list.size();
     }
 

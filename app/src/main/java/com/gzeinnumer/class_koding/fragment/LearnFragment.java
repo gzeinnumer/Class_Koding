@@ -52,28 +52,21 @@ public class LearnFragment extends MyFunctionFragment {
         unbinder = ButterKnife.bind(this, view);
 
         contextFragment = view.getContext();
+
         i_learnFragment = new MainPresenter(contextFragment);
-
-        //test.zein();
-
         adapter = new AdapterLearn(contextFragment, list, true);
-
         i_learnFragment.setRecyclerViewLearn(rvLearn);
-        i_learnFragment.setAdapterLearn(adapter);
+        i_learnFragment.setAdapterFirst(adapter);
         i_learnFragment.startShimmer();
-
         i_learnFragment.searchFunction(edSearch);
+
         return view;
     }
 
     @Override
     public void onStart() {
         super.onStart();
-        i_learnFragment.setAdapterFirst(adapter);
-    }
-
-    public void searchFunction(EditText edSearch) {
-
+        i_learnFragment.setAdapterLearn(adapter);
     }
 
     @Override
@@ -81,5 +74,7 @@ public class LearnFragment extends MyFunctionFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+
 
 }
