@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".activity.DetailMateri">
+
+        <ImageView
+            android:id="@+id/gambar_detail_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart"
+            android:src="@color/shimmerbag" />
+
+        <TextView
+            android:id="@+id/judul_detail_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="judul"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/oleh_detail_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="oleh" />
+
+        <TextView
+            android:id="@+id/plat_detail_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="platform" />
+
+        <TextView
+            android:id="@+id/level_detail_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="level" />
+
+        <TextView
+            android:id="@+id/bonus_detail_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="bonus" />
+
+        <WebView
+            android:id="@+id/video_detail_item"
+            android:layout_width="match_parent"
+            android:layout_height="211dp" />
+
+        <TextView
+            android:id="@+id/desc_detail_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="desc" />
+
+        <Button
+            android:id="@+id/beli_detail_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Beli" />
+
+        <Button
+            android:id="@+id/mulai_detail_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Mulai" />
+    </LinearLayout>
+</ScrollView>

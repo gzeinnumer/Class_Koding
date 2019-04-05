@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Class_Koding</string>
+    <string name="loading">Loading</string>
+    <string name="home">Home</string>
+    <string name="learn">Learn</string>
+    <string name="notification">Notification</string>
+    <string name="profil">Profil</string>
+    <string name="isEmpty">Cannot Empty</string>
+
+</resources>
