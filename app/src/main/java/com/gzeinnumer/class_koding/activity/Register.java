@@ -2,24 +2,18 @@ package com.gzeinnumer.class_koding.activity;
 
 import android.os.Bundle;
 import android.support.design.widget.TextInputEditText;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 
 import com.athkalia.emphasis.EmphasisTextView;
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.helper.MyFunction;
-import com.gzeinnumer.class_koding.model.ResponseRegister;
-import com.gzeinnumer.class_koding.network.RetroServer;
-import com.gzeinnumer.class_koding.presenter.I_Register;
+import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class Register extends MyFunction {
 
@@ -35,9 +29,10 @@ public class Register extends MyFunction {
     Button register;
     @BindView(R.id.login)
     EmphasisTextView login;
-    I_Register i_register;
     @BindView(R.id.asal)
     TextInputEditText asal;
+
+    MainInterface.I_Register i_register;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

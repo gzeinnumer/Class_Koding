@@ -32,7 +32,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 //I_LearnFragment.Main
-public class MainPresenter implements I_Login, I_Register, I_LearnFragment{
+public class MainPresenter implements MainInterface.I_Register, MainInterface.I_LearnFragment, MainInterface.I_Login{
 
     private Context context;
     private AdapterLearn adapterLearn;

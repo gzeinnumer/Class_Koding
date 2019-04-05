@@ -2,36 +2,25 @@ package com.gzeinnumer.class_koding.fragment;
 
 
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.gzeinnumer.class_koding.R;
-import com.gzeinnumer.class_koding.adapter.Adapter;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
 import com.gzeinnumer.class_koding.helper.MyFunctionFragment;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
-import com.gzeinnumer.class_koding.model.ResponseMateri;
-import com.gzeinnumer.class_koding.network.RetroServer;
-import com.gzeinnumer.class_koding.presenter.I_LearnFragment;
+import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,7 +37,8 @@ public class LearnFragment extends MyFunctionFragment {
     AdapterLearn adapter;
     View view;
     ArrayList<DataMateriItem> list = new ArrayList<>();
-    I_LearnFragment i_learnFragment;
+
+    MainInterface.I_LearnFragment i_learnFragment;
 
     public LearnFragment() {
         // Required empty public constructor

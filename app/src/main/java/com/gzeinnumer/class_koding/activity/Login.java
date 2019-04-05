@@ -8,7 +8,7 @@ import android.widget.Button;
 import com.athkalia.emphasis.EmphasisTextView;
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.helper.MyFunction;
-import com.gzeinnumer.class_koding.presenter.I_Login;
+import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
 
 import butterknife.BindView;
@@ -17,7 +17,7 @@ import butterknife.OnClick;
 
 public class Login extends MyFunction {
 
-    I_Login i_login;
+    MainInterface.I_Login i_login;
 
     @BindView(R.id.email)
     TextInputEditText email;
