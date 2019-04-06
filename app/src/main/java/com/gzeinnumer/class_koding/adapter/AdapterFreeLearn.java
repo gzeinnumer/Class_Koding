@@ -29,7 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class AdapterLearn extends RecyclerView.Adapter<AdapterLearn.MyHolder> implements Filterable {
+public class AdapterFreeLearn extends RecyclerView.Adapter<AdapterFreeLearn.MyHolder> implements Filterable {
 
     private Context context;
     private ArrayList<DataMateriItem> list;
@@ -37,7 +37,7 @@ public class AdapterLearn extends RecyclerView.Adapter<AdapterLearn.MyHolder> im
     private View view;
     public boolean isShimmer;
 
-    public AdapterLearn(Context context, ArrayList<DataMateriItem> list, boolean shimmer) {
+    public AdapterFreeLearn(Context context, ArrayList<DataMateriItem> list, boolean shimmer) {
         this.context = context;
         this.list = list;
         this.isShimmer = shimmer;
@@ -56,7 +56,6 @@ public class AdapterLearn extends RecyclerView.Adapter<AdapterLearn.MyHolder> im
         if (isShimmer){
             myHolder.shimmerMateriItem.startShimmer();
         } else {
-
             myHolder.shimmerMateriItem.setShimmer(null);
             myHolder.shimmerMateriItem.stopShimmer();
 
@@ -80,12 +79,14 @@ public class AdapterLearn extends RecyclerView.Adapter<AdapterLearn.MyHolder> im
                 }
             });
         }
+
+
     }
 
     @Override
     public int getItemCount() {
         //return list.size();
-        int SHIMMER_ITEM_COUNT = 9;
+        int SHIMMER_ITEM_COUNT = 3;
         return isShimmer? SHIMMER_ITEM_COUNT : list.size();
     }
 
@@ -145,8 +146,4 @@ public class AdapterLearn extends RecyclerView.Adapter<AdapterLearn.MyHolder> im
             notifyDataSetChanged();
         }
     };
-
-
-
-
 }

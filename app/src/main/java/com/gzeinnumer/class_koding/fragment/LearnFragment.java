@@ -54,6 +54,7 @@ public class LearnFragment extends MyFunctionFragment {
         contextFragment = view.getContext();
 
         i_learnFragment = new MainPresenter(contextFragment);
+
         adapter = new AdapterLearn(contextFragment, list, true);
         i_learnFragment.setRecyclerViewLearn(rvLearn);
         i_learnFragment.setAdapterFirst(adapter);

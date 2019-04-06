@@ -1,10 +1,14 @@
 package com.gzeinnumer.class_koding.presenter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -15,19 +19,32 @@ import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.athkalia.emphasis.EmphasisTextView;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.activity.Login;
 import com.gzeinnumer.class_koding.activity.Parent;
 import com.gzeinnumer.class_koding.activity.Register;
+import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
+import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
+import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
+import com.gzeinnumer.class_koding.helper.MyConstant;
+import com.gzeinnumer.class_koding.helper.SessionManager;
+import com.gzeinnumer.class_koding.model.DataEventItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
+import com.gzeinnumer.class_koding.model.ResponseEvent;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
 import com.gzeinnumer.class_koding.network.RetroServer;
+import com.gzeinnumer.class_koding.slider.FragmentSlider;
+import com.gzeinnumer.class_koding.slider.SliderIndicator;
+import com.gzeinnumer.class_koding.slider.SliderPagerAdapter;
+import com.gzeinnumer.class_koding.slider.SliderView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +58,8 @@ public class MainPresenter implements
         MainInterface.I_Register,
         MainInterface.I_LearnFragment,
         MainInterface.I_Login,
-        MainInterface.I_DetailMateri{
+        MainInterface.I_DetailLearn,
+        MainInterface.I_HomeFragment{
 
     private Context context;
     private AdapterLearn adapterLearn;
@@ -104,6 +122,16 @@ public class MainPresenter implements
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
                 if (response.body().isSukses()){
+                    SessionManager mSession = new SessionManager(context);
+
+                    mSession.setUserEmail(response.body().getDataLogin().get(0).getUserEmail());
+                    mSession.setUserId(response.body().getDataLogin().get(0).getUserId());
+                    mSession.setUserImage(response.body().getDataLogin().get(0).getUserImage());
+                    mSession.setUserAsal(response.body().getDataLogin().get(0).getUserAsal());
+                    mSession.setUserName(response.body().getDataLogin().get(0).getUserName());
+                    mSession.setUserXP(response.body().getDataLogin().get(0).getUserXp());
+                    mSession.setUserDate(response.body().getDataLogin().get(0).getUserDate());
+
                     intent(Parent.class);
                 } else {
                     shortToast("Gagal Login");
@@ -287,7 +315,7 @@ public class MainPresenter implements
         });
     }
 
-    /////////////////////////////////////////////////////////////////////////////////////////////////I_DETAILMATERI
+    ////////////////////////////////////////////////////////////////////////////////////////////////I_DETAILMATERI
     @Override
     public void videoViewFunction(WebView videoDetailItem, DataMateriItem current) {
         videoDetailItem.getSettings().setJavaScriptEnabled(true);
@@ -310,4 +338,357 @@ public class MainPresenter implements
             }
         });
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////I_HOMEFRAGMENT
+
+    private SliderView sliderIklan;
+    private List<Fragment> fragmentsList;
+    private ArrayList<DataEventItem> listEvent;
+    private ShimmerFrameLayout shimmerEventItem;
+
+    private SliderPagerAdapter mAdapter;
+    private FragmentManager fragmentManager;
+    private FragmentActivity fragmentActivity;
+    private SliderIndicator mIndicator;
+    private LinearLayout mLinearLayout;
+
+    @Override
+    public void setSliderIklan(SliderView sliderIklan) {
+        this.sliderIklan = sliderIklan;
+    }
+
+    @Override
+    public void setShimmerForIklan(ShimmerFrameLayout shimmerEventItem) {
+        this.shimmerEventItem = shimmerEventItem;
+
+    }
+
+    @Override
+    public void setFragmentContextForSliderPagerAdapter(FragmentManager fragmentManager) {
+        this.fragmentManager = fragmentManager;
+    }
+
+    @Override
+    public void setFragmentActivityForSliderIndikator(FragmentActivity fragmentActivity) {
+        this.fragmentActivity = fragmentActivity;
+    }
+
+    @Override
+    public void setLinearForSliderIndikator(LinearLayout mLinearLayout) {
+        this.mLinearLayout = mLinearLayout;
+    }
+
+    @Override
+    public void iniDataEvent() {
+        RetroServer.getInstance().getAllEvent().enqueue(new Callback<ResponseEvent>() {
+            @Override
+            public void onResponse(Call<ResponseEvent> call, Response<ResponseEvent> response) {
+                List<DataEventItem> list = response.body().getDataEvent();
+                listEvent = new ArrayList();
+                sliderIklan.setDurationScroll(1000);
+                fragmentsList = new ArrayList<>();
+                if (response.body().isSukses()) {
+                    for (int i = 0; i < list.size(); i++) {
+                        listEvent.add(new DataEventItem(
+                                list.get(i).getEventGambar(),
+                                list.get(i).getEventVideo(),
+                                list.get(i).getEventNama(),
+                                list.get(i).getEventTglMulai(),
+                                list.get(i).getMitraId(),
+                                list.get(i).getEventTglSelesai(),
+                                list.get(i).getEventXp(),
+                                list.get(i).getEventAlamat(),
+                                list.get(i).getEventDeskripsi(),
+                                list.get(i).getEventKuota(),
+                                list.get(i).getEventJenis(),
+                                list.get(i).getEventId(),
+                                list.get(i).getEventTiket(),
+                                list.get(i).getEventKota()));
+                        fragmentsList.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(),list.get(i).getEventNama()));
+                    }
+                    iniDataEventToFlipper();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEvent> call, Throwable t) {
+
+            }
+        });
+
+    }
+
+    private void iniDataEventToFlipper() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }, 4999);
+        shimmerEventItem.setShimmer(null);
+        shimmerEventItem.stopShimmer();
+        mAdapter = new SliderPagerAdapter(fragmentManager, fragmentsList, fragmentsList);
+        sliderIklan.setAdapter(mAdapter);
+        mIndicator = new SliderIndicator(fragmentActivity, mLinearLayout, sliderIklan, R.drawable.indicator_circle);
+        mIndicator.setPageCount(fragmentsList.size());
+        mIndicator.show();
+    }
+
+    private RecyclerView rvNewLearn;
+    private AdapterNewLearn adapterNewLearn;
+    private ArrayList<DataMateriItem> listNewLearn = new ArrayList<>();
+
+    @Override
+    public void setRecyclerViewNewLearn(RecyclerView rvNewLearn) {
+        this.rvNewLearn = rvNewLearn;
+    }
+
+    @Override
+    public void setAdapterNewLearn(AdapterNewLearn adapterNewLearn) {
+        this.adapterNewLearn = adapterNewLearn;
+    }
+
+    @Override
+    public void setAdapterFirstNewLearn(AdapterNewLearn adapter) {
+        rvNewLearn.setAdapter(adapter);
+        rvNewLearn.setHasFixedSize(true);
+        rvNewLearn.setLayoutManager(new GridLayoutManager(context, 3));
+    }
+
+    @Override
+    public void startShimmerNewLearn() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initDataNewLearn();
+                adapterNewLearn.isShimmer = false;
+                adapterNewLearn.notifyDataSetChanged();
+            }
+        }, 4999);
+    }
+
+    private void initDataNewLearn() {
+        RetroServer.getInstance().getAllMateri().enqueue(new Callback<ResponseMateri>() {
+            @Override
+            public void onResponse(Call<ResponseMateri> call, Response<ResponseMateri> response) {
+                List<DataMateriItem> listData = response.body().getDataMateri();
+                listNewLearn = new ArrayList<>();
+
+                if (response.body().isSukses()) {
+                    for (int i = 0; i < listData.size(); i++) {
+                        if(i >= (listData.size()-3)){
+                            listNewLearn.add(new DataMateriItem(listData.get(i).getMateriJmlModul(),
+                                    listData.get(i).getMateriXp(),
+                                    listData.get(i).getMateriWaktu(),
+                                    listData.get(i).getMateriNama(),
+                                    listData.get(i).getMateriDiskon(),
+                                    listData.get(i).getMateriLevel(),
+                                    listData.get(i).getMateriJumSiswa(),
+                                    listData.get(i).getMateriGambar(),
+                                    listData.get(i).getMateriId(),
+                                    listData.get(i).getMitraId(),
+                                    listData.get(i).getMateriVideo(),
+                                    listData.get(i).getMateriRating(),
+                                    listData.get(i).getJenisKelasId(),
+                                    listData.get(i).getMateriDeadline(),
+                                    listData.get(i).getMateriPlatform(),
+                                    listData.get(i).getMateriDeskripsi(),
+                                    listData.get(i).getMateriHarga(),
+                                    listData.get(i).getMateriTgl()));
+                        }
+                    }
+                }
+                if (listNewLearn.size() > 0) {
+                    initToRecyclerNewLearn();
+                } else {
+                    shortToast("data tidak ada!!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMateri> call, Throwable t) {
+                shortToast("response tidak ada!!");
+            }
+        });
+    }
+
+    private void initToRecyclerNewLearn() {
+        adapterNewLearn = new AdapterNewLearn(context, listNewLearn, false);
+        rvNewLearn.setAdapter(adapterNewLearn);
+        rvNewLearn.setHasFixedSize(true);
+        rvNewLearn.setLayoutManager(new GridLayoutManager(context, 3));
+    }
+
+
+    private RecyclerView rvFreeLearn;
+    private AdapterFreeLearn adapterFreeLearn;
+    private ArrayList<DataMateriItem> listFreeLearn = new ArrayList<>();
+
+    @Override
+    public void setRecyclerViewFreeLearn(RecyclerView rvFreeLearn) {
+        this.rvFreeLearn = rvFreeLearn;
+
+    }
+    @Override
+    public void setAdapterFreeLearn(AdapterFreeLearn adapterFreeLearn) {
+        this.adapterFreeLearn = adapterFreeLearn;
+    }
+
+    @Override
+    public void setAdapterFirstFreeLearn(AdapterFreeLearn adapter) {
+        rvFreeLearn.setAdapter(adapter);
+        rvFreeLearn.setHasFixedSize(true);
+        rvFreeLearn.setLayoutManager(new GridLayoutManager(context, 3));
+    }
+
+    @Override
+    public void startShimmerFreeLearn() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initDataFreeLearn();
+                adapterFreeLearn.isShimmer = false;
+                adapterFreeLearn.notifyDataSetChanged();
+            }
+        }, 4999);
+    }
+
+    private void initDataFreeLearn() {
+        RetroServer.getInstance().getAllMateri().enqueue(new Callback<ResponseMateri>() {
+            @Override
+            public void onResponse(Call<ResponseMateri> call, Response<ResponseMateri> response) {
+                List<DataMateriItem> listData = response.body().getDataMateri();
+                listNewLearn = new ArrayList<>();
+
+                if (response.body().isSukses()) {
+                    for (int i = 0; i < listData.size(); i++) {
+                        if(listData.get(i).getMateriHarga().equals("0")){
+                            listFreeLearn.add(new DataMateriItem(listData.get(i).getMateriJmlModul(),
+                                    listData.get(i).getMateriXp(),
+                                    listData.get(i).getMateriWaktu(),
+                                    listData.get(i).getMateriNama(),
+                                    listData.get(i).getMateriDiskon(),
+                                    listData.get(i).getMateriLevel(),
+                                    listData.get(i).getMateriJumSiswa(),
+                                    listData.get(i).getMateriGambar(),
+                                    listData.get(i).getMateriId(),
+                                    listData.get(i).getMitraId(),
+                                    listData.get(i).getMateriVideo(),
+                                    listData.get(i).getMateriRating(),
+                                    listData.get(i).getJenisKelasId(),
+                                    listData.get(i).getMateriDeadline(),
+                                    listData.get(i).getMateriPlatform(),
+                                    listData.get(i).getMateriDeskripsi(),
+                                    listData.get(i).getMateriHarga(),
+                                    listData.get(i).getMateriTgl()));
+                        }
+                    }
+                }
+                if (listFreeLearn.size() > 0) {
+                    initToRecyclerFreeLearn();
+                } else {
+                    shortToast("data tidak ada!!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMateri> call, Throwable t) {
+                shortToast("response tidak ada!!");
+            }
+        });
+    }
+
+    private void initToRecyclerFreeLearn() {
+        adapterFreeLearn = new AdapterFreeLearn(context, listFreeLearn, false);
+        rvFreeLearn.setAdapter(adapterFreeLearn);
+        rvFreeLearn.setHasFixedSize(true);
+        rvFreeLearn.setLayoutManager(new GridLayoutManager(context, 3));
+    }
+
+
+    private RecyclerView rvPayLearn;
+    private AdapterPayLearn adapterPayLearn;
+    private ArrayList<DataMateriItem> listPayLearn = new ArrayList<>();
+
+    @Override
+    public void setRecyclerViewPayLearn(RecyclerView rvPayLearn) {
+        this.rvPayLearn = rvPayLearn;
+
+    }
+    @Override
+    public void setAdapterPayLearn(AdapterPayLearn adapterPayLearn) {
+        this.adapterPayLearn = adapterPayLearn;
+    }
+
+    @Override
+    public void setAdapterFirstPayLearn(AdapterPayLearn adapter) {
+        rvPayLearn.setAdapter(adapter);
+        rvPayLearn.setHasFixedSize(true);
+        rvPayLearn.setLayoutManager(new GridLayoutManager(context, 3));
+    }
+
+    @Override
+    public void startShimmerPayLearn() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initDataPayLearn();
+                adapterPayLearn.isShimmer = false;
+                adapterPayLearn.notifyDataSetChanged();
+            }
+        }, 4999);
+    }
+
+    private void initDataPayLearn() {
+        RetroServer.getInstance().getAllMateri().enqueue(new Callback<ResponseMateri>() {
+            @Override
+            public void onResponse(Call<ResponseMateri> call, Response<ResponseMateri> response) {
+                List<DataMateriItem> listData = response.body().getDataMateri();
+                listPayLearn = new ArrayList<>();
+
+                if (response.body().isSukses()) {
+                    for (int i = 0; i < listData.size(); i++) {
+                        if(!listData.get(i).getMateriHarga().equals("0")){
+                            listPayLearn.add(new DataMateriItem(listData.get(i).getMateriJmlModul(),
+                                    listData.get(i).getMateriXp(),
+                                    listData.get(i).getMateriWaktu(),
+                                    listData.get(i).getMateriNama(),
+                                    listData.get(i).getMateriDiskon(),
+                                    listData.get(i).getMateriLevel(),
+                                    listData.get(i).getMateriJumSiswa(),
+                                    listData.get(i).getMateriGambar(),
+                                    listData.get(i).getMateriId(),
+                                    listData.get(i).getMitraId(),
+                                    listData.get(i).getMateriVideo(),
+                                    listData.get(i).getMateriRating(),
+                                    listData.get(i).getJenisKelasId(),
+                                    listData.get(i).getMateriDeadline(),
+                                    listData.get(i).getMateriPlatform(),
+                                    listData.get(i).getMateriDeskripsi(),
+                                    listData.get(i).getMateriHarga(),
+                                    listData.get(i).getMateriTgl()));
+                        }
+                    }
+                }
+                if (listPayLearn.size() > 0) {
+                    initToRecyclerPayLearn();
+                } else {
+                    shortToast("data tidak ada!!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMateri> call, Throwable t) {
+                shortToast("response tidak ada!!");
+            }
+        });
+    }
+
+    private void initToRecyclerPayLearn() {
+        adapterPayLearn = new AdapterPayLearn(context, listPayLearn, false);
+        rvPayLearn.setAdapter(adapterPayLearn);
+        rvPayLearn.setHasFixedSize(true);
+        rvPayLearn.setLayoutManager(new GridLayoutManager(context, 3));
+    }
+
 }

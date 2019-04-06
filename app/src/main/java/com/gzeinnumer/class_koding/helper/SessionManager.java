@@ -1,97 +1,91 @@
 package com.gzeinnumer.class_koding.helper;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.annotation.VisibleForTesting;
 
-import com.gzeinnumer.class_koding.activity.Login;
-import com.gzeinnumer.class_koding.activity.Parent;
+public class SessionManager {
+    //TODO kenalin
+    private String PREF_NAME = "SIMPAN";
+    private String KEY_EMAIL = "EMAIL";
+    private String KEY_ID = "ID";
+    private String KEY_IMAGE = "IMAGE";
+    private String KEY_ASAL = "ASAL";
+    private String KEY_NAME = "NAME";
+    private String KEY_XP = "XP";
+    private String KEY_DATE = "DATE";
 
-public class SessionManager extends MyFunction {
-    @VisibleForTesting
+    private SharedPreferences mSharedPreferences;
+    private SharedPreferences.Editor mEditor;
 
-    /*variable sharepreference*/
-    public SharedPreferences pref;
-    public SharedPreferences.Editor editor;
-    public SessionManager sessionManager;
-
-    /*mode share preference*/
-    int mode = 0;
-
-    /*nama dari share preference*/
-    private static final String pref_name = "crudpref";
-
-    /*kunci share preference*/
-    private static final String is_login = "islogin";
-    public static final String kunci_email = "keyemail";
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        sessionManager = new SessionManager(getApplicationContext());
+    public SessionManager(Context context) {
+        mSharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 
-    public SessionManager() {
-
+    public void setUserEmail(String email) {
+        mEditor = mSharedPreferences.edit();
+        mEditor.putString(KEY_EMAIL, email).apply();
     }
 
-    /*construktor*/
-    public SessionManager(Context c) {
-        context = c;
-        pref = context.getSharedPreferences(pref_name, mode);
-        editor = pref.edit();
+    public String getEmail() {
+        return mSharedPreferences.getString(KEY_EMAIL, null);
     }
 
-    /*methode membuat session*/
-    public void createSession(String email) {
-        editor.putBoolean(is_login, true);
-        editor.putString(kunci_email, email);
-        editor.commit();
+    public void setUserId(String s) {
+        mEditor = mSharedPreferences.edit();
+        mEditor.putString(KEY_ID, s).apply();
     }
 
-    public void setIdUser(String iduser) {
-        editor.putBoolean(is_login, true);
-        editor.putString("iduser", iduser);
-        editor.commit();
+    public String getUserId() {
+        return mSharedPreferences.getString(KEY_ID, null);
     }
 
-    public String getIdUser() {
-        return pref.getString("iduser", "");
+    public void setUserImage(String s) {
+        mEditor = mSharedPreferences.edit();
+        mEditor.putString(KEY_IMAGE, s).apply();
     }
 
-    public void checkLogin() {
-        if (!this.islogin()) {
-            Intent i = new Intent(context, Login.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
-        } else {
-            Intent i = new Intent(context, Parent.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
-        }
+    public String getUserImage() {
+        return mSharedPreferences.getString(KEY_IMAGE, null);
     }
 
-    public boolean islogin() {
-        return pref.getBoolean(is_login, false);
+    public void setUserAsal(String s) {
+        mEditor = mSharedPreferences.edit();
+        mEditor.putString(KEY_ASAL, s).apply();
+    }
+
+    public String getAsal() {
+        return mSharedPreferences.getString(KEY_ASAL, null);
+    }
+
+    public void setUserName(String s) {
+        mEditor = mSharedPreferences.edit();
+        mEditor.putString(KEY_NAME, s).apply();
+    }
+
+    public String getName() {
+        return mSharedPreferences.getString(KEY_NAME, null);
+    }
+
+    public void setUserXP(String xp) {
+        mEditor = mSharedPreferences.edit();
+        mEditor.putString(KEY_XP, xp).apply();
+    }
+
+    public String getXP() {
+        return mSharedPreferences.getString(KEY_XP, null);
+    }
+
+    public void setUserDate(String s) {
+        mEditor = mSharedPreferences.edit();
+        mEditor.putString(KEY_DATE, s).apply();
+    }
+
+    public String getDate() {
+        return mSharedPreferences.getString(KEY_DATE, null);
     }
 
     public void logout() {
-        editor.clear();
-        editor.commit();
-
-        Intent i = new Intent(context, Login.class);
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(i);
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        hideProgressDialog();
+        mEditor = mSharedPreferences.edit();
+        mEditor.clear().commit();
     }
 }

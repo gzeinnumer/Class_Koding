@@ -12,10 +12,12 @@ import com.gzeinnumer.class_koding.fragment.HomeFragment;
 import com.gzeinnumer.class_koding.fragment.LearnFragment;
 import com.gzeinnumer.class_koding.fragment.NotificationFragment;
 import com.gzeinnumer.class_koding.fragment.ProfilFragment;
+import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.helper.SessionManager;
 
-public class Parent extends SessionManager {
+public class Parent extends MyFunction {
 
+    SessionManager mSessionManager;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -46,15 +48,22 @@ public class Parent extends SessionManager {
         setContentView(R.layout.activity_main);
 
         //toolbar
-        Toolbar toolbar =(Toolbar)findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle("Belajar Yuk?...");
 
-        //firts start
-        fragment = new HomeFragment();
-        setFragmentToParent(fragment);
+        mSessionManager = new SessionManager(this);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        if (mSessionManager.getEmail() == null){
+            intent(Login.class);
+            finish();
+        } else {
+            //firts start
+            fragment = new HomeFragment();
+            setFragmentToParent(fragment);
+        }
+
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 

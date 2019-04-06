@@ -2,18 +2,13 @@ package com.gzeinnumer.class_koding.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.helper.MyConstant;
@@ -32,7 +27,7 @@ import butterknife.OnClick;
 public class DetailMateri extends MyFunction {
     public static String DATA = "data";
     ArrayList<DataMateriItem> list;
-    MainInterface.I_DetailMateri i_detailMateri;
+    MainInterface.I_DetailLearn i_detailLearn;
 
     @BindView(R.id.gambar_detail_item)
     ImageView gambarDetailItem;
@@ -63,7 +58,7 @@ public class DetailMateri extends MyFunction {
         setContentView(R.layout.activity_detail_materi);
         ButterKnife.bind(this);
 
-        i_detailMateri = new MainPresenter(context);
+        i_detailLearn = new MainPresenter(context);
 
         list = new ArrayList<>();
 
@@ -72,7 +67,7 @@ public class DetailMateri extends MyFunction {
 
         initView();
 
-        i_detailMateri.videoViewFunction(videoDetailItem,current);
+        i_detailLearn.videoViewFunction(videoDetailItem,current);
 
     }
 
@@ -105,6 +100,6 @@ public class DetailMateri extends MyFunction {
     @Override
     protected void onStart() {
         super.onStart();
-        i_detailMateri.videoViewFunction(videoDetailItem,current);
+        i_detailLearn.videoViewFunction(videoDetailItem,current);
     }
 }

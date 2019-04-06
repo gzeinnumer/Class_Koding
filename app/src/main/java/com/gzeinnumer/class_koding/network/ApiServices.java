@@ -1,5 +1,6 @@
 package com.gzeinnumer.class_koding.network;
 
+import com.gzeinnumer.class_koding.model.ResponseEvent;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
@@ -25,4 +26,7 @@ public interface ApiServices {
                                     @Field("user_email") String user_email,
                                     @Field("user_password") String user_password,
                                     @Field("user_asal") String user_asal);
+
+    @GET("page_list/list/event")
+    Call<ResponseEvent> getAllEvent();
 }
