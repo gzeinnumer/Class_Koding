@@ -34,7 +34,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
-                        <com.gzeinnumer.class_koding.slider.SliderView
+                        <com.gzeinnumer.class_koding.helper.sliderevent.SliderView
                             android:id="@+id/sliderIklan"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />

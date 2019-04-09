@@ -1,6 +1,5 @@
 package com.gzeinnumer.class_koding.presenter;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,12 +13,16 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
 import android.webkit.WebResourceError;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.athkalia.emphasis.EmphasisTextView;
@@ -41,10 +44,11 @@ import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
 import com.gzeinnumer.class_koding.network.RetroServer;
-import com.gzeinnumer.class_koding.slider.FragmentSlider;
-import com.gzeinnumer.class_koding.slider.SliderIndicator;
-import com.gzeinnumer.class_koding.slider.SliderPagerAdapter;
-import com.gzeinnumer.class_koding.slider.SliderView;
+import com.gzeinnumer.class_koding.helper.sliderevent.FragmentSlider;
+import com.gzeinnumer.class_koding.helper.sliderevent.SliderIndicator;
+import com.gzeinnumer.class_koding.helper.sliderevent.SliderPagerAdapter;
+import com.gzeinnumer.class_koding.helper.sliderevent.SliderView;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -338,6 +342,30 @@ public class MainPresenter implements
             }
         });
     }
+
+    @Override
+    public void initViewDataDetail(DataMateriItem current,
+                                   ImageView gambarDetailItem,
+                                   TextView judulDetailItem,
+                                   TextView descDetailItem,
+                                   Button beliDetailItem,
+                                   Button mulaiDetailItem,
+                                   TextView olehDetailItem,
+                                   TextView platDetailItem,
+                                   TextView levelDetailItem,
+                                   TextView bonusDetailItem) {
+        Picasso.get().load(MyConstant.IMAGE_URL_MATERI + current.getMateriGambar())
+                .placeholder(R.color.shimmerbag).resize(399, 399).into(gambarDetailItem);
+        judulDetailItem.setText(current.getMateriNama());
+        descDetailItem.setText(current.getMateriDeskripsi());
+        beliDetailItem.setVisibility(View.VISIBLE);
+        mulaiDetailItem.setVisibility(View.VISIBLE);
+        olehDetailItem.setText(current.getMitraId());
+        platDetailItem.setText(current.getMateriPlatform());
+        levelDetailItem.setText(current.getMateriLevel());
+        bonusDetailItem.setText(current.getMateriXp()+" Xp");
+    }
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_HOMEFRAGMENT
 

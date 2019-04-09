@@ -1,4 +1,4 @@
-package com.gzeinnumer.class_koding.slider;
+package com.gzeinnumer.class_koding.helper.sliderevent;
 
 import android.content.Context;
 import android.content.res.Resources;

@@ -5,8 +5,11 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.webkit.WebView;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.athkalia.emphasis.EmphasisTextView;
 import com.facebook.shimmer.ShimmerFrameLayout;
@@ -17,7 +20,7 @@ import com.gzeinnumer.class_koding.adapter.AdapterLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
-import com.gzeinnumer.class_koding.slider.SliderView;
+import com.gzeinnumer.class_koding.helper.sliderevent.SliderView;
 
 public interface MainInterface {
 
@@ -43,6 +46,8 @@ public interface MainInterface {
 
     interface I_DetailLearn {
         void videoViewFunction(WebView videoDetailItem, DataMateriItem current);
+        void initViewDataDetail(DataMateriItem current, ImageView gambarDetailItem, TextView judulDetailItem, TextView descDetailItem, Button beliDetailItem, Button mulaiDetailItem, TextView olehDetailItem, TextView platDetailItem, TextView levelDetailItem, TextView bonusDetailItem);
+
     }
 
     interface I_HomeFragment {

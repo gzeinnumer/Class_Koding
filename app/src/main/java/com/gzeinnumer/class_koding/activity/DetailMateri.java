@@ -65,19 +65,22 @@ public class DetailMateri extends MyFunction {
         Intent intent = getIntent();
         current = intent.getParcelableExtra(DATA);
 
-        initView();
+        i_detailLearn.initViewDataDetail(current,
+                gambarDetailItem,
+                judulDetailItem,
+                descDetailItem,
+                beliDetailItem,
+                mulaiDetailItem,
+                olehDetailItem,
+                platDetailItem,
+                levelDetailItem,
+                bonusDetailItem
+                );
 
         i_detailLearn.videoViewFunction(videoDetailItem,current);
 
     }
 
-    private void initView() {
-        Picasso.get().load(MyConstant.IMAGE_URL_MATERI + current.getMateriGambar()).placeholder(R.color.shimmerbag).resize(399, 399).into(gambarDetailItem);
-        judulDetailItem.setText(current.getMateriNama());
-        descDetailItem.setText(current.getMateriDeskripsi());
-        beliDetailItem.setVisibility(View.VISIBLE);
-        mulaiDetailItem.setVisibility(View.VISIBLE);
-    }
 
     @OnClick({R.id.beli_detail_item, R.id.mulai_detail_item})
     public void onViewClicked(View view) {

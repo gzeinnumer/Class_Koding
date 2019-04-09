@@ -1,12 +1,14 @@
-package com.gzeinnumer.class_koding.slider;
+package com.gzeinnumer.class_koding.helper.sliderevent;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gzeinnumer.class_koding.R;
@@ -39,15 +41,21 @@ public class FragmentSlider extends Fragment {
         assert getArguments() != null;
         String imageUrls = getArguments().getString(ARG_PARAM1);
         String titleEvent = getArguments().getString(ARG_PARAM2);
-        View view = inflater.inflate(R.layout.fragment_slider_item, container, false);
+        final View view = inflater.inflate(R.layout.fragment_slider_item, container, false);
         ImageView img = view.findViewById(R.id.img_event);
         TextView title = view.findViewById(R.id.title_event);
+        CardView card = view.findViewById(R.id.card_event);
         Glide.with(getActivity())
                 .load(imageUrls)
                 .placeholder(R.drawable.shimmer)
                 .into(img);
-
         title.setText(titleEvent);
+        card.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(view.getContext(), "hay", Toast.LENGTH_SHORT).show();
+            }
+        });
         return view;
     }
 }
