@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.athkalia.emphasis.EmphasisTextView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.gzeinnumer.class_koding.R;
+import com.gzeinnumer.class_koding.activity.DaftarModul;
 import com.gzeinnumer.class_koding.activity.Login;
 import com.gzeinnumer.class_koding.activity.Parent;
 import com.gzeinnumer.class_koding.activity.Register;
@@ -217,6 +218,7 @@ public class MainPresenter implements
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_LEARNFRAGMENT
 
+    //lempar ini lagi
     private ArrayList<DataMateriItem> list = new ArrayList<>();
     private RecyclerView rvLearn;
 
@@ -344,26 +346,46 @@ public class MainPresenter implements
     }
 
     @Override
-    public void initViewDataDetail(DataMateriItem current,
-                                   ImageView gambarDetailItem,
-                                   TextView judulDetailItem,
-                                   TextView descDetailItem,
-                                   Button beliDetailItem,
-                                   Button mulaiDetailItem,
-                                   TextView olehDetailItem,
-                                   TextView platDetailItem,
-                                   TextView levelDetailItem,
-                                   TextView bonusDetailItem) {
+    public void initViewDataDetail(DataMateriItem current, ImageView gambarDetailItem, TextView judulDetailItem, TextView descDetailItem, Button beliDetailItem, Button mulaiDetailItem, TextView olehDetailItem, TextView platDetailItem, TextView levelDetailItem, TextView bonusDetailItem, TextView waktuJamDetailItem, TextView deadlineDetailItem) {
         Picasso.get().load(MyConstant.IMAGE_URL_MATERI + current.getMateriGambar())
                 .placeholder(R.color.shimmerbag).resize(399, 399).into(gambarDetailItem);
         judulDetailItem.setText(current.getMateriNama());
         descDetailItem.setText(current.getMateriDeskripsi());
-        beliDetailItem.setVisibility(View.VISIBLE);
-        mulaiDetailItem.setVisibility(View.VISIBLE);
         olehDetailItem.setText(current.getMitraId());
         platDetailItem.setText(current.getMateriPlatform());
         levelDetailItem.setText(current.getMateriLevel());
         bonusDetailItem.setText(current.getMateriXp()+" Xp");
+        waktuJamDetailItem.setText(current.getMateriWaktu());
+        deadlineDetailItem.setText(current.getMateriDeadline());
+
+        if (current.getMateriHarga().equals("0")){
+            mulaiDetailItem.setVisibility(View.VISIBLE);
+            actionMulaiDetailItem(mulaiDetailItem, current);
+        } else {
+            beliDetailItem.setVisibility(View.VISIBLE);
+            actionBeliDetailItem(beliDetailItem, current);
+        }
+    }
+
+
+    private void actionMulaiDetailItem(Button mulaiDetailItem, final DataMateriItem current) {
+        mulaiDetailItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DaftarModul.class);
+                intent.putExtra(DaftarModul.DATA , current.getMateriId());
+                context.startActivity(intent);
+            }
+        });
+    }
+
+    private void actionBeliDetailItem(Button beliDetailItem, DataMateriItem current) {
+        beliDetailItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
 

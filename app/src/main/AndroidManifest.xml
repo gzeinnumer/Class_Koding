@@ -13,11 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".activity.StartLearning"></activity>
+        <activity android:name=".activity.DaftarModul" />
         <activity android:name=".activity.Register" />
         <activity android:name=".activity.DetailMateri" />
-        <activity android:name=".activity.Login">
-
-        </activity>
+        <activity android:name=".activity.Login" />
         <activity
             android:name=".activity.Parent"
             android:label="@string/app_name"

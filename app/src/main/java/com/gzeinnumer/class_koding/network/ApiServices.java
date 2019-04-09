@@ -1,6 +1,8 @@
 package com.gzeinnumer.class_koding.network;
 
+import com.gzeinnumer.class_koding.model.ResponseContentModul;
 import com.gzeinnumer.class_koding.model.ResponseEvent;
+import com.gzeinnumer.class_koding.model.ResponseListModul;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
@@ -10,6 +12,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface ApiServices {
     @GET("page_list/list/materi")
@@ -29,4 +32,12 @@ public interface ApiServices {
 
     @GET("page_list/list/event")
     Call<ResponseEvent> getAllEvent();
+
+    @FormUrlEncoded
+    @POST("get_modul_judul_by_materi_id")
+    Call<ResponseListModul> getAllListModul(@Field("materi_id") String materi_id);
+
+    @FormUrlEncoded
+    @POST("get_content_by_modul_id")
+    Call<ResponseContentModul> getContentByModulId(@Field("materi_id") String materi_id);
 }

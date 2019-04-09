@@ -49,8 +49,13 @@ public class DetailMateri extends MyFunction {
     TextView bonusDetailItem;
     @BindView(R.id.video_detail_item)
     WebView videoDetailItem;
+    @BindView(R.id.waktu_jam_detail_item)
+    TextView waktuJamDetailItem;
+    @BindView(R.id.deadline_detail_item)
+    TextView deadlineDetailItem;
 
     DataMateriItem current;
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,22 +79,13 @@ public class DetailMateri extends MyFunction {
                 olehDetailItem,
                 platDetailItem,
                 levelDetailItem,
-                bonusDetailItem
-                );
+                bonusDetailItem,
+                waktuJamDetailItem,
+                deadlineDetailItem
+        );
 
-        i_detailLearn.videoViewFunction(videoDetailItem,current);
+        i_detailLearn.videoViewFunction(videoDetailItem, current);
 
-    }
-
-
-    @OnClick({R.id.beli_detail_item, R.id.mulai_detail_item})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.beli_detail_item:
-                break;
-            case R.id.mulai_detail_item:
-                break;
-        }
     }
 
     @Override
@@ -103,6 +99,6 @@ public class DetailMateri extends MyFunction {
     @Override
     protected void onStart() {
         super.onStart();
-        i_detailLearn.videoViewFunction(videoDetailItem,current);
+        i_detailLearn.videoViewFunction(videoDetailItem, current);
     }
 }
