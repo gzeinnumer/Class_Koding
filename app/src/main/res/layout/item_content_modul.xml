@@ -1,6 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:ignore="WebViewLayout">
+
+    <TextView
+        android:id="@+id/h_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Header"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/p_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Paragraf"
+        android:visibility="gone" />
+
+    <WebView
+        android:id="@+id/video_content"
+        android:layout_width="match_parent"
+        android:layout_height="211dp"
+        android:visibility="gone" />
+
+    <WebView
+        android:id="@+id/table_content"
+        android:layout_width="match_parent"
+        android:layout_height="211dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/a_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/colorAccent"
+        android:visibility="gone" />
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/img_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitStart" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end">
+
+        <Button
+            android:id="@+id/submit_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="submit"
+            android:visibility="gone" />
+    </LinearLayout>
 
 </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+

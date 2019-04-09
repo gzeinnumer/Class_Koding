@@ -39,5 +39,5 @@ public interface ApiServices {
 
     @FormUrlEncoded
     @POST("get_content_by_modul_id")
-    Call<ResponseContentModul> getContentByModulId(@Field("materi_id") String materi_id);
+    Call<ResponseContentModul> getContentByModulId(@Field("modul_id") String modul_id);
 }
