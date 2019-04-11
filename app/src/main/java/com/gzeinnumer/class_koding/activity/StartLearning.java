@@ -10,6 +10,8 @@ import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.model.DataListContentByModulIdItem;
 import com.gzeinnumer.class_koding.model.ResponseContentModul;
 import com.gzeinnumer.class_koding.network.RetroServer;
+import com.gzeinnumer.class_koding.presenter.MainInterface;
+import com.gzeinnumer.class_koding.presenter.MainPresenter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,13 +26,14 @@ public class StartLearning extends MyFunction {
 
     public static final String DATA = "modul_id";
 
-    String modul_id;
-
-    ArrayList<DataListContentByModulIdItem> listContentByModul;
-
-    AdapterContentList adapterContentList;
     @BindView(R.id.rv_content_by_id_modul)
     RecyclerView rvContentByIdModul;
+
+    String modul_id;
+    ArrayList<DataListContentByModulIdItem> listContentByModul;
+    AdapterContentList adapterContentList;
+
+    MainInterface.I_StartLearning i_startLearning;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,40 +41,11 @@ public class StartLearning extends MyFunction {
         setContentView(R.layout.activity_start_learning);
         ButterKnife.bind(this);
 
+        i_startLearning = new MainPresenter(context);
+
         modul_id = getIntent().getStringExtra(DATA);
-        shortToast(modul_id);
-
-        initDataContentList(modul_id);
+        i_startLearning.setRecyclerViewContentByIdModul(rvContentByIdModul);
+        i_startLearning.initDataContentList(modul_id);
     }
 
-    private void initDataContentList(String modul_id) {
-        RetroServer.getInstance().getContentByModulId(modul_id).enqueue(new Callback<ResponseContentModul>() {
-            @Override
-            public void onResponse(Call<ResponseContentModul> call, Response<ResponseContentModul> response) {
-                List<DataListContentByModulIdItem> list = response.body().getDataListContentByModulId();
-                listContentByModul = new ArrayList<>();
-                if (response.body().isSukses()) {
-                    for (int i = 0; i < list.size(); i++) {
-                        listContentByModul.add(new DataListContentByModulIdItem(list.get(i).getContentUrutan(), list.get(i).getModulId(), list.get(i).getContentIsi(), list.get(i).getModulTipe()));
-                    }
-                    initDataToRecyclerContentModul();
-                } else {
-                    shortToast("data tidak ada!!");
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseContentModul> call, Throwable t) {
-                shortToast("Cek Koneksi!!");
-            }
-        });
-
-    }
-
-    private void initDataToRecyclerContentModul() {
-        adapterContentList = new AdapterContentList(context, listContentByModul);
-        rvContentByIdModul.setAdapter(adapterContentList);
-        rvContentByIdModul.setLayoutManager(new LinearLayoutManager(this));
-        rvContentByIdModul.setHasFixedSize(true);
-    }
 }

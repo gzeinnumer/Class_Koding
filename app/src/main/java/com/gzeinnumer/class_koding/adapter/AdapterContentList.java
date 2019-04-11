@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gzeinnumer.class_koding.R;
+import com.gzeinnumer.class_koding.helper.MyConstant;
 import com.gzeinnumer.class_koding.model.DataListContentByModulIdItem;
 import com.squareup.picasso.Picasso;
 
@@ -83,7 +84,7 @@ public class AdapterContentList extends RecyclerView.Adapter<AdapterContentList.
             });
             myHolder.videoContent.setVisibility(View.VISIBLE);
         } else if(tipe.equals("img")){
-            Picasso.get().load(list.get(i).getContentIsi()).placeholder(R.drawable.shimmer).into(myHolder.imgContent);
+            Picasso.get().load(MyConstant.IMAGE_URL_MODUL+list.get(i).getContentIsi()).placeholder(R.drawable.shimmer).into(myHolder.imgContent);
             myHolder.imgContent.setVisibility(View.VISIBLE);
         } else if(tipe.equals("a")){
             myHolder.aContent.setText(list.get(i).getContentIsi());

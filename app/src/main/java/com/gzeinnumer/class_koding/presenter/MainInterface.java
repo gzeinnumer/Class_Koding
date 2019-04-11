@@ -73,4 +73,22 @@ public interface MainInterface {
         void startShimmerPayLearn();
 
     }
+
+    interface I_StartLearning{
+        void setRecyclerViewContentByIdModul(RecyclerView rvContentByIdModul);
+        void initDataContentList(String modul_id);
+    }
+
+    interface I_BuyActivity {
+        void setViewForBuyActivity(DataMateriItem dataMateriItem, TextView jumModul, TextView xp, TextView waktu, TextView nama, TextView diskon, TextView level, TextView jumSiswa, TextView materiId, TextView mitraId, TextView jenisKelasId, TextView materiPlatform, TextView descripsi, TextView harga, Button beli);
+    }
+
+    interface I_PayActivity{
+        void setViewForPayActivity(DataMateriItem dataMateriItem, TextView noreq, Button btnOploadBukti);
+    }
+
+    interface I_DaftarModul{
+        void setRecyclerViewListModulMateri(RecyclerView rvListModulMateri);
+        void initDataModulList(String materiId);
+    }
 }

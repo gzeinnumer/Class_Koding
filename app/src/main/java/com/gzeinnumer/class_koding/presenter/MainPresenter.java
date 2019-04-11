@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -28,19 +29,28 @@ import android.widget.Toast;
 import com.athkalia.emphasis.EmphasisTextView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.gzeinnumer.class_koding.R;
+import com.gzeinnumer.class_koding.activity.BuyActivity;
 import com.gzeinnumer.class_koding.activity.DaftarModul;
 import com.gzeinnumer.class_koding.activity.Login;
 import com.gzeinnumer.class_koding.activity.Parent;
+import com.gzeinnumer.class_koding.activity.PayActivity;
 import com.gzeinnumer.class_koding.activity.Register;
+import com.gzeinnumer.class_koding.activity.UploadStruckActivity;
+import com.gzeinnumer.class_koding.adapter.AdapterContentList;
 import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
+import com.gzeinnumer.class_koding.adapter.AdapterModulList;
 import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
 import com.gzeinnumer.class_koding.helper.MyConstant;
 import com.gzeinnumer.class_koding.helper.SessionManager;
 import com.gzeinnumer.class_koding.model.DataEventItem;
+import com.gzeinnumer.class_koding.model.DataListContentByModulIdItem;
+import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
+import com.gzeinnumer.class_koding.model.ResponseContentModul;
 import com.gzeinnumer.class_koding.model.ResponseEvent;
+import com.gzeinnumer.class_koding.model.ResponseListModul;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
@@ -58,13 +68,17 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//I_LearnFragment.Main
+//start
 public class MainPresenter implements
         MainInterface.I_Register,
         MainInterface.I_LearnFragment,
         MainInterface.I_Login,
         MainInterface.I_DetailLearn,
-        MainInterface.I_HomeFragment{
+        MainInterface.I_HomeFragment,
+        MainInterface.I_StartLearning,
+        MainInterface.I_BuyActivity,
+        MainInterface.I_PayActivity,
+        MainInterface.I_DaftarModul{
 
     private Context context;
     private AdapterLearn adapterLearn;
@@ -367,7 +381,6 @@ public class MainPresenter implements
         }
     }
 
-
     private void actionMulaiDetailItem(Button mulaiDetailItem, final DataMateriItem current) {
         mulaiDetailItem.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -379,11 +392,13 @@ public class MainPresenter implements
         });
     }
 
-    private void actionBeliDetailItem(Button beliDetailItem, DataMateriItem current) {
+    private void actionBeliDetailItem(Button beliDetailItem, final DataMateriItem current) {
         beliDetailItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent intent = new Intent(context, BuyActivity.class);
+                intent.putExtra(BuyActivity.DATA , current);
+                context.startActivity(intent);
             }
         });
     }
@@ -741,4 +756,132 @@ public class MainPresenter implements
         rvPayLearn.setLayoutManager(new GridLayoutManager(context, 3));
     }
 
+    ////////////////////////////////////////////////////////////////////////////////////////////////I_STARTLEARN
+    ArrayList<DataListContentByModulIdItem> listContentByModul;
+    AdapterContentList adapterContentList;
+    RecyclerView rvContentByIdModul;
+
+    @Override
+    public void setRecyclerViewContentByIdModul(RecyclerView rvContentByIdModul) {
+        this.rvContentByIdModul = rvContentByIdModul;
+    }
+
+    @Override
+    public void initDataContentList(String modul_id) {
+        RetroServer.getInstance().getContentByModulId(modul_id).enqueue(new Callback<ResponseContentModul>() {
+            @Override
+            public void onResponse(Call<ResponseContentModul> call, Response<ResponseContentModul> response) {
+                List<DataListContentByModulIdItem> list = response.body().getDataListContentByModulId();
+                listContentByModul = new ArrayList<>();
+                if (response.body().isSukses()) {
+                    for (int i = 0; i < list.size(); i++) {
+                        listContentByModul.add(new DataListContentByModulIdItem(list.get(i).getContentUrutan(), list.get(i).getModulId(), list.get(i).getContentIsi(), list.get(i).getModulTipe()));
+                    }
+                    initDataToRecyclerContentModul();
+                } else {
+                    shortToast("data tidak ada!!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseContentModul> call, Throwable t) {
+                shortToast("Cek Koneksi!!");
+            }
+        });
+    }
+
+    private void initDataToRecyclerContentModul() {
+        adapterContentList = new AdapterContentList(context, listContentByModul);
+        rvContentByIdModul.setAdapter(adapterContentList);
+        rvContentByIdModul.setLayoutManager(new LinearLayoutManager(context));
+        rvContentByIdModul.setHasFixedSize(true);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////I_BUYACTIVITY
+
+
+    @Override
+    public void setViewForBuyActivity(final DataMateriItem dataMateriItem, TextView jumModul, TextView xp, TextView waktu, TextView nama, TextView diskon, TextView level, TextView jumSiswa, TextView materiId, TextView mitraId, TextView jenisKelasId, TextView materiPlatform, TextView descripsi, TextView harga, Button beli) {
+        jumModul.setText(dataMateriItem.getMateriJmlModul());
+        xp.setText(dataMateriItem.getMateriXp());
+        waktu.setText(dataMateriItem.getMateriWaktu());
+        nama.setText(dataMateriItem.getMateriNama());
+        diskon.setText(dataMateriItem.getMateriDiskon());
+        level.setText(dataMateriItem.getMateriLevel());
+        jumSiswa.setText(dataMateriItem.getMateriJumSiswa());
+        materiId.setText(dataMateriItem.getMateriId());
+        mitraId.setText(dataMateriItem.getMitraId());
+        jenisKelasId.setText(dataMateriItem.getJenisKelasId());
+        materiPlatform.setText(dataMateriItem.getMateriPlatform());
+        descripsi.setText(dataMateriItem.getMateriDeskripsi());
+        harga.setText(dataMateriItem.getMateriHarga());
+
+        beli.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, PayActivity.class);
+                intent.putExtra(PayActivity.DATA, dataMateriItem);
+                context.startActivity(intent);
+            }
+        });
+    }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////I_PAYACTIVITY
+
+    @Override
+    public void setViewForPayActivity(final DataMateriItem dataMateriItem, TextView noreq, Button btnOploadBukti) {
+        noreq.setText("823858445");
+
+        btnOploadBukti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, UploadStruckActivity.class);
+                intent.putExtra(UploadStruckActivity.DATA, dataMateriItem);
+                context.startActivity(intent);
+            }
+        });
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////I_DAFTARMODUL
+
+    AdapterModulList adapterModulList;
+    ArrayList<DataListModulByModulIdItem> listDataListModul;
+    RecyclerView rvListModulMateri;
+
+    @Override
+    public void setRecyclerViewListModulMateri(RecyclerView rvListModulMateri) {
+        this.rvListModulMateri = rvListModulMateri;
+    }
+
+    @Override
+    public void initDataModulList(String materiId) {
+        RetroServer.getInstance().getAllListModul(materiId).enqueue(new Callback<ResponseListModul>() {
+            @Override
+            public void onResponse(Call<ResponseListModul> call, Response<ResponseListModul> response) {
+                List<DataListModulByModulIdItem> list = response.body().getDataListModulByModulId();
+                listDataListModul = new ArrayList<>();
+                if (response.body().isSukses()){
+                    for (int i=0; i<list.size(); i++){
+                        listDataListModul.add(new DataListModulByModulIdItem(list.get(i).getMateriId(), list.get(i).getModulId(), list.get(i).getModulJudul()));
+                    }
+                    initDataToRecyclerListModulMateri();
+                } else {
+                    shortToast("Data tidak ada!!!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseListModul> call, Throwable t) {
+                shortToast("Cek Koneksi kamu!!");
+            }
+        });
+    }
+
+    private void initDataToRecyclerListModulMateri() {
+        adapterModulList = new AdapterModulList(context, listDataListModul);
+        rvListModulMateri.setAdapter(adapterModulList);
+        rvListModulMateri.setHasFixedSize(true);
+        rvListModulMateri.setLayoutManager(new LinearLayoutManager(context));
+    }
 }
