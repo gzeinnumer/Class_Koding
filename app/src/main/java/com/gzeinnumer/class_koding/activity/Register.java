@@ -41,7 +41,6 @@ public class Register extends MyFunction {
         ButterKnife.bind(this);
         i_register = new MainPresenter(this);
         i_register.setHighLightLogin(login);
-
     }
 
     @OnClick({R.id.register, R.id.login})

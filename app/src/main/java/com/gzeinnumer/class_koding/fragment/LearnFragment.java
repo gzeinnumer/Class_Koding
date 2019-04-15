@@ -60,7 +60,6 @@ public class LearnFragment extends MyFunctionFragment {
         i_learnFragment.setAdapterFirst(adapter);
         i_learnFragment.startShimmer();
         i_learnFragment.searchFunction(edSearch);
-
         return view;
     }
 
@@ -76,6 +75,9 @@ public class LearnFragment extends MyFunctionFragment {
         unbinder.unbind();
     }
 
-
-
+    @Override
+    public void onResume() {
+        super.onResume();
+        list = i_learnFragment.getListMateri();
+    }
 }

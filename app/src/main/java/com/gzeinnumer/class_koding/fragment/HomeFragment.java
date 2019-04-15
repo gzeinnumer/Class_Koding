@@ -99,7 +99,6 @@ public class HomeFragment extends MyFunctionFragment {
         i_homeFragment.startShimmerPayLearn();
 
         return view;
-
     }
 
     @Override
@@ -114,6 +113,14 @@ public class HomeFragment extends MyFunctionFragment {
         //RECYCLERVIEW MATERI BERBAYAR
         i_homeFragment.setAdapterPayLearn(adapterPayLearn);
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        listNewLearn = i_homeFragment.getListNewLearn();
+        listFreeLearn = i_homeFragment.getListFreeLearn();
+        listPayLearn = i_homeFragment.getListPayLearn();
     }
 
     @Override

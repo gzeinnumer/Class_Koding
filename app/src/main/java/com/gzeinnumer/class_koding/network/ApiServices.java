@@ -42,13 +42,9 @@ public interface ApiServices {
     @POST("get_content_by_modul_id")
     Call<ResponseContentModul> getContentByModulId(@Field("modul_id") String modul_id);
 
-
     @FormUrlEncoded
     @POST("on_buy_learn_viewed")
     Call<ResponseBuyViewed> setOnBuyLearnViewed(@Field("materi_id") String materi_id,
                                                 @Field("user_id") String user_id,
                                                 @Field("materi_harga") String materi_harga);
-
-//    test
-
 }

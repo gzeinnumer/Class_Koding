@@ -33,6 +33,7 @@ public class DaftarModul extends MyFunction {
     TextView titleMateri;
     @BindView(R.id.rv_list_modul_materi)
     RecyclerView rvListModulMateri;
+
     AdapterModulList adapterModulList;
     ArrayList<DataListModulByModulIdItem> listDataListModul;
     String materiId;
@@ -53,7 +54,13 @@ public class DaftarModul extends MyFunction {
         i_daftarModul.setRecyclerViewListModulMateri(rvListModulMateri);
 
         i_daftarModul.initDataModulList(materiId);
+
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        listDataListModul = i_daftarModul.getListDataListModul();
+        adapterModulList = i_daftarModul.getAdapterModulList();
+    }
 }

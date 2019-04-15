@@ -29,8 +29,6 @@ import retrofit2.Response;
 
 public class DetailMateri extends MyFunction {
     public static String DATA = "data";
-    ArrayList<DataMateriItem> list;
-    MainInterface.I_DetailLearn i_detailLearn;
 
     @BindView(R.id.gambar_detail_item)
     ImageView gambarDetailItem;
@@ -58,8 +56,9 @@ public class DetailMateri extends MyFunction {
     TextView deadlineDetailItem;
 
     DataMateriItem current;
-
     SessionManager sessionManager;
+    ArrayList<DataMateriItem> list;
+    MainInterface.I_DetailLearn i_detailLearn;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override

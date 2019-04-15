@@ -40,14 +40,15 @@ import okhttp3.RequestBody;
 public class UploadStruckActivity extends MyFunction {
 
     public static final String DATA = "data";
-    private Uri filePath;
-
-    private String path;
 
     @BindView(R.id.image_chooser)
     ImageView imageChooser;
     @BindView(R.id.btn_kirim)
     Button btnKirim;
+
+    private Uri filePath;
+    private String path;
+
     private int PICK_IMAGE_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 123;
 

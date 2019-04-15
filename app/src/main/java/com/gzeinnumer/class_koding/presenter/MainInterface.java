@@ -17,10 +17,14 @@ import com.gzeinnumer.class_koding.activity.Login;
 import com.gzeinnumer.class_koding.activity.Register;
 import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
+import com.gzeinnumer.class_koding.adapter.AdapterModulList;
 import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
+import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.helper.sliderevent.SliderView;
+
+import java.util.ArrayList;
 
 public interface MainInterface {
 
@@ -42,6 +46,7 @@ public interface MainInterface {
         void setAdapterFirst(AdapterLearn adapter);
         void startShimmer();
         void searchFunction(EditText edSearch);
+        ArrayList<DataMateriItem> getListMateri();
     }
 
     interface I_DetailLearn {
@@ -61,16 +66,19 @@ public interface MainInterface {
         void setAdapterNewLearn(AdapterNewLearn adapterNewLearn);
         void setAdapterFirstNewLearn(AdapterNewLearn adapter);
         void startShimmerNewLearn();
+        ArrayList<DataMateriItem> getListNewLearn();
 
         void setRecyclerViewFreeLearn(RecyclerView rvFreeLearn);
         void setAdapterFreeLearn(AdapterFreeLearn adapterFreeLearn);
         void setAdapterFirstFreeLearn(AdapterFreeLearn adapterFreeLearn);
         void startShimmerFreeLearn();
+        ArrayList<DataMateriItem> getListFreeLearn();
 
         void setRecyclerViewPayLearn(RecyclerView rvPayLearn);
         void setAdapterPayLearn(AdapterPayLearn adapterPayLearn);
         void setAdapterFirstPayLearn(AdapterPayLearn adapterPayLearn);
         void startShimmerPayLearn();
+        ArrayList<DataMateriItem> getListPayLearn();
 
     }
 
@@ -90,5 +98,8 @@ public interface MainInterface {
     interface I_DaftarModul{
         void setRecyclerViewListModulMateri(RecyclerView rvListModulMateri);
         void initDataModulList(String materiId);
+
+        ArrayList<DataListModulByModulIdItem> getListDataListModul();
+        AdapterModulList getAdapterModulList();
     }
 }

@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 public class BuyActivity extends MyFunction {
 
     public static final String DATA = "data";
+
     @BindView(R.id.jum_modul)
     TextView jumModul;
     @BindView(R.id.xp)
@@ -60,7 +61,21 @@ public class BuyActivity extends MyFunction {
 
         i_buyActivity = new MainPresenter(context);
 
-        i_buyActivity.setViewForBuyActivity(dataMateriItem, jumModul, xp, waktu, nama, diskon, level, jumSiswa, materiId, mitraId, jenisKelasId, materiPlatform, descripsi, harga, beli);
+        i_buyActivity.setViewForBuyActivity(dataMateriItem,
+                jumModul,
+                xp,
+                waktu,
+                nama,
+                diskon,
+                level,
+                jumSiswa,
+                materiId,
+                mitraId,
+                jenisKelasId,
+                materiPlatform,
+                descripsi,
+                harga,
+                beli);
 
     }
 }

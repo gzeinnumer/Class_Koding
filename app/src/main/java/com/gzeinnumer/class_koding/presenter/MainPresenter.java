@@ -1,18 +1,13 @@
 package com.gzeinnumer.class_koding.presenter;
 
-import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -238,7 +233,7 @@ public class MainPresenter implements
     ////////////////////////////////////////////////////////////////////////////////////////////////I_LEARNFRAGMENT
 
     //lempar ini lagi
-    private ArrayList<DataMateriItem> list = new ArrayList<>();
+    private ArrayList<DataMateriItem> listMateri = new ArrayList<>();
     private RecyclerView rvLearn;
 
     @Override
@@ -275,11 +270,11 @@ public class MainPresenter implements
             @Override
             public void onResponse(Call<ResponseMateri> call, Response<ResponseMateri> response) {
                 List<DataMateriItem> listData = response.body().getDataMateri();
-                list = new ArrayList<>();
+                listMateri = new ArrayList<>();
 
                 if (response.body().isSukses()) {
                     for (int i = 0; i < listData.size(); i++) {
-                        list.add(new DataMateriItem(listData.get(i).getMateriJmlModul(),
+                        listMateri.add(new DataMateriItem(listData.get(i).getMateriJmlModul(),
                                 listData.get(i).getMateriXp(),
                                 listData.get(i).getMateriWaktu(),
                                 listData.get(i).getMateriNama(),
@@ -299,7 +294,7 @@ public class MainPresenter implements
                                 listData.get(i).getMateriTgl()));
                     }
                 }
-                if (list.size() > 0) {
+                if (listMateri.size() > 0) {
                     initToRecyclerLearn();
                 } else {
                     shortToast("data tidak ada!!");
@@ -314,7 +309,7 @@ public class MainPresenter implements
     }
 
     private void initToRecyclerLearn() {
-        adapterLearn = new AdapterLearn(context, list, false);
+        adapterLearn = new AdapterLearn(context, listMateri, false);
         rvLearn.setAdapter(adapterLearn);
         rvLearn.setHasFixedSize(true);
         rvLearn.setLayoutManager(new GridLayoutManager(context, 3));
@@ -338,6 +333,11 @@ public class MainPresenter implements
                 adapterLearn.getFilter().filter(String.valueOf(s));
             }
         });
+    }
+
+    @Override
+    public ArrayList<DataMateriItem> getListMateri() {
+        return listMateri;
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_DETAILMATERI
@@ -407,7 +407,6 @@ public class MainPresenter implements
             }
         });
     }
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_HOMEFRAGMENT
 
@@ -537,6 +536,11 @@ public class MainPresenter implements
         }, 4999);
     }
 
+    @Override
+    public ArrayList<DataMateriItem> getListNewLearn() {
+        return listNewLearn;
+    }
+
     private void initDataNewLearn() {
         RetroServer.getInstance().getAllMateri().enqueue(new Callback<ResponseMateri>() {
             @Override
@@ -589,7 +593,6 @@ public class MainPresenter implements
         rvNewLearn.setLayoutManager(new GridLayoutManager(context, 3));
     }
 
-
     private RecyclerView rvFreeLearn;
     private AdapterFreeLearn adapterFreeLearn;
     private ArrayList<DataMateriItem> listFreeLearn = new ArrayList<>();
@@ -599,6 +602,7 @@ public class MainPresenter implements
         this.rvFreeLearn = rvFreeLearn;
 
     }
+
     @Override
     public void setAdapterFreeLearn(AdapterFreeLearn adapterFreeLearn) {
         this.adapterFreeLearn = adapterFreeLearn;
@@ -621,6 +625,11 @@ public class MainPresenter implements
                 adapterFreeLearn.notifyDataSetChanged();
             }
         }, 4999);
+    }
+
+    @Override
+    public ArrayList<DataMateriItem> getListFreeLearn() {
+        return listFreeLearn;
     }
 
     private void initDataFreeLearn() {
@@ -675,7 +684,6 @@ public class MainPresenter implements
         rvFreeLearn.setLayoutManager(new GridLayoutManager(context, 3));
     }
 
-
     private RecyclerView rvPayLearn;
     private AdapterPayLearn adapterPayLearn;
     private ArrayList<DataMateriItem> listPayLearn = new ArrayList<>();
@@ -685,6 +693,7 @@ public class MainPresenter implements
         this.rvPayLearn = rvPayLearn;
 
     }
+
     @Override
     public void setAdapterPayLearn(AdapterPayLearn adapterPayLearn) {
         this.adapterPayLearn = adapterPayLearn;
@@ -707,6 +716,11 @@ public class MainPresenter implements
                 adapterPayLearn.notifyDataSetChanged();
             }
         }, 4999);
+    }
+
+    @Override
+    public ArrayList<DataMateriItem> getListPayLearn() {
+        return listPayLearn;
     }
 
     private void initDataPayLearn() {
@@ -762,9 +776,9 @@ public class MainPresenter implements
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_STARTLEARN
-    ArrayList<DataListContentByModulIdItem> listContentByModul;
-    AdapterContentList adapterContentList;
-    RecyclerView rvContentByIdModul;
+    private ArrayList<DataListContentByModulIdItem> listContentByModul;
+    private AdapterContentList adapterContentList;
+    private RecyclerView rvContentByIdModul;
 
     @Override
     public void setRecyclerViewContentByIdModul(RecyclerView rvContentByIdModul) {
@@ -804,7 +818,6 @@ public class MainPresenter implements
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_BUYACTIVITY
 
-
     @Override
     public void setViewForBuyActivity(final DataMateriItem dataMateriItem, TextView jumModul, TextView xp, TextView waktu, TextView nama, TextView diskon, TextView level, TextView jumSiswa, TextView materiId, TextView mitraId, TextView jenisKelasId, TextView materiPlatform, TextView descripsi, TextView harga, Button beli) {
         jumModul.setText(dataMateriItem.getMateriJmlModul());
@@ -838,7 +851,6 @@ public class MainPresenter implements
         });
     }
 
-
     ///////////////////////////////////////////////////////////////////////////////////////////////I_PAYACTIVITY
 
     @Override
@@ -856,9 +868,9 @@ public class MainPresenter implements
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_DAFTARMODUL
 
-    AdapterModulList adapterModulList;
-    ArrayList<DataListModulByModulIdItem> listDataListModul;
-    RecyclerView rvListModulMateri;
+    private AdapterModulList adapterModulList;
+    private ArrayList<DataListModulByModulIdItem> listDataListModul;
+    private RecyclerView rvListModulMateri;
 
     @Override
     public void setRecyclerViewListModulMateri(RecyclerView rvListModulMateri) {
@@ -870,6 +882,7 @@ public class MainPresenter implements
         RetroServer.getInstance().getAllListModul(materiId).enqueue(new Callback<ResponseListModul>() {
             @Override
             public void onResponse(Call<ResponseListModul> call, Response<ResponseListModul> response) {
+                assert response.body() != null;
                 List<DataListModulByModulIdItem> list = response.body().getDataListModulByModulId();
                 listDataListModul = new ArrayList<>();
                 if (response.body().isSukses()){
@@ -889,6 +902,16 @@ public class MainPresenter implements
         });
     }
 
+    @Override
+    public ArrayList<DataListModulByModulIdItem> getListDataListModul() {
+        return listDataListModul;
+    }
+
+    @Override
+    public AdapterModulList getAdapterModulList() {
+        return adapterModulList;
+    }
+
     private void initDataToRecyclerListModulMateri() {
         adapterModulList = new AdapterModulList(context, listDataListModul);
         rvListModulMateri.setAdapter(adapterModulList);
@@ -897,6 +920,4 @@ public class MainPresenter implements
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_UPLOADSTRUCKACTIVITY
-
-
 }
