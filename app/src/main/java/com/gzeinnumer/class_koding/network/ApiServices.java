@@ -1,5 +1,6 @@
 package com.gzeinnumer.class_koding.network;
 
+import com.gzeinnumer.class_koding.model.ResponseBuyViewed;
 import com.gzeinnumer.class_koding.model.ResponseContentModul;
 import com.gzeinnumer.class_koding.model.ResponseEvent;
 import com.gzeinnumer.class_koding.model.ResponseListModul;
@@ -40,4 +41,13 @@ public interface ApiServices {
     @FormUrlEncoded
     @POST("get_content_by_modul_id")
     Call<ResponseContentModul> getContentByModulId(@Field("modul_id") String modul_id);
+
+
+    @FormUrlEncoded
+    @POST("on_buy_learn_viewed")
+    Call<ResponseBuyViewed> setOnBuyLearnViewed(@Field("materi_id") String materi_id,
+                                                @Field("user_id") String user_id,
+                                                @Field("materi_harga") String materi_harga);
+
+
 }

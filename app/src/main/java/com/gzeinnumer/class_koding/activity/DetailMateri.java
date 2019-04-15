@@ -4,25 +4,28 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gzeinnumer.class_koding.R;
-import com.gzeinnumer.class_koding.helper.MyConstant;
 import com.gzeinnumer.class_koding.helper.MyFunction;
+import com.gzeinnumer.class_koding.helper.SessionManager;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
+import com.gzeinnumer.class_koding.model.ResponseBuyViewed;
+import com.gzeinnumer.class_koding.model.ResponseContentModul;
+import com.gzeinnumer.class_koding.network.RetroServer;
 import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class DetailMateri extends MyFunction {
     public static String DATA = "data";
@@ -56,6 +59,8 @@ public class DetailMateri extends MyFunction {
 
     DataMateriItem current;
 
+    SessionManager sessionManager;
+
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +68,7 @@ public class DetailMateri extends MyFunction {
         setContentView(R.layout.activity_detail_materi);
         ButterKnife.bind(this);
 
+        sessionManager = new SessionManager(context);
         i_detailLearn = new MainPresenter(context);
 
         list = new ArrayList<>();
@@ -100,5 +106,20 @@ public class DetailMateri extends MyFunction {
     protected void onStart() {
         super.onStart();
         i_detailLearn.videoViewFunction(videoDetailItem, current);
+        onBuyLearnViewed(current.getMateriId(), sessionManager.getUserId(), current.getMateriHarga());
+    }
+
+    private void onBuyLearnViewed(String materiId, String userId, String materiHarga) {
+        RetroServer.getInstance().setOnBuyLearnViewed(materiId, userId, materiHarga).enqueue(new Callback<ResponseBuyViewed>() {
+            @Override
+            public void onResponse(Call<ResponseBuyViewed> call, Response<ResponseBuyViewed> response) {
+                shortToast(response.body().getPesan());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBuyViewed> call, Throwable t) {
+                shortToast(t.getMessage());
+            }
+        });
     }
 }

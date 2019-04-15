@@ -1,13 +1,18 @@
 package com.gzeinnumer.class_koding.presenter;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Handler;
 import android.support.design.widget.TextInputEditText;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -85,8 +90,8 @@ public class MainPresenter implements
 
     public MainPresenter(Context context) {
         this.context = context;
-
     }
+
 
     /**
      * global function
@@ -369,8 +374,8 @@ public class MainPresenter implements
         platDetailItem.setText(current.getMateriPlatform());
         levelDetailItem.setText(current.getMateriLevel());
         bonusDetailItem.setText(current.getMateriXp()+" Xp");
-        waktuJamDetailItem.setText(current.getMateriWaktu());
-        deadlineDetailItem.setText(current.getMateriDeadline());
+        waktuJamDetailItem.setText("Durasi total video "+current.getMateriWaktu() + " Jam");
+        deadlineDetailItem.setText("Deadline pengerjaan Modul "+current.getMateriDeadline() + " Hari");
 
         if (current.getMateriHarga().equals("0")){
             mulaiDetailItem.setVisibility(View.VISIBLE);
@@ -809,9 +814,16 @@ public class MainPresenter implements
         diskon.setText(dataMateriItem.getMateriDiskon());
         level.setText(dataMateriItem.getMateriLevel());
         jumSiswa.setText(dataMateriItem.getMateriJumSiswa());
+        //hide
+        materiId.setVisibility(View.GONE);
         materiId.setText(dataMateriItem.getMateriId());
+        //hide
+        mitraId.setVisibility(View.GONE);
         mitraId.setText(dataMateriItem.getMitraId());
+        //hide
+        jenisKelasId.setVisibility(View.GONE);
         jenisKelasId.setText(dataMateriItem.getJenisKelasId());
+
         materiPlatform.setText(dataMateriItem.getMateriPlatform());
         descripsi.setText(dataMateriItem.getMateriDeskripsi());
         harga.setText(dataMateriItem.getMateriHarga());
@@ -830,8 +842,7 @@ public class MainPresenter implements
     ///////////////////////////////////////////////////////////////////////////////////////////////I_PAYACTIVITY
 
     @Override
-    public void setViewForPayActivity(final DataMateriItem dataMateriItem, TextView noreq, Button btnOploadBukti) {
-        noreq.setText("823858445");
+    public void setViewForPayActivity(final DataMateriItem dataMateriItem, Button btnOploadBukti) {
 
         btnOploadBukti.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -884,4 +895,8 @@ public class MainPresenter implements
         rvListModulMateri.setHasFixedSize(true);
         rvListModulMateri.setLayoutManager(new LinearLayoutManager(context));
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////I_UPLOADSTRUCKACTIVITY
+
+
 }

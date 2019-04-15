@@ -84,7 +84,7 @@ public interface MainInterface {
     }
 
     interface I_PayActivity{
-        void setViewForPayActivity(DataMateriItem dataMateriItem, TextView noreq, Button btnOploadBukti);
+        void setViewForPayActivity(DataMateriItem dataMateriItem, Button btnOploadBukti);
     }
 
     interface I_DaftarModul{

@@ -20,9 +20,12 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.gzeinnumer.class_koding.R;
+import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.network.ApiServices;
 import com.gzeinnumer.class_koding.network.RetroServer;
+import com.gzeinnumer.class_koding.presenter.MainInterface;
+import com.gzeinnumer.class_koding.presenter.MainPresenter;
 
 import java.io.File;
 import java.io.IOException;
@@ -34,7 +37,7 @@ import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
-public class UploadStruckActivity extends AppCompatActivity {
+public class UploadStruckActivity extends MyFunction {
 
     public static final String DATA = "data";
     private Uri filePath;
@@ -48,7 +51,6 @@ public class UploadStruckActivity extends AppCompatActivity {
     private int PICK_IMAGE_REQUEST = 1;
     private static final int STORAGE_PERMISSION_CODE = 123;
 
-
     DataMateriItem dataMateriItem;
 
     @Override
@@ -60,7 +62,6 @@ public class UploadStruckActivity extends AppCompatActivity {
         dataMateriItem = getIntent().getParcelableExtra(DATA);
 
         requestStoragePermission();
-
     }
 
     private void requestStoragePermission() {
@@ -170,9 +171,6 @@ public class UploadStruckActivity extends AppCompatActivity {
         //$_POST['image']
         String imagePost = "image";
         MultipartBody.Part partImage = MultipartBody.Part.createFormData(imagePost, imagefile.getName(),reqBody);
-
-        ApiServices api = RetroServer.getInstance();
-
 
     }
 

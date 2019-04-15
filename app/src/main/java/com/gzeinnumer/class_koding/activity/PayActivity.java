@@ -20,8 +20,7 @@ public class PayActivity extends MyFunction {
 
 
     public static final String DATA = "data";
-    @BindView(R.id.noreq)
-    TextView noreq;
+
     @BindView(R.id.btn_upload_bukti)
     Button btnOploadBukti;
 
@@ -37,6 +36,6 @@ public class PayActivity extends MyFunction {
 
         final DataMateriItem dataMateriItem = getIntent().getParcelableExtra(DATA);
 
-        i_payActivity.setViewForPayActivity(dataMateriItem ,noreq, btnOploadBukti);
+        i_payActivity.setViewForPayActivity(dataMateriItem , btnOploadBukti);
     }
 }
