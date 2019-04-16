@@ -110,8 +110,13 @@ public class BuyActivity extends MyFunction {
         RetroServer.getInstance().getStatusPembelian(userId, materiId).enqueue(new Callback<ResponseStatusPembayaran>() {
             @Override
             public void onResponse(Call<ResponseStatusPembayaran> call, Response<ResponseStatusPembayaran> response) {
+                assert response.body() != null;
                 List<DataDetailPembayaranItem> list = response.body().getDataDetailPembayaran();
-                if (list.get(0).getPmbyStatus().equals("")){
+                if (list.get(0).getPmbyStatus().equals("lunas")){
+                    Intent intent =new Intent(context, StartLearning.class);
+                    intent.putExtra(StartLearning.DATA, dataMateriItem.getMateriId());
+                    startActivity(intent);
+                } else if (list.get(0).getPmbyStatus().equals("cek")){
                     intent(SabarActivity.class);
                 }
             }

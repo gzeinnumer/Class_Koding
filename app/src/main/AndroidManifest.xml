@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.SabarActivity"></activity>
+        <activity android:name=".activity.MyLearn"></activity>
+        <activity android:name=".activity.SabarActivity" />
         <activity android:name=".activity.UploadStruckActivity" />
         <activity android:name=".activity.PayActivity" />
         <activity android:name=".activity.BuyActivity" />

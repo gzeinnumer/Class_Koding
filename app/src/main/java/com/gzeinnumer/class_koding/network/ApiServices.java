@@ -68,7 +68,7 @@ public interface ApiServices {
                                                  @Part MultipartBody.Part image);
 
     @FormUrlEncoded
-    @POST("get_status_pembelian")
-    Call<ResponseStatusPembayaran> getStatusPembelian(@Field("materi_id") String materi_id,
-                                                      @Field("user_id") String user_id);
+    @POST("get_detail_pmby_by_id")
+    Call<ResponseStatusPembayaran> getStatusPembelian(@Field("user_id") String user_id,
+                                                      @Field("materi_id") String materi_id);
 }
