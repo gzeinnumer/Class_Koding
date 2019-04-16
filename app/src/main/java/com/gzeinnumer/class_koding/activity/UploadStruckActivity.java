@@ -21,7 +21,9 @@ import android.widget.Toast;
 
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.helper.MyFunction;
+import com.gzeinnumer.class_koding.helper.SessionManager;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
+import com.gzeinnumer.class_koding.model.ResponsePembayaran;
 import com.gzeinnumer.class_koding.network.ApiServices;
 import com.gzeinnumer.class_koding.network.RetroServer;
 import com.gzeinnumer.class_koding.presenter.MainInterface;
@@ -36,6 +38,9 @@ import butterknife.OnClick;
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class UploadStruckActivity extends MyFunction {
 
@@ -54,12 +59,14 @@ public class UploadStruckActivity extends MyFunction {
 
     DataMateriItem dataMateriItem;
 
+    SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_struck);
         ButterKnife.bind(this);
 
+        sessionManager = new SessionManager(context);
         dataMateriItem = getIntent().getParcelableExtra(DATA);
 
         requestStoragePermission();
@@ -154,10 +161,8 @@ public class UploadStruckActivity extends MyFunction {
     }
 
     public void setImageToAdmin(DataMateriItem data) {
-        String param1 = "";
-        String param2 = "";
-        String param3 = "";
-        String param4 = "";
+        String param1 = data.getMateriId();
+        String param2 = sessionManager.getUserId();
 
         //todo 1.8
         String path = getPath(filePath);
@@ -166,13 +171,22 @@ public class UploadStruckActivity extends MyFunction {
         RequestBody reqBody = RequestBody.create(MediaType.parse("multipart/form-file"),imagefile);
         RequestBody temp1 = RequestBody.create(MediaType.parse("text/plain"), param1);
         RequestBody temp2 = RequestBody.create(MediaType.parse("text/plain"), param2);
-        RequestBody temp3 = RequestBody.create(MediaType.parse("text/plain"), param3);
-        RequestBody temp4 = RequestBody.create(MediaType.parse("text/plain"), param4);
 
         //$_POST['image']
-        String imagePost = "image";
+        String imagePost = "bukti";
         MultipartBody.Part partImage = MultipartBody.Part.createFormData(imagePost, imagefile.getName(),reqBody);
 
+        RetroServer.getInstance().uploadBuktiPembayaran(temp1, temp2,partImage).enqueue(new Callback<ResponsePembayaran>() {
+            @Override
+            public void onResponse(Call<ResponsePembayaran> call, Response<ResponsePembayaran> response) {
+                shortToast("sukses");
+            }
+
+            @Override
+            public void onFailure(Call<ResponsePembayaran> call, Throwable t) {
+                shortToast(t.getMessage());
+            }
+        });
     }
 
 }

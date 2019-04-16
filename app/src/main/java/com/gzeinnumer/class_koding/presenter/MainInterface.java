@@ -90,7 +90,7 @@ public interface MainInterface {
     }
 
     interface I_BuyActivity {
-        void setViewForBuyActivity(DataMateriItem dataMateriItem, TextView jumModul, TextView xp, TextView waktu, TextView nama, TextView diskon, TextView level, TextView jumSiswa, TextView materiId, TextView mitraId, TextView jenisKelasId, TextView materiPlatform, TextView descripsi, TextView harga, Button beli);
+        void setViewForBuyActivity(DataMateriItem dataMateriItem, TextView jumModul, TextView xp, TextView waktu, TextView nama, TextView diskon, TextView level, TextView jumSiswa, TextView materiId, TextView mitraId, TextView jenisKelasId, TextView materiPlatform, TextView descripsi, TextView harga);
     }
 
     interface I_PayActivity{

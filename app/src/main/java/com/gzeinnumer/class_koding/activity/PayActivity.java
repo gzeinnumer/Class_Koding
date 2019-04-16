@@ -75,7 +75,7 @@ public class PayActivity extends MyFunction {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, UploadStruckActivity.class);
-                intent.putExtra(UploadStruckActivity.DATA, (Parcelable) list);
+                intent.putExtra(UploadStruckActivity.DATA, dataMateriItem);
                 startActivity(intent);
             }
         });

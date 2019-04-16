@@ -7,13 +7,19 @@ import com.gzeinnumer.class_koding.model.ResponseGetPembayaran;
 import com.gzeinnumer.class_koding.model.ResponseListModul;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
+import com.gzeinnumer.class_koding.model.ResponsePembayaran;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
+import com.gzeinnumer.class_koding.model.ResponseStatusPembayaran;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiServices {
@@ -55,4 +61,14 @@ public interface ApiServices {
     Call<ResponseGetPembayaran> getDetailPmbyById(@Field("materi_id") String materi_id,
                                                   @Field("user_id") String user_id);
 
+    @Multipart
+    @POST("upload_image_bukti")
+    Call<ResponsePembayaran> uploadBuktiPembayaran (@Part("materi_id") RequestBody materi_id,
+                                                 @Part("user_id") RequestBody user_id,
+                                                 @Part MultipartBody.Part image);
+
+    @FormUrlEncoded
+    @POST("get_status_pembelian")
+    Call<ResponseStatusPembayaran> getStatusPembelian(@Field("materi_id") String materi_id,
+                                                      @Field("user_id") String user_id);
 }

@@ -4,8 +4,8 @@
     package="com.gzeinnumer.class_koding">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".activity.UploadStruckActivity"></activity>
+        <activity android:name=".activity.SabarActivity"></activity>
+        <activity android:name=".activity.UploadStruckActivity" />
         <activity android:name=".activity.PayActivity" />
         <activity android:name=".activity.BuyActivity" />
         <activity android:name=".activity.StartLearning" />

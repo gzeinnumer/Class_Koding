@@ -65,7 +65,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -824,7 +823,7 @@ public class MainPresenter implements
     ////////////////////////////////////////////////////////////////////////////////////////////////I_BUYACTIVITY
 
     @Override
-    public void setViewForBuyActivity(final DataMateriItem dataMateriItem, TextView jumModul, TextView xp, TextView waktu, TextView nama, TextView diskon, TextView level, TextView jumSiswa, TextView materiId, TextView mitraId, TextView jenisKelasId, TextView materiPlatform, TextView descripsi, TextView harga, Button beli) {
+    public void setViewForBuyActivity(final DataMateriItem dataMateriItem, TextView jumModul, TextView xp, TextView waktu, TextView nama, TextView diskon, TextView level, TextView jumSiswa, TextView materiId, TextView mitraId, TextView jenisKelasId, TextView materiPlatform, TextView descripsi, TextView harga) {
         jumModul.setText(dataMateriItem.getMateriJmlModul());
         xp.setText(dataMateriItem.getMateriXp());
         waktu.setText(dataMateriItem.getMateriWaktu());
@@ -846,14 +845,7 @@ public class MainPresenter implements
         descripsi.setText(dataMateriItem.getMateriDeskripsi());
         harga.setText(dataMateriItem.getMateriHarga());
 
-        beli.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, PayActivity.class);
-                intent.putExtra(PayActivity.DATA, dataMateriItem);
-                context.startActivity(intent);
-            }
-        });
+
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////I_PAYACTIVITY
