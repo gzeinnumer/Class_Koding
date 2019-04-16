@@ -20,11 +20,13 @@ import com.gzeinnumer.class_koding.adapter.AdapterLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterModulList;
 import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
+import com.gzeinnumer.class_koding.model.DataDetailPembayaranItem;
 import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.helper.sliderevent.SliderView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public interface MainInterface {
 
@@ -92,7 +94,10 @@ public interface MainInterface {
     }
 
     interface I_PayActivity{
-        void setViewForPayActivity(DataMateriItem dataMateriItem, Button btnOploadBukti);
+        void setViewForPayActivity(TextView kodeBankReq, TextView noReq, TextView namaReq, TextView totalReq, TextView timeReq);
+        void initDataForViewPayActivity(String materiId, String userId);
+
+        List<DataDetailPembayaranItem> getListPembayaran();
     }
 
     interface I_DaftarModul{

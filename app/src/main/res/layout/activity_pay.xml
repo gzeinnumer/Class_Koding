@@ -27,6 +27,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/time_req"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1111-11-11 22=22=22" />
@@ -38,6 +39,7 @@
 
 
             <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 

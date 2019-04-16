@@ -35,7 +35,6 @@ import com.gzeinnumer.class_koding.activity.Login;
 import com.gzeinnumer.class_koding.activity.Parent;
 import com.gzeinnumer.class_koding.activity.PayActivity;
 import com.gzeinnumer.class_koding.activity.Register;
-import com.gzeinnumer.class_koding.activity.UploadStruckActivity;
 import com.gzeinnumer.class_koding.adapter.AdapterContentList;
 import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
@@ -44,12 +43,14 @@ import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
 import com.gzeinnumer.class_koding.helper.MyConstant;
 import com.gzeinnumer.class_koding.helper.SessionManager;
+import com.gzeinnumer.class_koding.model.DataDetailPembayaranItem;
 import com.gzeinnumer.class_koding.model.DataEventItem;
 import com.gzeinnumer.class_koding.model.DataListContentByModulIdItem;
 import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.model.ResponseContentModul;
 import com.gzeinnumer.class_koding.model.ResponseEvent;
+import com.gzeinnumer.class_koding.model.ResponseGetPembayaran;
 import com.gzeinnumer.class_koding.model.ResponseListModul;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
@@ -64,6 +65,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -785,11 +787,14 @@ public class MainPresenter implements
         this.rvContentByIdModul = rvContentByIdModul;
     }
 
+
+
     @Override
     public void initDataContentList(String modul_id) {
         RetroServer.getInstance().getContentByModulId(modul_id).enqueue(new Callback<ResponseContentModul>() {
             @Override
             public void onResponse(Call<ResponseContentModul> call, Response<ResponseContentModul> response) {
+                assert response.body() != null;
                 List<DataListContentByModulIdItem> list = response.body().getDataListContentByModulId();
                 listContentByModul = new ArrayList<>();
                 if (response.body().isSukses()) {
@@ -853,18 +858,53 @@ public class MainPresenter implements
 
     ///////////////////////////////////////////////////////////////////////////////////////////////I_PAYACTIVITY
 
-    @Override
-    public void setViewForPayActivity(final DataMateriItem dataMateriItem, Button btnOploadBukti) {
 
-        btnOploadBukti.setOnClickListener(new View.OnClickListener() {
+    private TextView kodeBankReq;
+    private TextView noReq;
+    private TextView namaReq;
+    private TextView totalReq;
+    private TextView timeReq;
+
+    private List<DataDetailPembayaranItem> dataPembayaran;
+
+
+    @Override
+    public void setViewForPayActivity(TextView kodeBankReq, TextView noReq, TextView namaReq, TextView totalReq, TextView timeReq) {
+        this.kodeBankReq = kodeBankReq;
+        this.noReq = noReq;
+        this.namaReq = namaReq;
+        this.totalReq = totalReq;
+        this.timeReq = timeReq;
+    }
+
+    @Override
+    public void initDataForViewPayActivity(String materiId, String userId) {
+
+        RetroServer.getInstance().getDetailPmbyById(materiId, userId).enqueue(new Callback<ResponseGetPembayaran>() {
             @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, UploadStruckActivity.class);
-                intent.putExtra(UploadStruckActivity.DATA, dataMateriItem);
-                context.startActivity(intent);
+            public void onResponse(Call<ResponseGetPembayaran> call, Response<ResponseGetPembayaran> response) {
+                assert response.body() != null;
+                dataPembayaran = response.body().getDataDetailPembayaran();
+                initViewForPayActivity();
+            }
+
+            @Override
+            public void onFailure(Call<ResponseGetPembayaran> call, Throwable t) {
+
             }
         });
     }
+
+    @Override
+    public List<DataDetailPembayaranItem> getListPembayaran() {
+        return dataPembayaran;
+    }
+
+    private void initViewForPayActivity() {
+        timeReq.setText(dataPembayaran.get(0).getPmbyBatas());
+    }
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_DAFTARMODUL
 
