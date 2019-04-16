@@ -14,10 +14,10 @@ import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
 import com.gzeinnumer.class_koding.helper.MyFunctionFragment;
+import com.gzeinnumer.class_koding.helper.sliderevent.SliderView;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
-import com.gzeinnumer.class_koding.helper.sliderevent.SliderView;
 
 import java.util.ArrayList;
 
@@ -29,10 +29,6 @@ public class HomeFragment extends MyFunctionFragment {
 
     @BindView(R.id.shimmer_event_item)
     ShimmerFrameLayout shimmerEventItem;
-    @BindView(R.id.sliderIklan)
-    SliderView sliderIklan;
-    @BindView(R.id.pagesContainer)
-    LinearLayout pagesContainer;
     @BindView(R.id.layout_top)
     RelativeLayout layoutTop;
     @BindView(R.id.rv_materi_terbaru)
@@ -43,6 +39,19 @@ public class HomeFragment extends MyFunctionFragment {
     RecyclerView rvFreeLearn;
     @BindView(R.id.rv_pay_learn)
     RecyclerView rvPayLearn;
+    @BindView(R.id.slider_iklan_event)
+    SliderView sliderIklanEvent;
+
+    @BindView(R.id.pages_container_event)
+    LinearLayout pagesContainerEvent;
+    @BindView(R.id.slider_iklan_materi)
+    SliderView sliderIklanMateri;
+    @BindView(R.id.layout_sec)
+    RelativeLayout layoutSec;
+    @BindView(R.id.pages_container_materi)
+    LinearLayout pagesContainerMateri;
+    @BindView(R.id.shimmer_materi_item)
+    ShimmerFrameLayout shimmerMateriItem;
 
     MainInterface.I_HomeFragment i_homeFragment;
     View view;
@@ -54,6 +63,7 @@ public class HomeFragment extends MyFunctionFragment {
     ArrayList<DataMateriItem> listNewLearn = new ArrayList<>();
     ArrayList<DataMateriItem> listFreeLearn = new ArrayList<>();
     ArrayList<DataMateriItem> listPayLearn = new ArrayList<>();
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -72,13 +82,21 @@ public class HomeFragment extends MyFunctionFragment {
 
         i_homeFragment = new MainPresenter(contextFragment);
 
-        //SLIDER IKLAN
-        i_homeFragment.setSliderIklan(sliderIklan);
-        i_homeFragment.setShimmerForIklan(shimmerEventItem);
-        i_homeFragment.setFragmentContextForSliderPagerAdapter(getFragmentManager());
-        i_homeFragment.setFragmentActivityForSliderIndikator(getActivity());
-        i_homeFragment.setLinearForSliderIndikator(pagesContainer);
+        //SLIDER IKLAN EVENT
+        i_homeFragment.setSliderIklanEvent(sliderIklanEvent);
+        i_homeFragment.setShimmerForIklanEvent(shimmerEventItem);
+        i_homeFragment.setFragmentContextForSliderPagerAdapterIklanEvent(getFragmentManager());
+        i_homeFragment.setFragmentActivityForSliderIndikatorIklanEvent(getActivity());
+        i_homeFragment.setLinearForSliderIndikatorIklanEvent(pagesContainerEvent);
         i_homeFragment.iniDataEvent();
+
+        //SLIDER IKLAN MATERI
+        i_homeFragment.setSliderIklanMateri(sliderIklanMateri);
+        i_homeFragment.setShimmerForIklanMateri(shimmerMateriItem);
+        i_homeFragment.setFragmentContextForSliderPagerAdapterIklanMateri(getFragmentManager());
+        i_homeFragment.setFragmentActivityForSliderIndikatorIklanMateri(getActivity());
+        i_homeFragment.setLinearForSliderIndikatorIklanMateri(pagesContainerMateri);
+        i_homeFragment.iniDataMateri();
 
         //RECYCLERVIEW MATERI BARU
         adapterNewLearn = new AdapterNewLearn(contextFragment, listNewLearn, true);

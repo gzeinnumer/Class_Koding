@@ -29,11 +29,8 @@ import android.widget.Toast;
 import com.athkalia.emphasis.EmphasisTextView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.gzeinnumer.class_koding.R;
-import com.gzeinnumer.class_koding.activity.BuyActivity;
-import com.gzeinnumer.class_koding.activity.DaftarModul;
 import com.gzeinnumer.class_koding.activity.Login;
 import com.gzeinnumer.class_koding.activity.Parent;
-import com.gzeinnumer.class_koding.activity.PayActivity;
 import com.gzeinnumer.class_koding.activity.Register;
 import com.gzeinnumer.class_koding.adapter.AdapterContentList;
 import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
@@ -43,6 +40,8 @@ import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
 import com.gzeinnumer.class_koding.helper.MyConstant;
 import com.gzeinnumer.class_koding.helper.SessionManager;
+import com.gzeinnumer.class_koding.helper.slidermateri.SliderIndicatorMateriSlider;
+import com.gzeinnumer.class_koding.helper.slidermateri.SliderPagerAdapterMateriSlider;
 import com.gzeinnumer.class_koding.model.DataDetailPembayaranItem;
 import com.gzeinnumer.class_koding.model.DataEventItem;
 import com.gzeinnumer.class_koding.model.DataListContentByModulIdItem;
@@ -218,11 +217,6 @@ public class MainPresenter implements
     }
 
     @Override
-    public void actionLogin(Class<Login> loginClass) {
-        intent(loginClass);
-    }
-
-    @Override
     public void setHighLightLogin(EmphasisTextView login) {
         login.setText("Have Account? Login!!");
         login.setTextToHighlight("Login!!");
@@ -380,72 +374,47 @@ public class MainPresenter implements
 
         if (current.getMateriHarga().equals("0")){
             mulaiDetailItem.setVisibility(View.VISIBLE);
-            actionMulaiDetailItem(mulaiDetailItem, current);
         } else {
             beliDetailItem.setVisibility(View.VISIBLE);
-            actionBeliDetailItem(beliDetailItem, current);
         }
-    }
-
-    private void actionMulaiDetailItem(Button mulaiDetailItem, final DataMateriItem current) {
-        mulaiDetailItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, DaftarModul.class);
-                intent.putExtra(DaftarModul.DATA , current.getMateriId());
-                context.startActivity(intent);
-            }
-        });
-    }
-
-    private void actionBeliDetailItem(Button beliDetailItem, final DataMateriItem current) {
-        beliDetailItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, BuyActivity.class);
-                intent.putExtra(BuyActivity.DATA , current);
-                context.startActivity(intent);
-            }
-        });
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_HOMEFRAGMENT
 
-    private SliderView sliderIklan;
-    private List<Fragment> fragmentsList;
-    private ArrayList<DataEventItem> listEvent;
-    private ShimmerFrameLayout shimmerEventItem;
+    private SliderView sliderIklanEvent;
+    private List<Fragment> fragmentsListIklanEvent;
+    private ArrayList<DataEventItem> listIklanEvent;
+    private ShimmerFrameLayout shimmerIklanEventItem;
 
-    private SliderPagerAdapter mAdapter;
+    private SliderPagerAdapter mAdapterIklanEvent;
     private FragmentManager fragmentManager;
     private FragmentActivity fragmentActivity;
-    private SliderIndicator mIndicator;
-    private LinearLayout mLinearLayout;
+    private SliderIndicator mIndicatorIklanEvent;
+    private LinearLayout mLinearLayoutIklanEvent;
 
     @Override
-    public void setSliderIklan(SliderView sliderIklan) {
-        this.sliderIklan = sliderIklan;
+    public void setSliderIklanEvent(SliderView sliderIklanEvent) {
+        this.sliderIklanEvent = sliderIklanEvent;
     }
 
     @Override
-    public void setShimmerForIklan(ShimmerFrameLayout shimmerEventItem) {
-        this.shimmerEventItem = shimmerEventItem;
-
+    public void setShimmerForIklanEvent(ShimmerFrameLayout shimmerIklanEventItem) {
+        this.shimmerIklanEventItem = shimmerIklanEventItem;
     }
 
     @Override
-    public void setFragmentContextForSliderPagerAdapter(FragmentManager fragmentManager) {
+    public void setFragmentContextForSliderPagerAdapterIklanEvent(FragmentManager fragmentManager) {
         this.fragmentManager = fragmentManager;
     }
 
     @Override
-    public void setFragmentActivityForSliderIndikator(FragmentActivity fragmentActivity) {
+    public void setFragmentActivityForSliderIndikatorIklanEvent(FragmentActivity fragmentActivity) {
         this.fragmentActivity = fragmentActivity;
     }
 
     @Override
-    public void setLinearForSliderIndikator(LinearLayout mLinearLayout) {
-        this.mLinearLayout = mLinearLayout;
+    public void setLinearForSliderIndikatorIklanEvent(LinearLayout mLinearLayoutIklanEvent) {
+        this.mLinearLayoutIklanEvent = mLinearLayoutIklanEvent;
     }
 
     @Override
@@ -454,12 +423,12 @@ public class MainPresenter implements
             @Override
             public void onResponse(Call<ResponseEvent> call, Response<ResponseEvent> response) {
                 List<DataEventItem> list = response.body().getDataEvent();
-                listEvent = new ArrayList();
-                sliderIklan.setDurationScroll(1000);
-                fragmentsList = new ArrayList<>();
+                listIklanEvent = new ArrayList();
+                sliderIklanEvent.setDurationScroll(1000);
+                fragmentsListIklanEvent = new ArrayList<>();
                 if (response.body().isSukses()) {
                     for (int i = 0; i < list.size(); i++) {
-                        listEvent.add(new DataEventItem(
+                        listIklanEvent.add(new DataEventItem(
                                 list.get(i).getEventGambar(),
                                 list.get(i).getEventVideo(),
                                 list.get(i).getEventNama(),
@@ -474,9 +443,9 @@ public class MainPresenter implements
                                 list.get(i).getEventId(),
                                 list.get(i).getEventTiket(),
                                 list.get(i).getEventKota()));
-                        fragmentsList.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(),list.get(i).getEventNama()));
+                        fragmentsListIklanEvent.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(),list.get(i).getEventNama()));
                     }
-                    iniDataEventToFlipper();
+                    iniDataIklanEventToFlipper();
                 }
             }
 
@@ -485,24 +454,62 @@ public class MainPresenter implements
 
             }
         });
-
     }
 
-    private void iniDataEventToFlipper() {
+    private void iniDataIklanEventToFlipper() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
 
             }
         }, 4999);
-        shimmerEventItem.setShimmer(null);
-        shimmerEventItem.stopShimmer();
-        mAdapter = new SliderPagerAdapter(fragmentManager, fragmentsList, fragmentsList);
-        sliderIklan.setAdapter(mAdapter);
-        mIndicator = new SliderIndicator(fragmentActivity, mLinearLayout, sliderIklan, R.drawable.indicator_circle);
-        mIndicator.setPageCount(fragmentsList.size());
-        mIndicator.show();
+        shimmerIklanEventItem.setShimmer(null);
+        shimmerIklanEventItem.stopShimmer();
+        mAdapterIklanEvent = new SliderPagerAdapter(fragmentManager, fragmentsListIklanEvent, fragmentsListIklanEvent);
+        sliderIklanEvent.setAdapter(mAdapterIklanEvent);
+        mIndicatorIklanEvent = new SliderIndicator(fragmentActivity, mLinearLayoutIklanEvent, sliderIklanEvent, R.drawable.indicator_circle);
+        mIndicatorIklanEvent.setPageCount(fragmentsListIklanEvent.size());
+        mIndicatorIklanEvent.show();
     }
+
+    private SliderView sliderIklanMateriSlider;
+    private List<Fragment> fragmentsListMateriSlider;
+    private ArrayList<DataMateriItem> listMateriSlider;
+    private ShimmerFrameLayout shimmerMateriItemSlider;
+
+    private SliderPagerAdapterMateriSlider mAdapterMateriSlider;
+    private SliderIndicatorMateriSlider mIndicatorMateriSlider;
+
+    @Override
+    public void setSliderIklanMateri(SliderView sliderIklanMateri) {
+        this.sliderIklanMateriSlider = sliderIklanMateri;
+    }
+
+    @Override
+    public void setShimmerForIklanMateri(ShimmerFrameLayout shimmerMateriItem) {
+        this.shimmerMateriItemSlider = shimmerMateriItem;
+    }
+
+    @Override
+    public void setFragmentContextForSliderPagerAdapterIklanMateri(FragmentManager fragmentManager) {
+        this.fragmentManager= fragmentManager;
+    }
+
+    @Override
+    public void setFragmentActivityForSliderIndikatorIklanMateri(FragmentActivity activity) {
+        this.fragmentActivity=activity;
+    }
+
+    @Override
+    public void setLinearForSliderIndikatorIklanMateri(LinearLayout pagesContainerMateri) {
+        this.mLinearLayoutIklanEvent =pagesContainerMateri;
+    }
+
+    @Override
+    public void iniDataMateri() {
+
+    }
+
 
     private RecyclerView rvNewLearn;
     private AdapterNewLearn adapterNewLearn;
@@ -786,8 +793,6 @@ public class MainPresenter implements
         this.rvContentByIdModul = rvContentByIdModul;
     }
 
-
-
     @Override
     public void initDataContentList(String modul_id) {
         RetroServer.getInstance().getContentByModulId(modul_id).enqueue(new Callback<ResponseContentModul>() {
@@ -844,12 +849,9 @@ public class MainPresenter implements
         materiPlatform.setText(dataMateriItem.getMateriPlatform());
         descripsi.setText(dataMateriItem.getMateriDeskripsi());
         harga.setText(dataMateriItem.getMateriHarga());
-
-
     }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////I_PAYACTIVITY
-
 
     private TextView kodeBankReq;
     private TextView noReq;
@@ -858,7 +860,6 @@ public class MainPresenter implements
     private TextView timeReq;
 
     private List<DataDetailPembayaranItem> dataPembayaran;
-
 
     @Override
     public void setViewForPayActivity(TextView kodeBankReq, TextView noReq, TextView namaReq, TextView totalReq, TextView timeReq) {
@@ -895,8 +896,6 @@ public class MainPresenter implements
     private void initViewForPayActivity() {
         timeReq.setText(dataPembayaran.get(0).getPmbyBatas());
     }
-
-
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_DAFTARMODUL
 

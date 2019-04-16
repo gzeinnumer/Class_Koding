@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.View;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -91,6 +92,24 @@ public class DetailMateri extends MyFunction {
 
         i_detailLearn.videoViewFunction(videoDetailItem, current);
 
+        mulaiDetailItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, DaftarModul.class);
+                intent.putExtra(DaftarModul.DATA , current.getMateriId());
+                context.startActivity(intent);
+            }
+        });
+
+        beliDetailItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, BuyActivity.class);
+                intent.putExtra(BuyActivity.DATA , current);
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -121,4 +140,5 @@ public class DetailMateri extends MyFunction {
             }
         });
     }
+
 }

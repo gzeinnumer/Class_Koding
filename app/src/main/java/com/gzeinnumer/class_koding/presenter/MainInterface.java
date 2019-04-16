@@ -38,7 +38,7 @@ public interface MainInterface {
 
     interface I_Register {
         void actionRegister(TextInputEditText username, TextInputEditText email, TextInputEditText pass, TextInputEditText cPass, TextInputEditText asal);
-        void actionLogin(Class<Login> loginClass);
+
         void setHighLightLogin(EmphasisTextView login);
     }
 
@@ -57,12 +57,19 @@ public interface MainInterface {
     }
 
     interface I_HomeFragment {
-        void setSliderIklan(SliderView sliderIklan);
-        void setShimmerForIklan(ShimmerFrameLayout shimmerEventItem);
-        void setFragmentContextForSliderPagerAdapter(FragmentManager fragmentManager);
-        void setFragmentActivityForSliderIndikator(FragmentActivity fragmentActivity);
-        void setLinearForSliderIndikator(LinearLayout mLinearLayout);
+        void setSliderIklanEvent(SliderView sliderIklan);
+        void setShimmerForIklanEvent(ShimmerFrameLayout shimmerEventItem);
+        void setFragmentContextForSliderPagerAdapterIklanEvent(FragmentManager fragmentManager);
+        void setFragmentActivityForSliderIndikatorIklanEvent(FragmentActivity fragmentActivity);
+        void setLinearForSliderIndikatorIklanEvent(LinearLayout mLinearLayout);
         void iniDataEvent();
+
+        void setSliderIklanMateri(SliderView sliderIklanMateri);
+        void setShimmerForIklanMateri(ShimmerFrameLayout shimmerMateriItem);
+        void setFragmentContextForSliderPagerAdapterIklanMateri(FragmentManager fragmentManager);
+        void setFragmentActivityForSliderIndikatorIklanMateri(FragmentActivity activity);
+        void setLinearForSliderIndikatorIklanMateri(LinearLayout pagesContainerMateri);
+        void iniDataMateri();
 
         void setRecyclerViewNewLearn(RecyclerView rvMateriTerbaru);
         void setAdapterNewLearn(AdapterNewLearn adapterNewLearn);
@@ -81,7 +88,6 @@ public interface MainInterface {
         void setAdapterFirstPayLearn(AdapterPayLearn adapterPayLearn);
         void startShimmerPayLearn();
         ArrayList<DataMateriItem> getListPayLearn();
-
     }
 
     interface I_StartLearning{

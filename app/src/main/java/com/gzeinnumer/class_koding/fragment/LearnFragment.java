@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
@@ -78,6 +79,7 @@ public class LearnFragment extends MyFunctionFragment {
     @Override
     public void onResume() {
         super.onResume();
+        Toast.makeText(contextFragment, "resume", Toast.LENGTH_SHORT).show();
         list = i_learnFragment.getListMateri();
     }
 }
