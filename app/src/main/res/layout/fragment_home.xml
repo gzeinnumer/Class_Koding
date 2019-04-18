@@ -66,59 +66,6 @@
             </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>
 
-        <com.facebook.shimmer.ShimmerFrameLayout
-            android:visibility="gone"
-            android:id="@+id/shimmer_materi_item"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:id="@+id/layout_sec"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:orientation="vertical">
-
-                    <FrameLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <com.gzeinnumer.class_koding.helper.sliderevent.SliderView
-                            android:id="@+id/slider_iklan_materi"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-                    </FrameLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                    <!--android:background="@drawable/bg_indicator"-->
-                </RelativeLayout>
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="4dp"
-                    android:layout_marginBottom="8dp"
-                    android:orientation="horizontal"
-                    app:cardCornerRadius="7dp">
-
-                    <LinearLayout
-                        android:id="@+id/pages_container_materi"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_horizontal"
-                        android:orientation="horizontal"
-                        android:padding="1dp" />
-                </android.support.v7.widget.CardView>
-            </LinearLayout>
-        </com.facebook.shimmer.ShimmerFrameLayout>
-
         <TextView
             style="@style/FontTheme.SubTitleHome"
             android:layout_width="match_parent"

@@ -1,7 +1,10 @@
 package com.gzeinnumer.class_koding.network;
 
+import com.gzeinnumer.class_koding.model.DataDetailPembayaranUserItem;
 import com.gzeinnumer.class_koding.model.ResponseBuyViewed;
 import com.gzeinnumer.class_koding.model.ResponseContentModul;
+import com.gzeinnumer.class_koding.model.ResponseDataUser;
+import com.gzeinnumer.class_koding.model.ResponseDetailPembayaranUser;
 import com.gzeinnumer.class_koding.model.ResponseEvent;
 import com.gzeinnumer.class_koding.model.ResponseGetPembayaran;
 import com.gzeinnumer.class_koding.model.ResponseListModul;
@@ -10,6 +13,8 @@ import com.gzeinnumer.class_koding.model.ResponseMateri;
 import com.gzeinnumer.class_koding.model.ResponsePembayaran;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
 import com.gzeinnumer.class_koding.model.ResponseStatusPembayaran;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -43,7 +48,7 @@ public interface ApiServices {
 
     @FormUrlEncoded
     @POST("get_modul_judul_by_materi_id")
-    Call<ResponseListModul> getAllListModul(@Field("materi_id") String materi_id);
+    Call<ResponseListModul> getAllListModul(@Field("materi_id") String materi_id,@Field("user_id") String user_id);
 
     @FormUrlEncoded
     @POST("get_content_by_modul_id")
@@ -71,4 +76,14 @@ public interface ApiServices {
     @POST("get_detail_pmby_by_id")
     Call<ResponseStatusPembayaran> getStatusPembelian(@Field("user_id") String user_id,
                                                       @Field("materi_id") String materi_id);
+
+    @FormUrlEncoded
+    @POST("get_detail_pmby_by_id_user")
+    Call<ResponseDetailPembayaranUser> getDetailPmbyByIdUser(@Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("get_user")
+    Call<ResponseDataUser> gatDataUser(@Field("user_id") String user_id);
+
+
 }

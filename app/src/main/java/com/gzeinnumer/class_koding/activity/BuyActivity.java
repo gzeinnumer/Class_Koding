@@ -26,6 +26,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BuyActivity extends MyFunction {
+    private static final String TAG = "BuyActivity";
 
     public static final String DATA = "data";
 
@@ -68,6 +69,8 @@ public class BuyActivity extends MyFunction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_buy);
         ButterKnife.bind(this);
+        setTitle(TAG);
+
 
         dataMateriItem = getIntent().getParcelableExtra(DATA);
 
@@ -116,8 +119,10 @@ public class BuyActivity extends MyFunction {
                     Intent intent =new Intent(context, StartLearning.class);
                     intent.putExtra(StartLearning.DATA, dataMateriItem.getMateriId());
                     startActivity(intent);
+                    finish();
                 } else if (list.get(0).getPmbyStatus().equals("cek")){
                     intent(SabarActivity.class);
+                    finish();
                 }
             }
 

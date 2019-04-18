@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <ImageView
-                android:visibility="invisible"
+                android:id="@+id/cek"
                 android:src="@drawable/ic_check"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />

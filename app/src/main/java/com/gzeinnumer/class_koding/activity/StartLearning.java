@@ -23,6 +23,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class StartLearning extends MyFunction {
+    private static final String TAG = "StartLearning";
 
     public static final String DATA = "modul_id";
 
@@ -40,6 +41,7 @@ public class StartLearning extends MyFunction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_learning);
         ButterKnife.bind(this);
+        setTitle(TAG);
 
         i_startLearning = new MainPresenter(context);
 

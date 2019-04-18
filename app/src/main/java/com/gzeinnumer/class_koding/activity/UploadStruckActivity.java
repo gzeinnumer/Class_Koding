@@ -44,6 +44,8 @@ import retrofit2.Response;
 
 public class UploadStruckActivity extends MyFunction {
 
+    private static final String TAG = "UploadStruckActivity";
+
     public static final String DATA = "data";
 
     @BindView(R.id.image_chooser)
@@ -65,6 +67,8 @@ public class UploadStruckActivity extends MyFunction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload_struck);
         ButterKnife.bind(this);
+        setTitle(TAG);
+
 
         sessionManager = new SessionManager(context);
         dataMateriItem = getIntent().getParcelableExtra(DATA);
@@ -180,6 +184,8 @@ public class UploadStruckActivity extends MyFunction {
             @Override
             public void onResponse(Call<ResponsePembayaran> call, Response<ResponsePembayaran> response) {
                 shortToast("sukses");
+                intent(SabarActivity.class);
+                finish();
             }
 
             @Override

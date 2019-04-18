@@ -24,6 +24,7 @@ import com.gzeinnumer.class_koding.model.DataDetailPembayaranItem;
 import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.helper.sliderevent.SliderView;
+import com.gzeinnumer.class_koding.network.RetroServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,12 +65,6 @@ public interface MainInterface {
         void setLinearForSliderIndikatorIklanEvent(LinearLayout mLinearLayout);
         void iniDataEvent();
 
-        void setSliderIklanMateri(SliderView sliderIklanMateri);
-        void setShimmerForIklanMateri(ShimmerFrameLayout shimmerMateriItem);
-        void setFragmentContextForSliderPagerAdapterIklanMateri(FragmentManager fragmentManager);
-        void setFragmentActivityForSliderIndikatorIklanMateri(FragmentActivity activity);
-        void setLinearForSliderIndikatorIklanMateri(LinearLayout pagesContainerMateri);
-        void iniDataMateri();
 
         void setRecyclerViewNewLearn(RecyclerView rvMateriTerbaru);
         void setAdapterNewLearn(AdapterNewLearn adapterNewLearn);
@@ -112,5 +107,6 @@ public interface MainInterface {
 
         ArrayList<DataListModulByModulIdItem> getListDataListModul();
         AdapterModulList getAdapterModulList();
+
     }
 }

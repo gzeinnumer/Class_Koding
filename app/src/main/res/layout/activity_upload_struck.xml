@@ -1,31 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".activity.UploadStruckActivity">
+    android:layout_height="match_parent">
 
-
-
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Silahkan pilih gambar"
-        android:textAlignment="center" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".activity.UploadStruckActivity">
 
-    <ImageView
-        android:id="@+id/image_chooser"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitStart"
-        android:src="@drawable/logo_gw2"/>
 
-    <Button
-        android:id="@+id/btn_kirim"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="serahkan bukti transfer" />
-</LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Silahkan pilih gambar"
+            android:textAlignment="center" />
+
+        <ImageView
+            android:id="@+id/image_chooser"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitStart"
+            android:src="@drawable/logo_gw2" />
+
+        <Button
+            android:id="@+id/btn_kirim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="serahkan bukti transfer" />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

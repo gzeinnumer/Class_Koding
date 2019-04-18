@@ -16,6 +16,7 @@ import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.helper.SessionManager;
 
 public class Parent extends MyFunction {
+    private static final String TAG = "Parent";
 
     SessionManager mSessionManager;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -50,7 +51,7 @@ public class Parent extends MyFunction {
         //toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("Belajar Yuk?...");
+        toolbar.setTitle(TAG);
 
         mSessionManager = new SessionManager(this);
 
@@ -78,7 +79,9 @@ public class Parent extends MyFunction {
         int id = item.getItemId();
         switch (id){
             case R.id.search_dropmenu:
-                shortToast("tekan");
+                mSessionManager.logout();
+                intent(Login.class);
+                finish();
                 break;
             case R.id.search_materi:
                 shortToast("tekan");

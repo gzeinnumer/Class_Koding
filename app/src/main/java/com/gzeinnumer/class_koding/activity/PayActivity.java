@@ -28,6 +28,7 @@ import retrofit2.Response;
 
 public class PayActivity extends MyFunction {
 
+    private static final String TAG = "PayActivity";
 
     public static final String DATA = "data";
 
@@ -58,6 +59,7 @@ public class PayActivity extends MyFunction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pay);
         ButterKnife.bind(this);
+        setTitle(TAG);
 
         i_payActivity = new MainPresenter(context);
 

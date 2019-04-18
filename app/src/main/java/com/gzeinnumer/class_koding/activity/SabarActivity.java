@@ -13,6 +13,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SabarActivity extends MyFunction {
+    private static final String TAG = "SabarActivity";
 
     @BindView(R.id.btn_kembali)
     Button btnKembali;
@@ -22,6 +23,8 @@ public class SabarActivity extends MyFunction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sabar);
         ButterKnife.bind(this);
+        setTitle(TAG);
+
 
         btnKembali.setOnClickListener(new View.OnClickListener() {
             @Override

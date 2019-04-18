@@ -44,14 +44,6 @@ public class HomeFragment extends MyFunctionFragment {
 
     @BindView(R.id.pages_container_event)
     LinearLayout pagesContainerEvent;
-    @BindView(R.id.slider_iklan_materi)
-    SliderView sliderIklanMateri;
-    @BindView(R.id.layout_sec)
-    RelativeLayout layoutSec;
-    @BindView(R.id.pages_container_materi)
-    LinearLayout pagesContainerMateri;
-    @BindView(R.id.shimmer_materi_item)
-    ShimmerFrameLayout shimmerMateriItem;
 
     MainInterface.I_HomeFragment i_homeFragment;
     View view;
@@ -91,12 +83,6 @@ public class HomeFragment extends MyFunctionFragment {
         i_homeFragment.iniDataEvent();
 
         //SLIDER IKLAN MATERI
-        i_homeFragment.setSliderIklanMateri(sliderIklanMateri);
-        i_homeFragment.setShimmerForIklanMateri(shimmerMateriItem);
-        i_homeFragment.setFragmentContextForSliderPagerAdapterIklanMateri(getFragmentManager());
-        i_homeFragment.setFragmentActivityForSliderIndikatorIklanMateri(getActivity());
-        i_homeFragment.setLinearForSliderIndikatorIklanMateri(pagesContainerMateri);
-        i_homeFragment.iniDataMateri();
 
         //RECYCLERVIEW MATERI BARU
         adapterNewLearn = new AdapterNewLearn(contextFragment, listNewLearn, true);

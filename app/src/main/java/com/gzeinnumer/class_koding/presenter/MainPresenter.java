@@ -83,9 +83,12 @@ public class MainPresenter implements
     private Context context;
     private AdapterLearn adapterLearn;
 
+    private SessionManager sessionManager;
     public MainPresenter(Context context) {
         this.context = context;
+        sessionManager = new SessionManager(context);
     }
+
 
 
     /**
@@ -471,45 +474,6 @@ public class MainPresenter implements
         mIndicatorIklanEvent.setPageCount(fragmentsListIklanEvent.size());
         mIndicatorIklanEvent.show();
     }
-
-    private SliderView sliderIklanMateriSlider;
-    private List<Fragment> fragmentsListMateriSlider;
-    private ArrayList<DataMateriItem> listMateriSlider;
-    private ShimmerFrameLayout shimmerMateriItemSlider;
-
-    private SliderPagerAdapterMateriSlider mAdapterMateriSlider;
-    private SliderIndicatorMateriSlider mIndicatorMateriSlider;
-
-    @Override
-    public void setSliderIklanMateri(SliderView sliderIklanMateri) {
-        this.sliderIklanMateriSlider = sliderIklanMateri;
-    }
-
-    @Override
-    public void setShimmerForIklanMateri(ShimmerFrameLayout shimmerMateriItem) {
-        this.shimmerMateriItemSlider = shimmerMateriItem;
-    }
-
-    @Override
-    public void setFragmentContextForSliderPagerAdapterIklanMateri(FragmentManager fragmentManager) {
-        this.fragmentManager= fragmentManager;
-    }
-
-    @Override
-    public void setFragmentActivityForSliderIndikatorIklanMateri(FragmentActivity activity) {
-        this.fragmentActivity=activity;
-    }
-
-    @Override
-    public void setLinearForSliderIndikatorIklanMateri(LinearLayout pagesContainerMateri) {
-        this.mLinearLayoutIklanEvent =pagesContainerMateri;
-    }
-
-    @Override
-    public void iniDataMateri() {
-
-    }
-
 
     private RecyclerView rvNewLearn;
     private AdapterNewLearn adapterNewLearn;
@@ -909,8 +873,8 @@ public class MainPresenter implements
     }
 
     @Override
-    public void initDataModulList(String materiId) {
-        RetroServer.getInstance().getAllListModul(materiId).enqueue(new Callback<ResponseListModul>() {
+    public void initDataModulList(final String materiId) {
+        RetroServer.getInstance().getAllListModul(materiId, sessionManager.getUserId()).enqueue(new Callback<ResponseListModul>() {
             @Override
             public void onResponse(Call<ResponseListModul> call, Response<ResponseListModul> response) {
                 assert response.body() != null;
@@ -918,7 +882,13 @@ public class MainPresenter implements
                 listDataListModul = new ArrayList<>();
                 if (response.body().isSukses()){
                     for (int i=0; i<list.size(); i++){
-                        listDataListModul.add(new DataListModulByModulIdItem(list.get(i).getMateriId(), list.get(i).getModulId(), list.get(i).getModulJudul()));
+                        listDataListModul.add(new DataListModulByModulIdItem(
+                                list.get(i).getUserId(),
+                                list.get(i).getMateriId(),
+                                list.get(i).getModulId(),
+                                list.get(i).getModulJudul(),
+                                list.get(i).getProgressId(),
+                                list.get(i).getStatus()));
                     }
                     initDataToRecyclerListModulMateri();
                 } else {
@@ -932,6 +902,7 @@ public class MainPresenter implements
             }
         });
     }
+
 
     @Override
     public ArrayList<DataListModulByModulIdItem> getListDataListModul() {

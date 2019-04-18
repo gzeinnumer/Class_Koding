@@ -11,13 +11,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import com.gzeinnumer.class_koding.R;
-import com.gzeinnumer.class_koding.fragment.HomeFragment;
 
 @SuppressLint("Registered")
 public class MyFunction extends AppCompatActivity {
 
     @SuppressLint("StaticFieldLeak")
     public static Context context;
+
 
     @SuppressLint("StaticFieldLeak")
     public static FragmentTransaction fragmentTransaction = null;
@@ -29,6 +29,7 @@ public class MyFunction extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = MyFunction.this;
+
     }
 
     public void intent(Class destination) {

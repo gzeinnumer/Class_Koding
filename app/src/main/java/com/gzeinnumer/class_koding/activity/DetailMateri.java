@@ -29,6 +29,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class DetailMateri extends MyFunction {
+    private static final String TAG = "DetailMateri";
+
     public static String DATA = "data";
 
     @BindView(R.id.gambar_detail_item)
@@ -67,6 +69,7 @@ public class DetailMateri extends MyFunction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail_materi);
         ButterKnife.bind(this);
+        setTitle(TAG);
 
         sessionManager = new SessionManager(context);
         i_detailLearn = new MainPresenter(context);

@@ -16,6 +16,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class Register extends MyFunction {
+    private static final String TAG = "Register";
 
     @BindView(R.id.username)
     TextInputEditText username;
@@ -41,6 +42,8 @@ public class Register extends MyFunction {
         ButterKnife.bind(this);
         i_register = new MainPresenter(this);
         i_register.setHighLightLogin(login);
+        setTitle(TAG);
+
     }
 
     @OnClick({R.id.register, R.id.login})
