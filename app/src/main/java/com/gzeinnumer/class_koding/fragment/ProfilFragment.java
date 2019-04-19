@@ -3,6 +3,7 @@ package com.gzeinnumer.class_koding.fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +16,6 @@ import com.gzeinnumer.class_koding.helper.SessionManager;
 import com.gzeinnumer.class_koding.model.DataUserItem;
 import com.gzeinnumer.class_koding.model.ResponseDataUser;
 import com.gzeinnumer.class_koding.network.RetroServer;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +47,10 @@ public class ProfilFragment extends MyFunctionFragment {
     TextView dateUser;
     @BindView(R.id.image_user)
     ImageView imageUser;
+    @BindView(R.id.rv_my_learn_user)
+    RecyclerView rvMyLearnUser;
+    @BindView(R.id.rv_my_learn_progress_user)
+    RecyclerView rvMyLearnProgressUser;
 
     Unbinder unbinder;
 
@@ -68,6 +72,7 @@ public class ProfilFragment extends MyFunctionFragment {
         sessionManager = new SessionManager(contextFragment);
 
         initDataUserForProfile(sessionManager.getUserId());
+//        initDataMyLearnToRvMyLearnUser();
         return view;
     }
 
@@ -78,7 +83,7 @@ public class ProfilFragment extends MyFunctionFragment {
                 List<DataUserItem> list = response.body().getDataUser();
 
                 if (response.isSuccessful()) {
-                    for (int i=0; i<list.size(); i++){
+                    for (int i = 0; i < list.size(); i++) {
                         dataUser.add(new DataUserItem(
                                 list.get(i).getUserEmail(),
                                 list.get(i).getUserPassword(),
@@ -90,7 +95,7 @@ public class ProfilFragment extends MyFunctionFragment {
                                 list.get(i).getUserDate()));
                     }
                 }
-                initViewForProfil(imageUser,emailUser, idUser, asalUser, xpUser, dateUser);
+                initViewForProfil(imageUser, emailUser, idUser, asalUser, xpUser, dateUser);
             }
 
             @Override

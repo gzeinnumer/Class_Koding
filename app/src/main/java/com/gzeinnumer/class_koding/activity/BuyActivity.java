@@ -2,7 +2,6 @@ package com.gzeinnumer.class_koding.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,20 +9,11 @@ import android.widget.TextView;
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.helper.SessionManager;
-import com.gzeinnumer.class_koding.model.DataDetailPembayaranItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
-import com.gzeinnumer.class_koding.model.ResponseStatusPembayaran;
-import com.gzeinnumer.class_koding.network.RetroServer;
 import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class BuyActivity extends MyFunction {
     private static final String TAG = "BuyActivity";
@@ -106,30 +96,6 @@ public class BuyActivity extends MyFunction {
     @Override
     protected void onStart() {
         super.onStart();
-        cekStatusPembelian(sessionManager.getUserId(),dataMateriItem.getMateriId());
     }
 
-    private void cekStatusPembelian(String userId, String materiId) {
-        RetroServer.getInstance().getStatusPembelian(userId, materiId).enqueue(new Callback<ResponseStatusPembayaran>() {
-            @Override
-            public void onResponse(Call<ResponseStatusPembayaran> call, Response<ResponseStatusPembayaran> response) {
-                assert response.body() != null;
-                List<DataDetailPembayaranItem> list = response.body().getDataDetailPembayaran();
-                if (list.get(0).getPmbyStatus().equals("lunas")){
-                    Intent intent =new Intent(context, StartLearning.class);
-                    intent.putExtra(StartLearning.DATA, dataMateriItem.getMateriId());
-                    startActivity(intent);
-                    finish();
-                } else if (list.get(0).getPmbyStatus().equals("cek")){
-                    intent(SabarActivity.class);
-                    finish();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseStatusPembayaran> call, Throwable t) {
-
-            }
-        });
-    }
 }

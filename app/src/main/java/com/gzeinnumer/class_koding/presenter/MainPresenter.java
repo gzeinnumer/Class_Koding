@@ -1,5 +1,6 @@
 package com.gzeinnumer.class_koding.presenter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -40,8 +41,6 @@ import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
 import com.gzeinnumer.class_koding.helper.MyConstant;
 import com.gzeinnumer.class_koding.helper.SessionManager;
-import com.gzeinnumer.class_koding.helper.slidermateri.SliderIndicatorMateriSlider;
-import com.gzeinnumer.class_koding.helper.slidermateri.SliderPagerAdapterMateriSlider;
 import com.gzeinnumer.class_koding.model.DataDetailPembayaranItem;
 import com.gzeinnumer.class_koding.model.DataEventItem;
 import com.gzeinnumer.class_koding.model.DataListContentByModulIdItem;
@@ -89,8 +88,6 @@ public class MainPresenter implements
         sessionManager = new SessionManager(context);
     }
 
-
-
     /**
      * global function
      */
@@ -111,6 +108,7 @@ public class MainPresenter implements
         context.startActivity(new Intent(context, registerClass));
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void setHighLightSingUp(EmphasisTextView register) {
         register.setText("Havent Account? Sign Up!!");
@@ -121,13 +119,17 @@ public class MainPresenter implements
     }
 
     @Override
-    public void actionLogin(TextInputEditText email, TextInputEditText pass) {
+    public void actionLogin(TextInputEditText email,
+                            TextInputEditText pass) {
         String temp1 = email.getText().toString().trim();
         String temp2 = pass.getText().toString().trim();
         isValidateLogin(email, pass, temp1, temp2);
     }
 
-    private void isValidateLogin(TextInputEditText email, TextInputEditText pass, String temp1, String temp2) {
+    private void isValidateLogin(TextInputEditText email,
+                                 TextInputEditText pass,
+                                 String temp1,
+                                 String temp2) {
         if(TextUtils.isEmpty(temp1)){
             email.setError(context.getString(R.string.isEmpty));
             email.requestFocus();
@@ -139,7 +141,8 @@ public class MainPresenter implements
         }
     }
 
-    private void checkLogin(String temp1, String temp2) {
+    private void checkLogin(String temp1,
+                            String temp2) {
         RetroServer.getInstance().login(temp1, temp2).enqueue(new Callback<ResponseLogin>() {
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
@@ -169,12 +172,20 @@ public class MainPresenter implements
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_Register
     @Override
-    public void actionRegister(TextInputEditText username, TextInputEditText email, TextInputEditText pass, TextInputEditText cPass, TextInputEditText asal) {
+    public void actionRegister(TextInputEditText username,
+                               TextInputEditText email,
+                               TextInputEditText pass,
+                               TextInputEditText cPass,
+                               TextInputEditText asal) {
         isValidateRegister(username, email, pass,cPass, asal);
 
     }
 
-    private void isValidateRegister(TextInputEditText username, TextInputEditText email, TextInputEditText pass, TextInputEditText cPass, TextInputEditText asal) {
+    private void isValidateRegister(TextInputEditText username,
+                                    TextInputEditText email,
+                                    TextInputEditText pass,
+                                    TextInputEditText cPass,
+                                    TextInputEditText asal) {
         String temp1 = username.getText().toString().trim();
         String temp2 = email.getText().toString().trim();
         String temp3 = pass.getText().toString().trim();
@@ -200,7 +211,10 @@ public class MainPresenter implements
         }
     }
 
-    private void registerUser(String temp1, String temp2, String temp3, String temp4) {
+    private void registerUser(String temp1,
+                              String temp2,
+                              String temp3,
+                              String temp4) {
         RetroServer.getInstance().register(temp1, temp2, temp3, temp4).enqueue(new Callback<ResponseRegister>() {
             @Override
             public void onResponse(Call<ResponseRegister> call, Response<ResponseRegister> response) {
@@ -219,6 +233,7 @@ public class MainPresenter implements
         });
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void setHighLightLogin(EmphasisTextView login) {
         login.setText("Have Account? Login!!");
@@ -230,7 +245,6 @@ public class MainPresenter implements
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_LEARNFRAGMENT
 
-    //lempar ini lagi
     private ArrayList<DataMateriItem> listMateri = new ArrayList<>();
     private RecyclerView rvLearn;
 
@@ -333,14 +347,11 @@ public class MainPresenter implements
         });
     }
 
-    @Override
-    public ArrayList<DataMateriItem> getListMateri() {
-        return listMateri;
-    }
-
     ////////////////////////////////////////////////////////////////////////////////////////////////I_DETAILMATERI
+    @SuppressLint("SetJavaScriptEnabled")
     @Override
-    public void videoViewFunction(WebView videoDetailItem, DataMateriItem current) {
+    public void videoViewFunction(WebView videoDetailItem,
+                                  DataMateriItem current) {
         videoDetailItem.getSettings().setJavaScriptEnabled(true);
         videoDetailItem.loadData("<iframe width=\"100%\" height=\"100%\" src=\""+current.getMateriVideo()+"\" frameborder=\"0\" allowfullscreen></iframe>","text/html","utf-8");
         videoDetailItem.setWebViewClient(new WebViewClient() {
@@ -362,8 +373,20 @@ public class MainPresenter implements
         });
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
-    public void initViewDataDetail(DataMateriItem current, ImageView gambarDetailItem, TextView judulDetailItem, TextView descDetailItem, Button beliDetailItem, Button mulaiDetailItem, TextView olehDetailItem, TextView platDetailItem, TextView levelDetailItem, TextView bonusDetailItem, TextView waktuJamDetailItem, TextView deadlineDetailItem) {
+    public void initViewDataDetail(DataMateriItem current,
+                                   ImageView gambarDetailItem,
+                                   TextView judulDetailItem,
+                                   TextView descDetailItem,
+                                   final Button beliDetailItem,
+                                   final Button mulaiDetailItem,
+                                   TextView olehDetailItem,
+                                   TextView platDetailItem,
+                                   TextView levelDetailItem,
+                                   TextView bonusDetailItem,
+                                   TextView waktuJamDetailItem,
+                                   TextView deadlineDetailItem, Button sabarDetailItem) {
         Picasso.get().load(MyConstant.IMAGE_URL_MATERI + current.getMateriGambar())
                 .placeholder(R.color.shimmerbag).resize(399, 399).into(gambarDetailItem);
         judulDetailItem.setText(current.getMateriNama());
@@ -375,10 +398,31 @@ public class MainPresenter implements
         waktuJamDetailItem.setText("Durasi total video "+current.getMateriWaktu() + " Jam");
         deadlineDetailItem.setText("Deadline pengerjaan Modul "+current.getMateriDeadline() + " Hari");
 
+        initVisibilitiButtonForDetail(current, mulaiDetailItem, beliDetailItem, sabarDetailItem);
+
+    }
+    private void initVisibilitiButtonForDetail(DataMateriItem current, final Button mulaiDetailItem, final Button beliDetailItem, final Button sabarDetailItem) {
         if (current.getMateriHarga().equals("0")){
             mulaiDetailItem.setVisibility(View.VISIBLE);
         } else {
-            beliDetailItem.setVisibility(View.VISIBLE);
+            RetroServer.getInstance().getDetailPmbyById(current.getMateriId(), sessionManager.getUserId()).enqueue(new Callback<ResponseGetPembayaran>() {
+                @Override
+                public void onResponse(Call<ResponseGetPembayaran> call, Response<ResponseGetPembayaran> response) {
+                    assert response.body() != null;
+                    if (response.body().getDataDetailPembayaran().get(0).getPmbyStatus().equals("lunas")){
+                        mulaiDetailItem.setVisibility(View.VISIBLE);
+                    } else if(response.body().getDataDetailPembayaran().get(0).getPmbyStatus().equals("cek")){
+                        sabarDetailItem.setVisibility(View.VISIBLE);
+                    } else {
+                        beliDetailItem.setVisibility(View.VISIBLE);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResponseGetPembayaran> call, Throwable t) {
+
+                }
+            });
         }
     }
 
@@ -792,7 +836,21 @@ public class MainPresenter implements
     ////////////////////////////////////////////////////////////////////////////////////////////////I_BUYACTIVITY
 
     @Override
-    public void setViewForBuyActivity(final DataMateriItem dataMateriItem, TextView jumModul, TextView xp, TextView waktu, TextView nama, TextView diskon, TextView level, TextView jumSiswa, TextView materiId, TextView mitraId, TextView jenisKelasId, TextView materiPlatform, TextView descripsi, TextView harga) {
+    public void setViewForBuyActivity(final DataMateriItem dataMateriItem,
+                                      TextView jumModul,
+                                      TextView xp,
+                                      TextView waktu,
+                                      TextView nama,
+                                      TextView diskon,
+                                      TextView level,
+                                      TextView jumSiswa,
+                                      TextView materiId,
+                                      TextView mitraId,
+                                      TextView jenisKelasId,
+                                      TextView materiPlatform,
+                                      TextView descripsi,
+                                      TextView harga) {
+
         jumModul.setText(dataMateriItem.getMateriJmlModul());
         xp.setText(dataMateriItem.getMateriXp());
         waktu.setText(dataMateriItem.getMateriWaktu());
@@ -826,7 +884,11 @@ public class MainPresenter implements
     private List<DataDetailPembayaranItem> dataPembayaran;
 
     @Override
-    public void setViewForPayActivity(TextView kodeBankReq, TextView noReq, TextView namaReq, TextView totalReq, TextView timeReq) {
+    public void setViewForPayActivity(TextView kodeBankReq,
+                                      TextView noReq,
+                                      TextView namaReq,
+                                      TextView totalReq,
+                                      TextView timeReq) {
         this.kodeBankReq = kodeBankReq;
         this.noReq = noReq;
         this.namaReq = namaReq;
@@ -835,7 +897,8 @@ public class MainPresenter implements
     }
 
     @Override
-    public void initDataForViewPayActivity(String materiId, String userId) {
+    public void initDataForViewPayActivity(String materiId,
+                                           String userId) {
 
         RetroServer.getInstance().getDetailPmbyById(materiId, userId).enqueue(new Callback<ResponseGetPembayaran>() {
             @Override
@@ -852,14 +915,15 @@ public class MainPresenter implements
         });
     }
 
+    private void initViewForPayActivity() {
+        timeReq.setText(dataPembayaran.get(0).getPmbyBatas());
+    }
+
     @Override
     public List<DataDetailPembayaranItem> getListPembayaran() {
         return dataPembayaran;
     }
 
-    private void initViewForPayActivity() {
-        timeReq.setText(dataPembayaran.get(0).getPmbyBatas());
-    }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_DAFTARMODUL
 
@@ -902,7 +966,6 @@ public class MainPresenter implements
             }
         });
     }
-
 
     @Override
     public ArrayList<DataListModulByModulIdItem> getListDataListModul() {

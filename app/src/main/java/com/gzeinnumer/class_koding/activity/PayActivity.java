@@ -2,7 +2,6 @@ package com.gzeinnumer.class_koding.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,19 +11,13 @@ import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.helper.SessionManager;
 import com.gzeinnumer.class_koding.model.DataDetailPembayaranItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
-import com.gzeinnumer.class_koding.model.ResponseGetPembayaran;
-import com.gzeinnumer.class_koding.network.RetroServer;
 import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class PayActivity extends MyFunction {
 

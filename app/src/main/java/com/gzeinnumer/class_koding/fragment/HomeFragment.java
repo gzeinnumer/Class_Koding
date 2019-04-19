@@ -1,5 +1,6 @@
 package com.gzeinnumer.class_koding.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.RelativeLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.gzeinnumer.class_koding.R;
+import com.gzeinnumer.class_koding.activity.DetailMateri;
 import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
@@ -25,7 +27,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class HomeFragment extends MyFunctionFragment {
+public class HomeFragment extends MyFunctionFragment{
 
     @BindView(R.id.shimmer_event_item)
     ShimmerFrameLayout shimmerEventItem;
@@ -56,6 +58,11 @@ public class HomeFragment extends MyFunctionFragment {
     ArrayList<DataMateriItem> listFreeLearn = new ArrayList<>();
     ArrayList<DataMateriItem> listPayLearn = new ArrayList<>();
 
+    public static void myOnClickAdapter(DataMateriItem mList){
+                    Intent intent = new Intent(contextFragment, DetailMateri.class);
+                    intent.putExtra(DetailMateri.DATA, mList);
+                    contextFragment.startActivity(intent);
+    }
 
     public HomeFragment() {
         // Required empty public constructor
@@ -102,6 +109,7 @@ public class HomeFragment extends MyFunctionFragment {
         i_homeFragment.setAdapterFirstPayLearn(adapterPayLearn);
         i_homeFragment.startShimmerPayLearn();
 
+
         return view;
     }
 
@@ -132,5 +140,6 @@ public class HomeFragment extends MyFunctionFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 
 }

@@ -1,6 +1,5 @@
 package com.gzeinnumer.class_koding.network;
 
-import com.gzeinnumer.class_koding.BuildConfig;
 import com.gzeinnumer.class_koding.helper.MyConstant;
 
 import retrofit2.Retrofit;
@@ -18,4 +17,3 @@ public class RetroServer {
         return setInit().create(ApiServices.class);
     }
 }
-//sup

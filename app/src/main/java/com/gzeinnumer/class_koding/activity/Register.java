@@ -53,12 +53,12 @@ public class Register extends MyFunction {
                 i_register.actionRegister(username, email, pass, cPass, asal);
                 break;
             case R.id.login:
-                actionLogin(Login.class);
+                actionLogin();
                 break;
         }
     }
 
-    private void actionLogin(Class<Login> loginClass) {
-        intent(loginClass);
+    private void actionLogin() {
+        intent(Login.class);
     }
 }

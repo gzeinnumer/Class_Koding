@@ -15,7 +15,6 @@ import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.helper.SessionManager;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.model.ResponseBuyViewed;
-import com.gzeinnumer.class_koding.model.ResponseContentModul;
 import com.gzeinnumer.class_koding.network.RetroServer;
 import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
@@ -57,6 +56,8 @@ public class DetailMateri extends MyFunction {
     TextView waktuJamDetailItem;
     @BindView(R.id.deadline_detail_item)
     TextView deadlineDetailItem;
+    @BindView(R.id.sabar_detail_item)
+    Button sabarDetailItem;
 
     DataMateriItem current;
     SessionManager sessionManager;
@@ -76,7 +77,7 @@ public class DetailMateri extends MyFunction {
 
         list = new ArrayList<>();
 
-        Intent intent = getIntent();
+        final Intent intent = getIntent();
         current = intent.getParcelableExtra(DATA);
 
         i_detailLearn.initViewDataDetail(current,
@@ -90,7 +91,8 @@ public class DetailMateri extends MyFunction {
                 levelDetailItem,
                 bonusDetailItem,
                 waktuJamDetailItem,
-                deadlineDetailItem
+                deadlineDetailItem,
+                sabarDetailItem
         );
 
         i_detailLearn.videoViewFunction(videoDetailItem, current);
@@ -99,7 +101,7 @@ public class DetailMateri extends MyFunction {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, DaftarModul.class);
-                intent.putExtra(DaftarModul.DATA , current.getMateriId());
+                intent.putExtra(DaftarModul.DATA, current.getMateriId());
                 context.startActivity(intent);
             }
         });
@@ -108,11 +110,16 @@ public class DetailMateri extends MyFunction {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, BuyActivity.class);
-                intent.putExtra(BuyActivity.DATA , current);
+                intent.putExtra(BuyActivity.DATA, current);
                 context.startActivity(intent);
             }
         });
-
+        sabarDetailItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                intent(SabarActivity.class);
+            }
+        });
     }
 
     @Override

@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.athkalia.emphasis.EmphasisTextView;
 import com.facebook.shimmer.ShimmerFrameLayout;
-import com.gzeinnumer.class_koding.activity.Login;
 import com.gzeinnumer.class_koding.activity.Register;
 import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
@@ -24,7 +23,6 @@ import com.gzeinnumer.class_koding.model.DataDetailPembayaranItem;
 import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.helper.sliderevent.SliderView;
-import com.gzeinnumer.class_koding.network.RetroServer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +32,16 @@ public interface MainInterface {
     interface I_Login {
         void actionRegister(Class<Register> registerClass);
         void setHighLightSingUp(EmphasisTextView register);
-        void actionLogin(TextInputEditText email, TextInputEditText pass);
+        void actionLogin(TextInputEditText email,
+                         TextInputEditText pass);
     }
 
     interface I_Register {
-        void actionRegister(TextInputEditText username, TextInputEditText email, TextInputEditText pass, TextInputEditText cPass, TextInputEditText asal);
+        void actionRegister(TextInputEditText username,
+                            TextInputEditText email,
+                            TextInputEditText pass,
+                            TextInputEditText cPass,
+                            TextInputEditText asal);
 
         void setHighLightLogin(EmphasisTextView login);
     }
@@ -49,12 +52,23 @@ public interface MainInterface {
         void setAdapterFirst(AdapterLearn adapter);
         void startShimmer();
         void searchFunction(EditText edSearch);
-        ArrayList<DataMateriItem> getListMateri();
     }
 
     interface I_DetailLearn {
-        void videoViewFunction(WebView videoDetailItem, DataMateriItem current);
-        void initViewDataDetail(DataMateriItem current, ImageView gambarDetailItem, TextView judulDetailItem, TextView descDetailItem, Button beliDetailItem, Button mulaiDetailItem, TextView olehDetailItem, TextView platDetailItem, TextView levelDetailItem, TextView bonusDetailItem, TextView waktuJamDetailItem, TextView deadlineDetailItem);
+        void videoViewFunction(WebView videoDetailItem,
+                               DataMateriItem current);
+        void initViewDataDetail(DataMateriItem current,
+                                ImageView gambarDetailItem,
+                                TextView judulDetailItem,
+                                TextView descDetailItem,
+                                Button beliDetailItem,
+                                Button mulaiDetailItem,
+                                TextView olehDetailItem,
+                                TextView platDetailItem,
+                                TextView levelDetailItem,
+                                TextView bonusDetailItem,
+                                TextView waktuJamDetailItem,
+                                TextView deadlineDetailItem, Button sabarDetailItem);
     }
 
     interface I_HomeFragment {
@@ -91,22 +105,36 @@ public interface MainInterface {
     }
 
     interface I_BuyActivity {
-        void setViewForBuyActivity(DataMateriItem dataMateriItem, TextView jumModul, TextView xp, TextView waktu, TextView nama, TextView diskon, TextView level, TextView jumSiswa, TextView materiId, TextView mitraId, TextView jenisKelasId, TextView materiPlatform, TextView descripsi, TextView harga);
+        void setViewForBuyActivity(DataMateriItem dataMateriItem,
+                                   TextView jumModul,
+                                   TextView xp,
+                                   TextView waktu,
+                                   TextView nama,
+                                   TextView diskon,
+                                   TextView level,
+                                   TextView jumSiswa,
+                                   TextView materiId,
+                                   TextView mitraId,
+                                   TextView jenisKelasId,
+                                   TextView materiPlatform,
+                                   TextView descripsi,
+                                   TextView harga);
     }
 
     interface I_PayActivity{
-        void setViewForPayActivity(TextView kodeBankReq, TextView noReq, TextView namaReq, TextView totalReq, TextView timeReq);
+        void setViewForPayActivity(TextView kodeBankReq,
+                                   TextView noReq,
+                                   TextView namaReq,
+                                   TextView totalReq,
+                                   TextView timeReq);
         void initDataForViewPayActivity(String materiId, String userId);
-
         List<DataDetailPembayaranItem> getListPembayaran();
     }
 
     interface I_DaftarModul{
         void setRecyclerViewListModulMateri(RecyclerView rvListModulMateri);
         void initDataModulList(String materiId);
-
         ArrayList<DataListModulByModulIdItem> getListDataListModul();
         AdapterModulList getAdapterModulList();
-
     }
 }

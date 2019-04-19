@@ -1,6 +1,5 @@
 package com.gzeinnumer.class_koding.network;
 
-import com.gzeinnumer.class_koding.model.DataDetailPembayaranUserItem;
 import com.gzeinnumer.class_koding.model.ResponseBuyViewed;
 import com.gzeinnumer.class_koding.model.ResponseContentModul;
 import com.gzeinnumer.class_koding.model.ResponseDataUser;
@@ -12,10 +11,6 @@ import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
 import com.gzeinnumer.class_koding.model.ResponsePembayaran;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
-import com.gzeinnumer.class_koding.model.ResponseStatusPembayaran;
-
-import java.util.List;
-
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -25,7 +20,6 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
-import retrofit2.http.Query;
 
 public interface ApiServices {
     @GET("page_list/list/materi")
@@ -60,7 +54,6 @@ public interface ApiServices {
                                                 @Field("user_id") String user_id,
                                                 @Field("materi_harga") String materi_harga);
 
-
     @FormUrlEncoded
     @POST("get_detail_pmby_by_id")
     Call<ResponseGetPembayaran> getDetailPmbyById(@Field("materi_id") String materi_id,
@@ -73,17 +66,10 @@ public interface ApiServices {
                                                  @Part MultipartBody.Part image);
 
     @FormUrlEncoded
-    @POST("get_detail_pmby_by_id")
-    Call<ResponseStatusPembayaran> getStatusPembelian(@Field("user_id") String user_id,
-                                                      @Field("materi_id") String materi_id);
-
-    @FormUrlEncoded
     @POST("get_detail_pmby_by_id_user")
     Call<ResponseDetailPembayaranUser> getDetailPmbyByIdUser(@Field("user_id") String user_id);
 
     @FormUrlEncoded
     @POST("get_user")
     Call<ResponseDataUser> gatDataUser(@Field("user_id") String user_id);
-
-
 }

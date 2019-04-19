@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.activity.DetailMateri;
+import com.gzeinnumer.class_koding.fragment.HomeFragment;
 import com.gzeinnumer.class_koding.helper.MyConstant;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.squareup.picasso.Picasso;
@@ -73,9 +74,7 @@ public class AdapterFreeLearn extends RecyclerView.Adapter<AdapterFreeLearn.MyHo
             myHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, DetailMateri.class);
-                    intent.putExtra(DetailMateri.DATA, list.get(i));
-                    context.startActivity(intent);
+                    HomeFragment.myOnClickAdapter(list.get(i));
                 }
             });
         }

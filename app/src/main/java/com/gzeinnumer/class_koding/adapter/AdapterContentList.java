@@ -30,7 +30,7 @@ import butterknife.ButterKnife;
 public class AdapterContentList extends RecyclerView.Adapter<AdapterContentList.MyHolder> {
 
     private Context context;
-    private ArrayList<DataListContentByModulIdItem> list = new ArrayList<>();
+    private ArrayList<DataListContentByModulIdItem> list;
 
     public AdapterContentList(Context context, ArrayList<DataListContentByModulIdItem> list) {
         this.context = context;

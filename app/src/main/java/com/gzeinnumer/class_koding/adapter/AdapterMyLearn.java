@@ -1,5 +1,6 @@
 package com.gzeinnumer.class_koding.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -9,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.activity.Parent;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
 
 public class AdapterMyLearn extends RecyclerView.Adapter<AdapterMyLearn.MyHolder> {
     private Context context;
-    private ArrayList<DataDetailPembayaranUserItem> list = new ArrayList<>();
+    private ArrayList<DataDetailPembayaranUserItem> list;
 
     public AdapterMyLearn(Context context, ArrayList<DataDetailPembayaranUserItem> list) {
         this.context = context;
@@ -36,6 +36,7 @@ public class AdapterMyLearn extends RecyclerView.Adapter<AdapterMyLearn.MyHolder
         return new MyHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyHolder myHolder, int i) {
 

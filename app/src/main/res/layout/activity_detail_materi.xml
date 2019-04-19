@@ -207,6 +207,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Mulai" />
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/sabar_detail_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Lihat Proses" />
+
         </LinearLayout>
 
     </LinearLayout>

@@ -1,7 +1,7 @@
 package com.gzeinnumer.class_koding.activity;
 
 import android.Manifest;
-import android.app.Dialog;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,8 +12,6 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -24,10 +22,7 @@ import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.helper.SessionManager;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.model.ResponsePembayaran;
-import com.gzeinnumer.class_koding.network.ApiServices;
 import com.gzeinnumer.class_koding.network.RetroServer;
-import com.gzeinnumer.class_koding.presenter.MainInterface;
-import com.gzeinnumer.class_koding.presenter.MainPresenter;
 
 import java.io.File;
 import java.io.IOException;
@@ -114,7 +109,7 @@ public class UploadStruckActivity extends MyFunction {
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             filePath = data.getData();
             String[] imageprojection = {MediaStore.Images.Media.DATA};
-            Cursor cursor = getContentResolver().query(filePath,imageprojection,null,null,null);
+            @SuppressLint("Recycle") Cursor cursor = getContentResolver().query(filePath,imageprojection,null,null,null);
 
             if (cursor != null)
             {

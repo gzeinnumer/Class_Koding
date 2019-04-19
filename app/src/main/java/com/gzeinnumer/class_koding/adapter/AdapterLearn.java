@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.activity.DetailMateri;
+import com.gzeinnumer.class_koding.fragment.LearnFragment;
 import com.gzeinnumer.class_koding.helper.MyConstant;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.squareup.picasso.Picasso;
@@ -36,6 +37,17 @@ public class AdapterLearn extends RecyclerView.Adapter<AdapterLearn.MyHolder> im
     private ArrayList<DataMateriItem> listFilter;
     private View view;
     public boolean isShimmer;
+
+//    private onItemClick click;
+//
+//    public interface onItemClick {
+//        void onItemClickForIntent(int position, DataMateriItem mList, Context mContext);
+//    }
+//
+//    public void setOnClickListener2(onItemClick onClick) {
+//        click = onClick;
+//    }
+
 
     public AdapterLearn(Context context, ArrayList<DataMateriItem> list, boolean shimmer) {
         this.context = context;
@@ -74,9 +86,7 @@ public class AdapterLearn extends RecyclerView.Adapter<AdapterLearn.MyHolder> im
             myHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, DetailMateri.class);
-                    intent.putExtra(DetailMateri.DATA, list.get(i));
-                    context.startActivity(intent);
+                    LearnFragment.myOnClickAdapter(list.get(i));
                 }
             });
         }

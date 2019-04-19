@@ -1,6 +1,7 @@
 package com.gzeinnumer.class_koding.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -8,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.gzeinnumer.class_koding.R;
+import com.gzeinnumer.class_koding.activity.DetailMateri;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
 import com.gzeinnumer.class_koding.helper.MyFunctionFragment;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
@@ -26,7 +27,8 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LearnFragment extends MyFunctionFragment {
+//public class LearnFragment extends MyFunctionFragment implements AdapterLearn.onItemClick{
+public class LearnFragment extends MyFunctionFragment{
 
     //I_LearnFragment.Main test;
     @BindView(R.id.rv_learn)
@@ -40,6 +42,12 @@ public class LearnFragment extends MyFunctionFragment {
     ArrayList<DataMateriItem> list = new ArrayList<>();
 
     MainInterface.I_LearnFragment i_learnFragment;
+
+    public static void myOnClickAdapter(DataMateriItem mList){
+        Intent intent = new Intent(contextFragment, DetailMateri.class);
+        intent.putExtra(DetailMateri.DATA, mList);
+        contextFragment.startActivity(intent);
+    }
 
     public LearnFragment() {
         // Required empty public constructor
@@ -61,8 +69,17 @@ public class LearnFragment extends MyFunctionFragment {
         i_learnFragment.setAdapterFirst(adapter);
         i_learnFragment.startShimmer();
         i_learnFragment.searchFunction(edSearch);
+
+//        adapter.setOnClickListener2(LearnFragment.this);
         return view;
     }
+
+//    @Override
+//    public void onItemClickForIntent(int position, DataMateriItem mList, Context mContext) {
+//                    Intent intent = new Intent(mContext, DetailMateri.class);
+//                    intent.putExtra(DetailMateri.DATA, mList);
+//                    mContext.startActivity(intent);
+//    }
 
     @Override
     public void onStart() {
@@ -76,10 +93,5 @@ public class LearnFragment extends MyFunctionFragment {
         unbinder.unbind();
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Toast.makeText(contextFragment, "resume", Toast.LENGTH_SHORT).show();
-        list = i_learnFragment.getListMateri();
-    }
+
 }

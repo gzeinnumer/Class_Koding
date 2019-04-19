@@ -17,14 +17,13 @@ import com.gzeinnumer.class_koding.activity.StartLearning;
 import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AdapterModulList extends RecyclerView.Adapter<AdapterModulList.MyHolder> {
     private Context context;
-    private ArrayList<DataListModulByModulIdItem> list = new ArrayList<>();
+    private ArrayList<DataListModulByModulIdItem> list;
     private int number = 1;
 
     public AdapterModulList(Context context, ArrayList<DataListModulByModulIdItem> list) {
@@ -39,7 +38,7 @@ public class AdapterModulList extends RecyclerView.Adapter<AdapterModulList.MyHo
         return new MyHolder(view);
     }
 
-    public Boolean statusLoad;
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyHolder myHolder, @SuppressLint("RecyclerView") final int i) {
         if (list.get(i).getStatus().equals("1")){
@@ -49,7 +48,8 @@ public class AdapterModulList extends RecyclerView.Adapter<AdapterModulList.MyHo
         }
 
         myHolder.judulListModul.setText(list.get(i).getModulJudul());
-        myHolder.noListModul.setText(String.valueOf(number) + ".");
+//        myHolder.noListModul.setText(String.valueOf(number) + ".");
+        myHolder.noListModul.setText(number + ".");
         myHolder.cardListModul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

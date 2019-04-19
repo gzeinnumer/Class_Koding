@@ -53,9 +53,7 @@ public class DaftarModul extends MyFunction {
 
         i_daftarModul.setRecyclerViewListModulMateri(rvListModulMateri);
 
-
         i_daftarModul.initDataModulList(materiId);
-
     }
 
     @Override

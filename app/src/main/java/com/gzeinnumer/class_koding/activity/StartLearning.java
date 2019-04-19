@@ -1,26 +1,19 @@
 package com.gzeinnumer.class_koding.activity;
 
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.adapter.AdapterContentList;
 import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.model.DataListContentByModulIdItem;
-import com.gzeinnumer.class_koding.model.ResponseContentModul;
-import com.gzeinnumer.class_koding.network.RetroServer;
 import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class StartLearning extends MyFunction {
     private static final String TAG = "StartLearning";
@@ -31,8 +24,8 @@ public class StartLearning extends MyFunction {
     RecyclerView rvContentByIdModul;
 
     String modul_id;
-    ArrayList<DataListContentByModulIdItem> listContentByModul;
-    AdapterContentList adapterContentList;
+//    ArrayList<DataListContentByModulIdItem> listContentByModul;
+//    AdapterContentList adapterContentList;
 
     MainInterface.I_StartLearning i_startLearning;
 
