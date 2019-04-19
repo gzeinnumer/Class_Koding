@@ -38,17 +38,6 @@ public class AdapterLearn extends RecyclerView.Adapter<AdapterLearn.MyHolder> im
     private View view;
     public boolean isShimmer;
 
-//    private onItemClick click;
-//
-//    public interface onItemClick {
-//        void onItemClickForIntent(int position, DataMateriItem mList, Context mContext);
-//    }
-//
-//    public void setOnClickListener2(onItemClick onClick) {
-//        click = onClick;
-//    }
-
-
     public AdapterLearn(Context context, ArrayList<DataMateriItem> list, boolean shimmer) {
         this.context = context;
         this.list = list;

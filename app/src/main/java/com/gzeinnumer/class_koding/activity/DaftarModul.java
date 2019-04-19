@@ -10,6 +10,7 @@ import com.gzeinnumer.class_koding.adapter.AdapterModulList;
 import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.helper.SessionManager;
 import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
+import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
 
@@ -36,6 +37,12 @@ public class DaftarModul extends MyFunction {
     MainInterface.I_DaftarModul i_daftarModul;
 
     SessionManager sessionManager;
+
+    public static void myOnClickAdapter(DataListModulByModulIdItem mList){
+        Intent intent = new Intent(context, StartLearning.class);
+        intent.putExtra(StartLearning.DATA,mList.getModulId());
+        context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gzeinnumer.class_koding.R;
+import com.gzeinnumer.class_koding.activity.DaftarModul;
 import com.gzeinnumer.class_koding.activity.StartLearning;
 import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
 
@@ -53,9 +54,7 @@ public class AdapterModulList extends RecyclerView.Adapter<AdapterModulList.MyHo
         myHolder.cardListModul.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, StartLearning.class);
-                intent.putExtra(StartLearning.DATA,list.get(i).getModulId());
-                context.startActivity(intent);
+                DaftarModul.myOnClickAdapter(list.get(i));
             }
         });
 

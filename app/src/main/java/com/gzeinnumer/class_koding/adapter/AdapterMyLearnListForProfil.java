@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.fragment.ProfilFragment;
@@ -46,7 +47,7 @@ public class AdapterMyLearnListForProfil extends RecyclerView.Adapter<AdapterMyL
         myHolder.showClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Toast.makeText(context, "hay", Toast.LENGTH_SHORT).show();
             }
         });
     }
