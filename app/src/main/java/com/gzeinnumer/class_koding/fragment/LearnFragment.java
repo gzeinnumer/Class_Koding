@@ -70,16 +70,9 @@ public class LearnFragment extends MyFunctionFragment{
         i_learnFragment.startShimmer();
         i_learnFragment.searchFunction(edSearch);
 
-//        adapter.setOnClickListener2(LearnFragment.this);
         return view;
     }
 
-//    @Override
-//    public void onItemClickForIntent(int position, DataMateriItem mList, Context mContext) {
-//                    Intent intent = new Intent(mContext, DetailMateri.class);
-//                    intent.putExtra(DetailMateri.DATA, mList);
-//                    mContext.startActivity(intent);
-//    }
 
     @Override
     public void onStart() {

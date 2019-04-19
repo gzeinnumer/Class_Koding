@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.gzeinnumer.class_koding.R;
@@ -53,7 +54,7 @@ public class AdapterMyLearnProgressForProfil extends RecyclerView.Adapter<Adapte
         @BindView(R.id.platform_my_profil)
         TextView platformMyProfil;
         @BindView(R.id.progress_my_profil)
-        TextView progressMyProfil;
+        Button progressMyProfil;
 
         public MyHolder(@NonNull View itemView) {
             super(itemView);

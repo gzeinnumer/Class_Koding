@@ -10,6 +10,7 @@ import com.gzeinnumer.class_koding.model.ResponseListModul;
 import com.gzeinnumer.class_koding.model.ResponseListMyLearn;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
+import com.gzeinnumer.class_koding.model.ResponseMateriByIdFromProfil;
 import com.gzeinnumer.class_koding.model.ResponseMyLearnProgress;
 import com.gzeinnumer.class_koding.model.ResponsePembayaran;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
@@ -82,4 +83,9 @@ public interface ApiServices {
     @FormUrlEncoded
     @POST("get_list_my_learn")
     Call<ResponseListMyLearn> getMyLearnList(@Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("get_materi_detail_from_profil")
+    Call<ResponseMateriByIdFromProfil> getMateriDetailFromProfil(@Field("materi_id") String materi_id);
+
 }

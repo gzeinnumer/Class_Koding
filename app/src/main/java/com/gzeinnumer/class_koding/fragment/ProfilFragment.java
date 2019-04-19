@@ -1,6 +1,7 @@
 package com.gzeinnumer.class_koding.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,15 +14,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gzeinnumer.class_koding.R;
+import com.gzeinnumer.class_koding.activity.DetailMateri;
 import com.gzeinnumer.class_koding.adapter.AdapterMyLearnListForProfil;
 import com.gzeinnumer.class_koding.adapter.AdapterMyLearnProgressForProfil;
 import com.gzeinnumer.class_koding.helper.MyFunctionFragment;
 import com.gzeinnumer.class_koding.helper.SessionManager;
+import com.gzeinnumer.class_koding.model.DataDetailMateriFromProfilItem;
 import com.gzeinnumer.class_koding.model.DataListMyLearnItem;
+import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.model.DataMyLearnProgressItem;
 import com.gzeinnumer.class_koding.model.DataUserItem;
 import com.gzeinnumer.class_koding.model.ResponseDataUser;
 import com.gzeinnumer.class_koding.model.ResponseListMyLearn;
+import com.gzeinnumer.class_koding.model.ResponseMateriByIdFromProfil;
 import com.gzeinnumer.class_koding.model.ResponseMyLearnProgress;
 import com.gzeinnumer.class_koding.network.RetroServer;
 
@@ -81,6 +86,46 @@ public class ProfilFragment extends MyFunctionFragment {
 //        contextFragment.startActivity(intent);
         Toast.makeText(contextFragment, mList.getProgressModul(), Toast.LENGTH_SHORT).show();
     }
+
+    public static void myOnClickAdapterMyLearnList(DataListMyLearnItem dataListMyLearnItem) {
+        RetroServer.getInstance().getMateriDetailFromProfil(dataListMyLearnItem.getMateriId()).enqueue(new Callback<ResponseMateriByIdFromProfil>() {
+            @Override
+            public void onResponse(Call<ResponseMateriByIdFromProfil> call, Response<ResponseMateriByIdFromProfil> response) {
+                List<DataDetailMateriFromProfilItem> list = response.body().getDataDetailMateriFromProfil();
+                ArrayList<DataMateriItem> data = new ArrayList<>();
+                for (int i=0; i<list.size(); i++){
+                    data.add(new DataMateriItem(
+                            list.get(i).getMateriJmlModul(),
+                            list.get(i).getMateriXp(),
+                            list.get(i).getMateriWaktu(),
+                            list.get(i).getMateriNama(),
+                            list.get(i).getMateriDiskon(),
+                            list.get(i).getMateriLevel(),
+                            list.get(i).getMateriJumSiswa(),
+                            list.get(i).getMateriGambar(),
+                            list.get(i).getMateriId(),
+                            list.get(i).getMitraId(),
+                            list.get(i).getMateriVideo(),
+                            list.get(i).getMateriRating(),
+                            list.get(i).getJenisKelasId(),
+                            list.get(i).getMateriDeadline(),
+                            list.get(i).getMateriPlatform(),
+                            list.get(i).getMateriDeskripsi(),
+                            list.get(i).getMateriHarga(),
+                            list.get(i).getMateriTgl()));
+                }
+                Intent intent = new Intent(contextFragment, DetailMateri.class);
+                intent.putExtra(DetailMateri.DATA, data.get(0));
+                contextFragment.startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMateriByIdFromProfil> call, Throwable t) {
+
+            }
+        });
+    }
+
 
 
     @Override
@@ -148,7 +193,7 @@ public class ProfilFragment extends MyFunctionFragment {
                                 list.get(i).getUserDate()));
                     }
                 }
-                initViewForProfil(imageUser, emailUser, idUser, asalUser, xpUser, dateUser);
+                initViewForProfil(imageUser, emailUser, idUser, asalUser, xpUser, dateUser,namaUser);
             }
 
             @Override
@@ -163,13 +208,14 @@ public class ProfilFragment extends MyFunctionFragment {
                                    TextView idUser,
                                    TextView asalUser,
                                    TextView xpUser,
-                                   TextView dateUser) {
+                                   TextView dateUser, TextView namaUser) {
 //        Picasso.get().load(dataUser.get(0).getUserImage()).into(imageUser);
         emailUser.setText(dataUser.get(0).getUserEmail());
         idUser.setText(dataUser.get(0).getUserId());
         asalUser.setText(dataUser.get(0).getUserAsal());
         xpUser.setText(dataUser.get(0).getUserXp());
         dateUser.setText(dataUser.get(0).getUserDate());
+        namaUser.setText(dataUser.get(0).getUserName());
     }
 
     @Override

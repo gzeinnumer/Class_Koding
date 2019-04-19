@@ -47,7 +47,7 @@ public class AdapterMyLearnListForProfil extends RecyclerView.Adapter<AdapterMyL
         myHolder.showClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "hay", Toast.LENGTH_SHORT).show();
+                ProfilFragment.myOnClickAdapterMyLearnList(list.get(i));
             }
         });
     }
