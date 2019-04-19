@@ -10,7 +10,7 @@ import android.view.MenuItem;
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.fragment.HomeFragment;
 import com.gzeinnumer.class_koding.fragment.LearnFragment;
-import com.gzeinnumer.class_koding.fragment.NotificationFragment;
+import com.gzeinnumer.class_koding.fragment.EventFragment;
 import com.gzeinnumer.class_koding.fragment.ProfilFragment;
 import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.helper.SessionManager;
@@ -32,7 +32,7 @@ public class Parent extends MyFunction {
                     fragment = new LearnFragment();
                     break;
                 case R.id.nofication_fragment:
-                    fragment = new NotificationFragment();
+                    fragment = new EventFragment();
                     break;
                 case R.id.profil_fragment:
                     fragment = new ProfilFragment();

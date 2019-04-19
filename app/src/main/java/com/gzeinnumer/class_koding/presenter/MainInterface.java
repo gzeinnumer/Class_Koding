@@ -28,7 +28,9 @@ public interface MainInterface {
 
     interface I_Login {
         void actionRegister(Class<Register> registerClass);
+
         void setHighLightSingUp(EmphasisTextView register);
+
         void actionLogin(TextInputEditText email,
                          TextInputEditText pass);
     }
@@ -39,20 +41,38 @@ public interface MainInterface {
                             TextInputEditText pass,
                             TextInputEditText cPass,
                             TextInputEditText asal);
+
         void setHighLightLogin(EmphasisTextView login);
     }
 
     interface I_LearnFragment {
         void setAdapterLearn(AdapterLearn adapter);
+
         void setRecyclerViewLearn(RecyclerView rvLearn);
+
         void setAdapterFirst(AdapterLearn adapter);
+
         void startShimmerLearnFragment();
+
         void searchFunction(EditText edSearch);
+    }
+
+    interface I_EventFragment {
+        void setAdapterEvent(AdapterLearn adapter);
+
+        void setRecyclerViewEvent(RecyclerView rvEvent);
+
+        void setAdapterFirstEvent(AdapterLearn adapter);
+
+        void startShimmerEventFragmentEvent();
+
+        void searchFunctionEvent(EditText edSearchEvent);
     }
 
     interface I_DetailLearn {
         void videoViewFunction(WebView videoDetailItem,
                                DataMateriItem current);
+
         void setViewDataDetail(DataMateriItem current,
                                ImageView gambarDetailItem,
                                TextView judulDetailItem,
@@ -65,35 +85,49 @@ public interface MainInterface {
                                TextView bonusDetailItem,
                                TextView waktuJamDetailItem,
                                TextView deadlineDetailItem, Button sabarDetailItem);
+
         void onBuyLearnViewed(String materiId, String userId, String materiHarga);
     }
 
     interface I_HomeFragment {
         void setViewForIklanEventHomeFragment(SliderView sliderIklanEvent, ShimmerFrameLayout shimmerEventItem, LinearLayout pagesContainerEvent);
+
         void setContexForIklanEventHomeFragment(FragmentManager fragmentManager, FragmentActivity activity);
+
         void iniDataEvent();
 
         void setViewForIklanMateriHomeFragment(SliderView sliderIklanMateri, ShimmerFrameLayout shimmerMateriItem, LinearLayout pagesContainerMateri);
+
         //void setContexForIklanMateriHomeFragment(FragmentManager fragmentManager, FragmentActivity activity);
         void iniDataMateri();
 
         void setViewForIklanKomersialHomeFragment(SliderView sliderIklanKomersial, ShimmerFrameLayout shimmerKomersialItem, LinearLayout pagesContainerKomersial);
+
         //void setContexForIklanKomersialHomeFragment(FragmentManager fragmentManager, FragmentActivity activity);
         void iniDataKomersial();
 
         void setViewNewLearn(RecyclerView rvMateriTerbaru);
+
         void setAdapterNewLearn(AdapterNewLearn adapterNewLearn);
+
         void setAdapterFirstNewLearn(AdapterNewLearn adapter);
+
         void startShimmerNewLearn();
 
         void setViewFreeLearn(RecyclerView rvFreeLearn);
+
         void setAdapterFreeLearn(AdapterFreeLearn adapterFreeLearn);
+
         void setAdapterFirstFreeLearn(AdapterFreeLearn adapterFreeLearn);
+
         void startShimmerFreeLearn();
 
         void setViewPayLearn(RecyclerView rvPayLearn);
+
         void setAdapterPayLearn(AdapterPayLearn adapterPayLearn);
+
         void setAdapterFirstPayLearn(AdapterPayLearn adapterPayLearn);
+
         void startShimmerPayLearn();
 
 
@@ -101,6 +135,7 @@ public interface MainInterface {
 
     interface I_StartLearning {
         void setViewForContent(RecyclerView rvContentByIdModul);
+
         void initDataContentList(String modul_id);
     }
 
@@ -127,18 +162,23 @@ public interface MainInterface {
                                    TextView namaReq,
                                    TextView totalReq,
                                    TextView timeReq);
+
         void initDataForViewPayActivity(String materiId, String userId);
+
         List<DataDetailPembayaranItem> getListPembayaran();
     }
 
     interface I_DaftarModul {
         void regisToTableBelajar(String userId, String materiId);
+
         void setViewForDaftarModul(RecyclerView rvListModulMateri);
+
         void initDataModulList(String materiId);
     }
 
     interface I_ProfilFragment {
         void initDataUserForProfile(String userId);
+
         void setViewForProfilFragment(ImageView imageUser,
                                       TextView emailUser,
                                       TextView idUser,
@@ -148,12 +188,17 @@ public interface MainInterface {
                                       TextView namaUser,
                                       RecyclerView rvMyLearnProgressUser,
                                       RecyclerView rvMyLearnTersediaForProfil);
+
         void initDataMyLearnList(String userId);
+
         void initDataMyLearnListProgress(String userId);
     }
 
     interface I_MyLearn {
         void initDataMyLearn(String userId);
+
         void setViewForMyLearn(RecyclerView rvMyLearn);
     }
+
+
 }

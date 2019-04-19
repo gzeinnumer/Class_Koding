@@ -93,10 +93,10 @@ public class MainPresenter implements
         MainInterface.I_PayActivity,
         MainInterface.I_DaftarModul,
         MainInterface.I_ProfilFragment,
-        MainInterface.I_MyLearn {
+        MainInterface.I_MyLearn,
+        MainInterface.I_EventFragment {
 
     private Context context;
-    private AdapterLearn adapterLearn;
 
     private SessionManager sessionManager;
 
@@ -262,7 +262,7 @@ public class MainPresenter implements
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_LEARNFRAGMENT
-
+    private AdapterLearn adapterLearn;
     private ArrayList<DataMateriItem> listMateri = new ArrayList<>();
     private RecyclerView rvLearn;
 
@@ -363,6 +363,112 @@ public class MainPresenter implements
                 adapterLearn.getFilter().filter(String.valueOf(s));
             }
         });
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////I_EVENTFRAGMENT
+    private ArrayList<DataMateriItem> listEvent = new ArrayList<>();
+    private AdapterLearn adapterEvent;
+    private RecyclerView rvEvent;
+
+    @Override
+    public void setAdapterEvent(AdapterLearn adapter) {
+        this.adapterEvent = adapter;
+    }
+
+    @Override
+    public void setRecyclerViewEvent(RecyclerView rvEvent) {
+        this.rvEvent = rvEvent;
+
+    }
+
+    @Override
+    public void setAdapterFirstEvent(AdapterLearn adapter) {
+        rvEvent.setAdapter(adapter);
+        rvEvent.setHasFixedSize(true);
+        rvEvent.setLayoutManager(new GridLayoutManager(context, 3));
+    }
+
+    @Override
+    public void startShimmerEventFragmentEvent() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initDataEvent();
+                adapterEvent.isShimmer = false;
+                adapterEvent.notifyDataSetChanged();
+            }
+        }, 4999);
+    }
+
+    private void initDataEvent() {
+        RetroServer.getInstance().getAllMateri().enqueue(new Callback<ResponseMateri>() {
+            @Override
+            public void onResponse(Call<ResponseMateri> call, Response<ResponseMateri> response) {
+                List<DataMateriItem> listData = response.body().getDataMateri();
+                listEvent = new ArrayList<>();
+
+                if (response.body().isSukses()) {
+                    for (int i = 0; i < listData.size(); i++) {
+                        listEvent.add(new DataMateriItem(listData.get(i).getMateriJmlModul(),
+                                listData.get(i).getMateriXp(),
+                                listData.get(i).getMateriWaktu(),
+                                listData.get(i).getMateriNama(),
+                                listData.get(i).getMateriDiskon(),
+                                listData.get(i).getMateriLevel(),
+                                listData.get(i).getMateriJumSiswa(),
+                                listData.get(i).getMateriGambar(),
+                                listData.get(i).getMateriId(),
+                                listData.get(i).getMitraId(),
+                                listData.get(i).getMateriVideo(),
+                                listData.get(i).getMateriRating(),
+                                listData.get(i).getJenisKelasId(),
+                                listData.get(i).getMateriDeadline(),
+                                listData.get(i).getMateriPlatform(),
+                                listData.get(i).getMateriDeskripsi(),
+                                listData.get(i).getMateriHarga(),
+                                listData.get(i).getMateriTgl()));
+                    }
+                }
+                if (listEvent.size() > 0) {
+                    initToRecyclerEvent();
+                } else {
+                    shortToast("data tidak ada!!");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMateri> call, Throwable t) {
+                shortToast("response tidak ada!!");
+            }
+        });
+    }
+
+    private void initToRecyclerEvent() {
+        adapterEvent = new AdapterLearn(context, listEvent, false);
+        rvEvent.setAdapter(adapterEvent);
+        rvEvent.setHasFixedSize(true);
+        rvEvent.setLayoutManager(new GridLayoutManager(context, 3));
+    }
+
+    @Override
+    public void searchFunctionEvent(EditText edSearchEvent) {
+        edSearchEvent.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                adapterEvent.getFilter().filter(String.valueOf(s));
+            }
+        });
+
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_DETAILMATERI
@@ -1398,4 +1504,6 @@ public class MainPresenter implements
         rvMyLearn.setLayoutManager(new LinearLayoutManager(context));
         rvMyLearn.setHasFixedSize(true);
     }
+
+
 }
