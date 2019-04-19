@@ -20,6 +20,7 @@ public class DaftarModul extends MyFunction {
     private static final String TAG = "DaftarModul";
     public static final String DATA = "materi_id";
     private MainInterface.I_DaftarModul i_daftarModul;
+    private SessionManager sessionManager;
 
     @BindView(R.id.title_materi)
     TextView titleMateri;
@@ -34,8 +35,10 @@ public class DaftarModul extends MyFunction {
         setContentView(R.layout.activity_daftar_modul);
         ButterKnife.bind(this);
         setTitle(TAG);
+        sessionManager = new SessionManager(context);
         materiId = getIntent().getStringExtra(DATA);
         i_daftarModul = new MainPresenter(context);
+        i_daftarModul.regisToTableBelajar(sessionManager.getUserId(),materiId);
         i_daftarModul.setViewForDaftarModul(rvListModulMateri);
         i_daftarModul.initDataModulList(materiId);
     }

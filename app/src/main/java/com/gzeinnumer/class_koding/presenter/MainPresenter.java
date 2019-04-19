@@ -49,6 +49,7 @@ import com.gzeinnumer.class_koding.model.DataDetailPembayaranUserItem;
 import com.gzeinnumer.class_koding.model.DataEventItem;
 import com.gzeinnumer.class_koding.model.DataListContentByModulIdItem;
 import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
+import com.gzeinnumer.class_koding.model.DataListModulByModulIdStatusItem;
 import com.gzeinnumer.class_koding.model.DataListMyLearnItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.model.DataMyLearnProgressItem;
@@ -64,6 +65,7 @@ import com.gzeinnumer.class_koding.model.ResponseListMyLearn;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
 import com.gzeinnumer.class_koding.model.ResponseMyLearnProgress;
+import com.gzeinnumer.class_koding.model.ResponseRegisToTableBelajar;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
 import com.gzeinnumer.class_koding.network.RetroServer;
 import com.gzeinnumer.class_koding.helper.sliderevent.FragmentSlider;
@@ -75,7 +77,6 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -471,28 +472,16 @@ public class MainPresenter implements
     private LinearLayout mLinearLayoutIklanEvent;
 
     @Override
-    public void setSliderIklanEvent(SliderView sliderIklanEvent) {
+    public void setViewForIklanEventHomeFragment(SliderView sliderIklanEvent, ShimmerFrameLayout shimmerEventItem, LinearLayout pagesContainerEvent) {
         this.sliderIklanEvent = sliderIklanEvent;
+        this.shimmerIklanEventItem = shimmerEventItem;
+        this.mLinearLayoutIklanEvent = pagesContainerEvent;
     }
 
     @Override
-    public void setShimmerForIklanEvent(ShimmerFrameLayout shimmerIklanEventItem) {
-        this.shimmerIklanEventItem = shimmerIklanEventItem;
-    }
-
-    @Override
-    public void setFragmentContextForSliderPagerAdapterIklanEvent(FragmentManager fragmentManager) {
+    public void setContexForIklanEventHomeFragment(FragmentManager fragmentManager, FragmentActivity activity) {
         this.fragmentManager = fragmentManager;
-    }
-
-    @Override
-    public void setFragmentActivityForSliderIndikatorIklanEvent(FragmentActivity fragmentActivity) {
-        this.fragmentActivity = fragmentActivity;
-    }
-
-    @Override
-    public void setLinearForSliderIndikatorIklanEvent(LinearLayout mLinearLayoutIklanEvent) {
-        this.mLinearLayoutIklanEvent = mLinearLayoutIklanEvent;
+        this.fragmentActivity = activity;
     }
 
     @Override
@@ -550,12 +539,157 @@ public class MainPresenter implements
         mIndicatorIklanEvent.show();
     }
 
+    private SliderView sliderIklanMateri;
+    private List<Fragment> fragmentsListIklanMateri;
+    private ArrayList<DataEventItem> listIklanMateri;
+    private ShimmerFrameLayout shimmerIklanMateriItem;
+
+    private SliderPagerAdapter mAdapterIklanMateri;
+    private SliderIndicator mIndicatorIklanMateri;
+    private LinearLayout mLinearLayoutIklanMateri;
+
+    @Override
+    public void setViewForIklanMateriHomeFragment(SliderView sliderIklanMateri, ShimmerFrameLayout shimmerMateriItem, LinearLayout pagesContainerMateri) {
+        this.sliderIklanMateri = sliderIklanMateri;
+        this.shimmerIklanMateriItem = shimmerMateriItem;
+        this.mLinearLayoutIklanMateri = pagesContainerMateri;
+    }
+
+
+    @Override
+    public void iniDataMateri() {
+        RetroServer.getInstance().getAllEvent().enqueue(new Callback<ResponseEvent>() {
+            @Override
+            public void onResponse(Call<ResponseEvent> call, Response<ResponseEvent> response) {
+                List<DataEventItem> list = response.body().getDataEvent();
+                listIklanMateri = new ArrayList();
+                sliderIklanMateri.setDurationScroll(1000);
+                fragmentsListIklanMateri = new ArrayList<>();
+                if (response.body().isSukses()) {
+                    for (int i = 0; i < list.size(); i++) {
+                        listIklanMateri.add(new DataEventItem(
+                                list.get(i).getEventGambar(),
+                                list.get(i).getEventVideo(),
+                                list.get(i).getEventNama(),
+                                list.get(i).getEventTglMulai(),
+                                list.get(i).getMitraId(),
+                                list.get(i).getEventTglSelesai(),
+                                list.get(i).getEventXp(),
+                                list.get(i).getEventAlamat(),
+                                list.get(i).getEventDeskripsi(),
+                                list.get(i).getEventKuota(),
+                                list.get(i).getEventJenis(),
+                                list.get(i).getEventId(),
+                                list.get(i).getEventTiket(),
+                                list.get(i).getEventKota()));
+                        fragmentsListIklanMateri.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(),list.get(i).getEventNama()));
+                    }
+                    iniDataMateriEventToFlipper();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEvent> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void iniDataMateriEventToFlipper() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }, 4999);
+        shimmerIklanMateriItem.setShimmer(null);
+        shimmerIklanMateriItem.stopShimmer();
+        mAdapterIklanMateri = new SliderPagerAdapter(fragmentManager, fragmentsListIklanMateri, fragmentsListIklanMateri);
+        sliderIklanMateri.setAdapter(mAdapterIklanMateri);
+        mIndicatorIklanMateri = new SliderIndicator(fragmentActivity, mLinearLayoutIklanMateri, sliderIklanMateri, R.drawable.indicator_circle);
+        mIndicatorIklanMateri.setPageCount(fragmentsListIklanMateri.size());
+        mIndicatorIklanMateri.show();
+    }
+
+    private SliderView sliderIklanKomersial;
+    private List<Fragment> fragmentsListIklanKomersial;
+    private ArrayList<DataEventItem> listIklanKomersial;
+    private ShimmerFrameLayout shimmerIklanKomersialItem;
+
+    private SliderPagerAdapter mAdapterIklanKomersial;
+    private SliderIndicator mIndicatorIklanKomersial;
+    private LinearLayout mLinearLayoutIklanKomersial;
+
+    @Override
+    public void setViewForIklanKomersialHomeFragment(SliderView sliderIklanKomersial, ShimmerFrameLayout shimmerKomersialItem, LinearLayout pagesContainerKomersial) {
+        this.sliderIklanKomersial = sliderIklanKomersial;
+        this.shimmerIklanKomersialItem = shimmerKomersialItem;
+        this.mLinearLayoutIklanKomersial = pagesContainerKomersial;
+    }
+
+    @Override
+    public void iniDataKomersial() {
+        RetroServer.getInstance().getAllEvent().enqueue(new Callback<ResponseEvent>() {
+            @Override
+            public void onResponse(Call<ResponseEvent> call, Response<ResponseEvent> response) {
+                List<DataEventItem> list = response.body().getDataEvent();
+                listIklanKomersial = new ArrayList();
+                sliderIklanKomersial.setDurationScroll(1000);
+                fragmentsListIklanKomersial = new ArrayList<>();
+                if (response.body().isSukses()) {
+                    for (int i = 0; i < list.size(); i++) {
+                        listIklanKomersial.add(new DataEventItem(
+                                list.get(i).getEventGambar(),
+                                list.get(i).getEventVideo(),
+                                list.get(i).getEventNama(),
+                                list.get(i).getEventTglMulai(),
+                                list.get(i).getMitraId(),
+                                list.get(i).getEventTglSelesai(),
+                                list.get(i).getEventXp(),
+                                list.get(i).getEventAlamat(),
+                                list.get(i).getEventDeskripsi(),
+                                list.get(i).getEventKuota(),
+                                list.get(i).getEventJenis(),
+                                list.get(i).getEventId(),
+                                list.get(i).getEventTiket(),
+                                list.get(i).getEventKota()));
+                        fragmentsListIklanKomersial.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(),list.get(i).getEventNama()));
+                    }
+                    iniDataMateriKomersialToFlipper();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEvent> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void iniDataMateriKomersialToFlipper() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        }, 4999);
+        shimmerIklanKomersialItem.setShimmer(null);
+        shimmerIklanKomersialItem.stopShimmer();
+        mAdapterIklanKomersial = new SliderPagerAdapter(fragmentManager, fragmentsListIklanKomersial, fragmentsListIklanKomersial);
+        sliderIklanKomersial.setAdapter(mAdapterIklanKomersial);
+        mIndicatorIklanKomersial = new SliderIndicator(fragmentActivity, mLinearLayoutIklanKomersial, sliderIklanKomersial, R.drawable.indicator_circle);
+        mIndicatorIklanKomersial.setPageCount(fragmentsListIklanKomersial.size());
+        mIndicatorIklanKomersial.show();
+    }
+
+
+
     private RecyclerView rvNewLearn;
     private AdapterNewLearn adapterNewLearn;
     private ArrayList<DataMateriItem> listNewLearn = new ArrayList<>();
 
     @Override
-    public void setRecyclerViewNewLearn(RecyclerView rvNewLearn) {
+    public void setViewNewLearn(RecyclerView rvNewLearn) {
         this.rvNewLearn = rvNewLearn;
     }
 
@@ -641,7 +775,7 @@ public class MainPresenter implements
     private ArrayList<DataMateriItem> listFreeLearn = new ArrayList<>();
 
     @Override
-    public void setRecyclerViewFreeLearn(RecyclerView rvFreeLearn) {
+    public void setViewFreeLearn(RecyclerView rvFreeLearn) {
         this.rvFreeLearn = rvFreeLearn;
 
     }
@@ -728,7 +862,7 @@ public class MainPresenter implements
     private ArrayList<DataMateriItem> listPayLearn = new ArrayList<>();
 
     @Override
-    public void setRecyclerViewPayLearn(RecyclerView rvPayLearn) {
+    public void setViewPayLearn(RecyclerView rvPayLearn) {
         this.rvPayLearn = rvPayLearn;
 
     }
@@ -945,8 +1079,26 @@ public class MainPresenter implements
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_DAFTARMODUL
 
-    private AdapterModulList adapterModulList;
-    private ArrayList<DataListModulByModulIdItem> listDataListModul;
+    @Override
+    public void regisToTableBelajar(String userId, String materiId) {
+        RetroServer.getInstance().regisToTableBelajar(userId, materiId).enqueue(new Callback<ResponseRegisToTableBelajar>() {
+            @Override
+            public void onResponse(Call<ResponseRegisToTableBelajar> call, Response<ResponseRegisToTableBelajar> response) {
+                if (response.body().isSukses()){
+                    shortToast(response.body().getPesan());
+                } else {
+                    shortToast(response.body().getPesan());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseRegisToTableBelajar> call, Throwable t) {
+                shortToast("Cek your Connection");
+            }
+        });
+
+    }
+
     private RecyclerView rvListModulMateri;
 
     @Override
@@ -961,18 +1113,33 @@ public class MainPresenter implements
             public void onResponse(Call<ResponseListModul> call, Response<ResponseListModul> response) {
                 assert response.body() != null;
                 List<DataListModulByModulIdItem> list = response.body().getDataListModulByModulId();
-                listDataListModul = new ArrayList<>();
+                List<DataListModulByModulIdStatusItem> list1 = response.body().getDataListModulByModulIdStatus();
+                ArrayList<DataListModulByModulIdItem> listDataListModul = new ArrayList<>();
+                ArrayList<DataListModulByModulIdStatusItem> listDataListModulStatus = new ArrayList<>();
                 if (response.body().isSukses()){
-                    for (int i=0; i<list.size(); i++){
+                    for (int i=0; i<list.size(); i++)   {
                         listDataListModul.add(new DataListModulByModulIdItem(
-                                list.get(i).getUserId(),
                                 list.get(i).getMateriId(),
                                 list.get(i).getModulId(),
-                                list.get(i).getModulJudul(),
-                                list.get(i).getProgressId(),
-                                list.get(i).getStatus()));
+                                list.get(i).getModulJudul()));
+                        if (i>(list1.size()-1)){
+                            listDataListModulStatus.add(new DataListModulByModulIdStatusItem(
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                    ""));
+                        } else {
+                            listDataListModulStatus.add(new DataListModulByModulIdStatusItem(
+                                    list1.get(i).getUserId(),
+                                    list1.get(i).getMateriId(),
+                                    list1.get(i).getModulId(),
+                                    list1.get(i).getProgressId(),
+                                    list1.get(i).getStatus()));
+                        }
+
                     }
-                    initDataToRecyclerListModulMateri();
+                    initDataToRecyclerListModulMateri(listDataListModul,listDataListModulStatus);
                 } else {
                     shortToast("Data tidak ada!!!");
                 }
@@ -985,8 +1152,8 @@ public class MainPresenter implements
         });
     }
 
-    private void initDataToRecyclerListModulMateri() {
-        adapterModulList = new AdapterModulList(context, listDataListModul);
+    private void initDataToRecyclerListModulMateri(ArrayList<DataListModulByModulIdItem> listDataListModul, ArrayList<DataListModulByModulIdStatusItem> listDataListModulStatus) {
+        AdapterModulList adapterModulList = new AdapterModulList(context, listDataListModul, listDataListModulStatus);
         rvListModulMateri.setAdapter(adapterModulList);
         rvListModulMateri.setHasFixedSize(true);
         rvListModulMateri.setLayoutManager(new LinearLayoutManager(context));

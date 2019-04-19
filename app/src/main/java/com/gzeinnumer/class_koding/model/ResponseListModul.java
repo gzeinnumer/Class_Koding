@@ -8,6 +8,9 @@ public class ResponseListModul{
 	@SerializedName("pesan")
 	private String pesan;
 
+	@SerializedName("data_list_modul_by_modul_id_status")
+	private List<DataListModulByModulIdStatusItem> dataListModulByModulIdStatus;
+
 	@SerializedName("data_list_modul_by_modul_id")
 	private List<DataListModulByModulIdItem> dataListModulByModulId;
 
@@ -20,6 +23,14 @@ public class ResponseListModul{
 
 	public String getPesan(){
 		return pesan;
+	}
+
+	public void setDataListModulByModulIdStatus(List<DataListModulByModulIdStatusItem> dataListModulByModulIdStatus){
+		this.dataListModulByModulIdStatus = dataListModulByModulIdStatus;
+	}
+
+	public List<DataListModulByModulIdStatusItem> getDataListModulByModulIdStatus(){
+		return dataListModulByModulIdStatus;
 	}
 
 	public void setDataListModulByModulId(List<DataListModulByModulIdItem> dataListModulByModulId){

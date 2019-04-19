@@ -13,6 +13,7 @@ import com.gzeinnumer.class_koding.model.ResponseMateri;
 import com.gzeinnumer.class_koding.model.ResponseMateriByIdFromProfil;
 import com.gzeinnumer.class_koding.model.ResponseMyLearnProgress;
 import com.gzeinnumer.class_koding.model.ResponsePembayaran;
+import com.gzeinnumer.class_koding.model.ResponseRegisToTableBelajar;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -87,5 +88,10 @@ public interface ApiServices {
     @FormUrlEncoded
     @POST("get_materi_detail_from_profil")
     Call<ResponseMateriByIdFromProfil> getMateriDetailFromProfil(@Field("materi_id") String materi_id);
+
+    @FormUrlEncoded
+    @POST("regis_to_table_belajar")
+    Call<ResponseRegisToTableBelajar> regisToTableBelajar(@Field("user_id") String user_id,
+                                                          @Field("materi_id") String materi_id);
 
 }

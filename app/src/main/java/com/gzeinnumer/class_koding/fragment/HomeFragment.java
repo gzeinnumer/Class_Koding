@@ -27,14 +27,38 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
-public class HomeFragment extends MyFunctionFragment{
+public class HomeFragment extends MyFunctionFragment {
 
     private MainInterface.I_HomeFragment i_homeFragment;
 
+    @BindView(R.id.slider_iklan_event)
+    SliderView sliderIklanEvent;
+    @BindView(R.id.layout_top_event)
+    RelativeLayout layoutTopEvent;
+    @BindView(R.id.pages_container_event)
+    LinearLayout pagesContainerEvent;
     @BindView(R.id.shimmer_event_item)
     ShimmerFrameLayout shimmerEventItem;
-    @BindView(R.id.layout_top)
-    RelativeLayout layoutTop;
+
+    @BindView(R.id.slider_iklan_materi)
+    SliderView sliderIklanMateri;
+    @BindView(R.id.layout_top_materi)
+    RelativeLayout layoutTopMateri;
+    @BindView(R.id.pages_container_materi)
+    LinearLayout pagesContainerMateri;
+    @BindView(R.id.shimmer_materi_item)
+    ShimmerFrameLayout shimmerMateriItem;
+
+    @BindView(R.id.slider_iklan_komersial)
+    SliderView sliderIklanKomersial;
+    @BindView(R.id.layout_top_komersial)
+    RelativeLayout layoutTopKomersial;
+    @BindView(R.id.pages_container_komersial)
+    LinearLayout pagesContainerKomersial;
+    @BindView(R.id.shimmer_komersial_item)
+    ShimmerFrameLayout shimmerKomersialItem;
+
+
     @BindView(R.id.rv_materi_terbaru)
     RecyclerView rvNewLearn;
     @BindView(R.id.activity_main)
@@ -43,10 +67,6 @@ public class HomeFragment extends MyFunctionFragment{
     RecyclerView rvFreeLearn;
     @BindView(R.id.rv_pay_learn)
     RecyclerView rvPayLearn;
-    @BindView(R.id.slider_iklan_event)
-    SliderView sliderIklanEvent;
-    @BindView(R.id.pages_container_event)
-    LinearLayout pagesContainerEvent;
 
     private ArrayList<DataMateriItem> listNewLearn = new ArrayList<>();
     private ArrayList<DataMateriItem> listFreeLearn = new ArrayList<>();
@@ -77,30 +97,33 @@ public class HomeFragment extends MyFunctionFragment{
         i_homeFragment = new MainPresenter(contextFragment);
 
         //SLIDER IKLAN EVENT
-        i_homeFragment.setSliderIklanEvent(sliderIklanEvent);
-        i_homeFragment.setShimmerForIklanEvent(shimmerEventItem);
-        i_homeFragment.setFragmentContextForSliderPagerAdapterIklanEvent(getFragmentManager());
-        i_homeFragment.setFragmentActivityForSliderIndikatorIklanEvent(getActivity());
-        i_homeFragment.setLinearForSliderIndikatorIklanEvent(pagesContainerEvent);
+        i_homeFragment.setViewForIklanEventHomeFragment(sliderIklanEvent, shimmerEventItem, pagesContainerEvent);
+        i_homeFragment.setContexForIklanEventHomeFragment(getFragmentManager(), getActivity());
         i_homeFragment.iniDataEvent();
 
         //SLIDER IKLAN MATERI
+        i_homeFragment.setViewForIklanMateriHomeFragment(sliderIklanMateri, shimmerMateriItem, pagesContainerMateri);
+        i_homeFragment.iniDataMateri();
+
+        //SLIDER IKLAN KOMERSIAL
+        i_homeFragment.setViewForIklanKomersialHomeFragment(sliderIklanKomersial, shimmerKomersialItem, pagesContainerKomersial);
+        i_homeFragment.iniDataKomersial();
 
         //RECYCLERVIEW MATERI BARU
         adapterNewLearn = new AdapterNewLearn(contextFragment, listNewLearn, true);
-        i_homeFragment.setRecyclerViewNewLearn(rvNewLearn);
+        i_homeFragment.setViewNewLearn(rvNewLearn);
         i_homeFragment.setAdapterFirstNewLearn(adapterNewLearn);
         i_homeFragment.startShimmerNewLearn();
 
         //RECYCLERVIEW MATERI FREE
         adapterFreeLearn = new AdapterFreeLearn(contextFragment, listFreeLearn, true);
-        i_homeFragment.setRecyclerViewFreeLearn(rvFreeLearn);
+        i_homeFragment.setViewFreeLearn(rvFreeLearn);
         i_homeFragment.setAdapterFirstFreeLearn(adapterFreeLearn);
         i_homeFragment.startShimmerFreeLearn();
 
         //RECYCLERVIEW MATERI BERBAYAR
         adapterPayLearn = new AdapterPayLearn(contextFragment, listPayLearn, true);
-        i_homeFragment.setRecyclerViewPayLearn(rvPayLearn);
+        i_homeFragment.setViewPayLearn(rvPayLearn);
         i_homeFragment.setAdapterFirstPayLearn(adapterPayLearn);
         i_homeFragment.startShimmerPayLearn();
 
@@ -128,7 +151,7 @@ public class HomeFragment extends MyFunctionFragment{
         unbinder.unbind();
     }
 
-    public static void myOnClickAdapter(DataMateriItem mList){
+    public static void myOnClickAdapter(DataMateriItem mList) {
         Intent intent = new Intent(contextFragment, DetailMateri.class);
         intent.putExtra(DetailMateri.DATA, mList);
         contextFragment.startActivity(intent);

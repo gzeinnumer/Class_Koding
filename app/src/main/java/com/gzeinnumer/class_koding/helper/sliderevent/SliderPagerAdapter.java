@@ -12,7 +12,7 @@ import java.util.List;
 
 public class SliderPagerAdapter extends FragmentStatePagerAdapter {
 
-    private static final String TAG = "SliderPagerAdapterMateriSlider";
+    private static final String TAG = "SliderPagerAdapterMateri";
 
     private List<Fragment> mFrags;
     private List<Fragment> mFrags2;

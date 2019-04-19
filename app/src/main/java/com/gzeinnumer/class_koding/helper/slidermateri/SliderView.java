@@ -14,17 +14,17 @@ import java.lang.reflect.Field;
  * Created by bagicode on 12/04/17.
  */
 
-public class SliderViewMateriSlider extends ViewPager {
+public class SliderView extends ViewPager {
 
     public static final int DEFAULT_SCROLL_DURATION = 200;
 //    public static final int SLIDE_MODE_SCROLL_DURATION = 1000;
 
-    public SliderViewMateriSlider(Context context) {
+    public SliderView(Context context) {
         super(context);
         init();
     }
 
-    public SliderViewMateriSlider(Context context, AttributeSet attrs) {
+    public SliderView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }

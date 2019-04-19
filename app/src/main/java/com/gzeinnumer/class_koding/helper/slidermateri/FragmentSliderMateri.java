@@ -12,23 +12,22 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.gzeinnumer.class_koding.R;
-import com.gzeinnumer.class_koding.helper.sliderevent.FragmentSlider;
 
 
 /**
  * Created by bagicode on 12/04/17.
  */
 
-public class FragmentMateriSlider extends Fragment {
+public class FragmentSliderMateri extends Fragment {
 
     private static final String ARG_PARAM1 = "params";
     private static final String ARG_PARAM2 = "params2";
 
-    public FragmentMateriSlider() {
+    public FragmentSliderMateri() {
     }
 
-    public static FragmentMateriSlider newInstance(String params, String params2) {
-        FragmentMateriSlider fragment = new FragmentMateriSlider();
+    public static FragmentSliderMateri newInstance(String params, String params2) {
+        FragmentSliderMateri fragment = new FragmentSliderMateri();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, params);
         args.putString(ARG_PARAM2, params2);

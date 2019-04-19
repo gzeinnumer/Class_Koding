@@ -69,27 +69,34 @@ public interface MainInterface {
     }
 
     interface I_HomeFragment {
-        void setSliderIklanEvent(SliderView sliderIklan);
-        void setShimmerForIklanEvent(ShimmerFrameLayout shimmerEventItem);
-        void setFragmentContextForSliderPagerAdapterIklanEvent(FragmentManager fragmentManager);
-        void setFragmentActivityForSliderIndikatorIklanEvent(FragmentActivity fragmentActivity);
-        void setLinearForSliderIndikatorIklanEvent(LinearLayout mLinearLayout);
+        void setViewForIklanEventHomeFragment(SliderView sliderIklanEvent, ShimmerFrameLayout shimmerEventItem, LinearLayout pagesContainerEvent);
+        void setContexForIklanEventHomeFragment(FragmentManager fragmentManager, FragmentActivity activity);
         void iniDataEvent();
 
-        void setRecyclerViewNewLearn(RecyclerView rvMateriTerbaru);
+        void setViewForIklanMateriHomeFragment(SliderView sliderIklanMateri, ShimmerFrameLayout shimmerMateriItem, LinearLayout pagesContainerMateri);
+        //void setContexForIklanMateriHomeFragment(FragmentManager fragmentManager, FragmentActivity activity);
+        void iniDataMateri();
+
+        void setViewForIklanKomersialHomeFragment(SliderView sliderIklanKomersial, ShimmerFrameLayout shimmerKomersialItem, LinearLayout pagesContainerKomersial);
+        //void setContexForIklanKomersialHomeFragment(FragmentManager fragmentManager, FragmentActivity activity);
+        void iniDataKomersial();
+
+        void setViewNewLearn(RecyclerView rvMateriTerbaru);
         void setAdapterNewLearn(AdapterNewLearn adapterNewLearn);
         void setAdapterFirstNewLearn(AdapterNewLearn adapter);
         void startShimmerNewLearn();
 
-        void setRecyclerViewFreeLearn(RecyclerView rvFreeLearn);
+        void setViewFreeLearn(RecyclerView rvFreeLearn);
         void setAdapterFreeLearn(AdapterFreeLearn adapterFreeLearn);
         void setAdapterFirstFreeLearn(AdapterFreeLearn adapterFreeLearn);
         void startShimmerFreeLearn();
 
-        void setRecyclerViewPayLearn(RecyclerView rvPayLearn);
+        void setViewPayLearn(RecyclerView rvPayLearn);
         void setAdapterPayLearn(AdapterPayLearn adapterPayLearn);
         void setAdapterFirstPayLearn(AdapterPayLearn adapterPayLearn);
         void startShimmerPayLearn();
+
+
     }
 
     interface I_StartLearning {
@@ -125,6 +132,7 @@ public interface MainInterface {
     }
 
     interface I_DaftarModul {
+        void regisToTableBelajar(String userId, String materiId);
         void setViewForDaftarModul(RecyclerView rvListModulMateri);
         void initDataModulList(String materiId);
     }

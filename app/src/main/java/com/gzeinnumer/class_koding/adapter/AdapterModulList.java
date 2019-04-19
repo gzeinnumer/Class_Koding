@@ -16,6 +16,7 @@ import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.activity.DaftarModul;
 import com.gzeinnumer.class_koding.activity.StartLearning;
 import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
+import com.gzeinnumer.class_koding.model.DataListModulByModulIdStatusItem;
 
 import java.util.ArrayList;
 
@@ -25,11 +26,13 @@ import butterknife.ButterKnife;
 public class AdapterModulList extends RecyclerView.Adapter<AdapterModulList.MyHolder> {
     private Context context;
     private ArrayList<DataListModulByModulIdItem> list;
+    private ArrayList<DataListModulByModulIdStatusItem> list1;
     private int number = 1;
 
-    public AdapterModulList(Context context, ArrayList<DataListModulByModulIdItem> list) {
+    public AdapterModulList(Context context, ArrayList<DataListModulByModulIdItem> list, ArrayList<DataListModulByModulIdStatusItem> list1) {
         this.context = context;
         this.list = list;
+        this.list1 = list1;
     }
 
     @NonNull
@@ -42,11 +45,21 @@ public class AdapterModulList extends RecyclerView.Adapter<AdapterModulList.MyHo
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull MyHolder myHolder, @SuppressLint("RecyclerView") final int i) {
-        if (list.get(i).getStatus().equals("1")){
-            myHolder.cek.setVisibility(View.VISIBLE);
-        } else if(list.get(i).getStatus().equals("0")){
-            myHolder.cek.setVisibility(View.INVISIBLE);
+
+        if(list1.get(i).getModulId() != null){
+
         }
+
+        if (list.get(i).getModulId().equals(list1.get(i).getModulId())){
+            if (list1.get(i).getStatus().equals("1")){
+                myHolder.cek.setVisibility(View.VISIBLE);
+            } else if(list1.get(i).getStatus().equals("0")){
+                myHolder.cek.setVisibility(View.INVISIBLE);
+            }
+        } else {
+            myHolder.cek.setVisibility(View.VISIBLE);
+        }
+
 
         myHolder.judulListModul.setText(list.get(i).getModulJudul());
 //        myHolder.noListModul.setText(String.valueOf(number) + ".");

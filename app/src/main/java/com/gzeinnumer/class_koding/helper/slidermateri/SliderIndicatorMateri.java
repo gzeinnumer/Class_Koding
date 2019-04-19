@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
  * Created by bagicode on 12/04/17.
  */
 
-public class SliderIndicatorMateriSlider implements ViewPager.OnPageChangeListener {
+public class SliderIndicatorMateri implements ViewPager.OnPageChangeListener {
     private Context mContext;
     private LinearLayout mContainer;
     private int mDrawable;
@@ -24,10 +24,10 @@ public class SliderIndicatorMateriSlider implements ViewPager.OnPageChangeListen
     private int mPageCount;
     private int mInitialPage = 0;
 
-    public SliderIndicatorMateriSlider(@NonNull Context context,
-                                       @NonNull LinearLayout containerView,
-                                       @NonNull ViewPager viewPager,
-                                       @DrawableRes int drawableRes) {
+    public SliderIndicatorMateri(@NonNull Context context,
+                                 @NonNull LinearLayout containerView,
+                                 @NonNull ViewPager viewPager,
+                                 @DrawableRes int drawableRes) {
         if (context == null) {
             throw new IllegalArgumentException("context cannot be null");
         } else if (containerView == null) {
