@@ -7,8 +7,10 @@ import com.gzeinnumer.class_koding.model.ResponseDetailPembayaranUser;
 import com.gzeinnumer.class_koding.model.ResponseEvent;
 import com.gzeinnumer.class_koding.model.ResponseGetPembayaran;
 import com.gzeinnumer.class_koding.model.ResponseListModul;
+import com.gzeinnumer.class_koding.model.ResponseListMyLearn;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
+import com.gzeinnumer.class_koding.model.ResponseMyLearnProgress;
 import com.gzeinnumer.class_koding.model.ResponsePembayaran;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
 import okhttp3.MultipartBody;
@@ -72,4 +74,12 @@ public interface ApiServices {
     @FormUrlEncoded
     @POST("get_user")
     Call<ResponseDataUser> gatDataUser(@Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("get_my_learn_progress")
+    Call<ResponseMyLearnProgress> getMyLearnProgress(@Field("user_id") String user_id);
+
+    @FormUrlEncoded
+    @POST("get_list_my_learn")
+    Call<ResponseListMyLearn> getMyLearnList(@Field("user_id") String user_id);
 }

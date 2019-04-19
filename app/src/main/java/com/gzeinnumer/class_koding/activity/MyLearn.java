@@ -25,7 +25,7 @@ import retrofit2.Response;
 public class MyLearn extends MyFunction {
     private static final String TAG = "MyLearn";
 
-    @BindView(R.id.rv_my_learn)
+    @BindView(R.id.rv_my_learn_tersedia)
     RecyclerView rvMyLearn;
 
     SessionManager sessionManager;
