@@ -29,6 +29,8 @@ import butterknife.Unbinder;
 
 public class HomeFragment extends MyFunctionFragment{
 
+    private MainInterface.I_HomeFragment i_homeFragment;
+
     @BindView(R.id.shimmer_event_item)
     ShimmerFrameLayout shimmerEventItem;
     @BindView(R.id.layout_top)
@@ -43,26 +45,19 @@ public class HomeFragment extends MyFunctionFragment{
     RecyclerView rvPayLearn;
     @BindView(R.id.slider_iklan_event)
     SliderView sliderIklanEvent;
-
     @BindView(R.id.pages_container_event)
     LinearLayout pagesContainerEvent;
 
-    MainInterface.I_HomeFragment i_homeFragment;
-    View view;
-    Unbinder unbinder;
+    private ArrayList<DataMateriItem> listNewLearn = new ArrayList<>();
+    private ArrayList<DataMateriItem> listFreeLearn = new ArrayList<>();
+    private ArrayList<DataMateriItem> listPayLearn = new ArrayList<>();
 
-    AdapterNewLearn adapterNewLearn;
-    AdapterFreeLearn adapterFreeLearn;
-    AdapterPayLearn adapterPayLearn;
-    ArrayList<DataMateriItem> listNewLearn = new ArrayList<>();
-    ArrayList<DataMateriItem> listFreeLearn = new ArrayList<>();
-    ArrayList<DataMateriItem> listPayLearn = new ArrayList<>();
+    private AdapterNewLearn adapterNewLearn;
+    private AdapterFreeLearn adapterFreeLearn;
+    private AdapterPayLearn adapterPayLearn;
 
-    public static void myOnClickAdapter(DataMateriItem mList){
-                    Intent intent = new Intent(contextFragment, DetailMateri.class);
-                    intent.putExtra(DetailMateri.DATA, mList);
-                    contextFragment.startActivity(intent);
-    }
+    private View view;
+    private Unbinder unbinder;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -128,18 +123,15 @@ public class HomeFragment extends MyFunctionFragment{
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        listNewLearn = i_homeFragment.getListNewLearn();
-        listFreeLearn = i_homeFragment.getListFreeLearn();
-        listPayLearn = i_homeFragment.getListPayLearn();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
 
+    public static void myOnClickAdapter(DataMateriItem mList){
+        Intent intent = new Intent(contextFragment, DetailMateri.class);
+        intent.putExtra(DetailMateri.DATA, mList);
+        contextFragment.startActivity(intent);
+    }
 
 }

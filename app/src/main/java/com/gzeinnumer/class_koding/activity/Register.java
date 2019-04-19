@@ -16,7 +16,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class Register extends MyFunction {
+
     private static final String TAG = "Register";
+    private MainInterface.I_Register i_register;
 
     @BindView(R.id.username)
     TextInputEditText username;
@@ -33,16 +35,14 @@ public class Register extends MyFunction {
     @BindView(R.id.asal)
     TextInputEditText asal;
 
-    MainInterface.I_Register i_register;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         ButterKnife.bind(this);
+        setTitle(TAG);
         i_register = new MainPresenter(this);
         i_register.setHighLightLogin(login);
-        setTitle(TAG);
 
     }
 

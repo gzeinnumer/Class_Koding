@@ -17,8 +17,8 @@ import com.gzeinnumer.class_koding.helper.SessionManager;
 
 public class Parent extends MyFunction {
     private static final String TAG = "Parent";
+    private SessionManager mSessionManager;
 
-    SessionManager mSessionManager;
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 

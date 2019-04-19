@@ -37,21 +37,33 @@ import com.gzeinnumer.class_koding.adapter.AdapterContentList;
 import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterModulList;
+import com.gzeinnumer.class_koding.adapter.AdapterMyLearn;
+import com.gzeinnumer.class_koding.adapter.AdapterMyLearnListForProfil;
+import com.gzeinnumer.class_koding.adapter.AdapterMyLearnProgressForProfil;
 import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
 import com.gzeinnumer.class_koding.helper.MyConstant;
 import com.gzeinnumer.class_koding.helper.SessionManager;
 import com.gzeinnumer.class_koding.model.DataDetailPembayaranItem;
+import com.gzeinnumer.class_koding.model.DataDetailPembayaranUserItem;
 import com.gzeinnumer.class_koding.model.DataEventItem;
 import com.gzeinnumer.class_koding.model.DataListContentByModulIdItem;
 import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
+import com.gzeinnumer.class_koding.model.DataListMyLearnItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
+import com.gzeinnumer.class_koding.model.DataMyLearnProgressItem;
+import com.gzeinnumer.class_koding.model.DataUserItem;
+import com.gzeinnumer.class_koding.model.ResponseBuyViewed;
 import com.gzeinnumer.class_koding.model.ResponseContentModul;
+import com.gzeinnumer.class_koding.model.ResponseDataUser;
+import com.gzeinnumer.class_koding.model.ResponseDetailPembayaranUser;
 import com.gzeinnumer.class_koding.model.ResponseEvent;
 import com.gzeinnumer.class_koding.model.ResponseGetPembayaran;
 import com.gzeinnumer.class_koding.model.ResponseListModul;
+import com.gzeinnumer.class_koding.model.ResponseListMyLearn;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
 import com.gzeinnumer.class_koding.model.ResponseMateri;
+import com.gzeinnumer.class_koding.model.ResponseMyLearnProgress;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
 import com.gzeinnumer.class_koding.network.RetroServer;
 import com.gzeinnumer.class_koding.helper.sliderevent.FragmentSlider;
@@ -63,11 +75,12 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-//start
+//awal
 public class MainPresenter implements
         MainInterface.I_Register,
         MainInterface.I_LearnFragment,
@@ -77,7 +90,9 @@ public class MainPresenter implements
         MainInterface.I_StartLearning,
         MainInterface.I_BuyActivity,
         MainInterface.I_PayActivity,
-        MainInterface.I_DaftarModul{
+        MainInterface.I_DaftarModul,
+        MainInterface.I_ProfilFragment,
+        MainInterface.I_MyLearn{
 
     private Context context;
     private AdapterLearn adapterLearn;
@@ -266,7 +281,7 @@ public class MainPresenter implements
     }
 
     @Override
-    public void startShimmer() {
+    public void startShimmerLearnFragment() {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -375,18 +390,18 @@ public class MainPresenter implements
 
     @SuppressLint("SetTextI18n")
     @Override
-    public void initViewDataDetail(DataMateriItem current,
-                                   ImageView gambarDetailItem,
-                                   TextView judulDetailItem,
-                                   TextView descDetailItem,
-                                   final Button beliDetailItem,
-                                   final Button mulaiDetailItem,
-                                   TextView olehDetailItem,
-                                   TextView platDetailItem,
-                                   TextView levelDetailItem,
-                                   TextView bonusDetailItem,
-                                   TextView waktuJamDetailItem,
-                                   TextView deadlineDetailItem, Button sabarDetailItem) {
+    public void setViewDataDetail(DataMateriItem current,
+                                  ImageView gambarDetailItem,
+                                  TextView judulDetailItem,
+                                  TextView descDetailItem,
+                                  final Button beliDetailItem,
+                                  final Button mulaiDetailItem,
+                                  TextView olehDetailItem,
+                                  TextView platDetailItem,
+                                  TextView levelDetailItem,
+                                  TextView bonusDetailItem,
+                                  TextView waktuJamDetailItem,
+                                  TextView deadlineDetailItem, Button sabarDetailItem) {
         Picasso.get().load(MyConstant.IMAGE_URL_MATERI + current.getMateriGambar())
                 .placeholder(R.color.shimmerbag).resize(399, 399).into(gambarDetailItem);
         judulDetailItem.setText(current.getMateriNama());
@@ -401,6 +416,22 @@ public class MainPresenter implements
         initVisibilitiButtonForDetail(current, mulaiDetailItem, beliDetailItem, sabarDetailItem);
 
     }
+
+    @Override
+    public void onBuyLearnViewed(String materiId, String userId, String materiHarga) {
+        RetroServer.getInstance().setOnBuyLearnViewed(materiId, userId, materiHarga).enqueue(new Callback<ResponseBuyViewed>() {
+            @Override
+            public void onResponse(Call<ResponseBuyViewed> call, Response<ResponseBuyViewed> response) {
+                shortToast(response.body().getPesan());
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBuyViewed> call, Throwable t) {
+                shortToast(t.getMessage());
+            }
+        });
+    }
+
     private void initVisibilitiButtonForDetail(DataMateriItem current, final Button mulaiDetailItem, final Button beliDetailItem, final Button sabarDetailItem) {
         if (current.getMateriHarga().equals("0")){
             mulaiDetailItem.setVisibility(View.VISIBLE);
@@ -552,10 +583,6 @@ public class MainPresenter implements
         }, 4999);
     }
 
-    @Override
-    public ArrayList<DataMateriItem> getListNewLearn() {
-        return listNewLearn;
-    }
 
     private void initDataNewLearn() {
         RetroServer.getInstance().getAllMateri().enqueue(new Callback<ResponseMateri>() {
@@ -643,10 +670,6 @@ public class MainPresenter implements
         }, 4999);
     }
 
-    @Override
-    public ArrayList<DataMateriItem> getListFreeLearn() {
-        return listFreeLearn;
-    }
 
     private void initDataFreeLearn() {
         RetroServer.getInstance().getAllMateri().enqueue(new Callback<ResponseMateri>() {
@@ -732,11 +755,6 @@ public class MainPresenter implements
                 adapterPayLearn.notifyDataSetChanged();
             }
         }, 4999);
-    }
-
-    @Override
-    public ArrayList<DataMateriItem> getListPayLearn() {
-        return listPayLearn;
     }
 
     private void initDataPayLearn() {
@@ -932,7 +950,7 @@ public class MainPresenter implements
     private RecyclerView rvListModulMateri;
 
     @Override
-    public void setRecyclerViewListModulMateri(RecyclerView rvListModulMateri) {
+    public void setViewForDaftarModul(RecyclerView rvListModulMateri) {
         this.rvListModulMateri = rvListModulMateri;
     }
 
@@ -967,16 +985,6 @@ public class MainPresenter implements
         });
     }
 
-    @Override
-    public ArrayList<DataListModulByModulIdItem> getListDataListModul() {
-        return listDataListModul;
-    }
-
-    @Override
-    public AdapterModulList getAdapterModulList() {
-        return adapterModulList;
-    }
-
     private void initDataToRecyclerListModulMateri() {
         adapterModulList = new AdapterModulList(context, listDataListModul);
         rvListModulMateri.setAdapter(adapterModulList);
@@ -985,4 +993,233 @@ public class MainPresenter implements
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_UPLOADSTRUCKACTIVITY
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////I_PROFILFRAGMENT
+
+    @Override
+    public void initDataUserForProfile(String userId) {
+        RetroServer.getInstance().gatDataUser(userId).enqueue(new Callback<ResponseDataUser>() {
+            @Override
+            public void onResponse(Call<ResponseDataUser> call, Response<ResponseDataUser> response) {
+                List<DataUserItem> list = response.body().getDataUser();
+                ArrayList<DataUserItem> dataUser = new ArrayList<>();
+                if (response.isSuccessful()) {
+                    for (int i = 0; i < list.size(); i++) {
+                        dataUser.add(new DataUserItem(
+                                list.get(i).getUserEmail(),
+                                list.get(i).getUserPassword(),
+                                list.get(i).getUserId(),
+                                list.get(i).getUserImage(),
+                                list.get(i).getUserAsal(),
+                                list.get(i).getUserName(),
+                                list.get(i).getUserXp(),
+                                list.get(i).getUserDate()));
+                    }
+                }
+                initViewForProfil(dataUser);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDataUser> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void initViewForProfil(ArrayList<DataUserItem> dataUser) {
+        //        Picasso.get().load(dataUser.get(0).getUserImage()).into(imageUser);
+        emailUser.setText(dataUser.get(0).getUserEmail());
+        idUser.setText(dataUser.get(0).getUserId());
+        asalUser.setText(dataUser.get(0).getUserAsal());
+        xpUser.setText(dataUser.get(0).getUserXp());
+        dateUser.setText(dataUser.get(0).getUserDate());
+        namaUser.setText(dataUser.get(0).getUserName());
+    }
+
+    private TextView emailUser;
+    private TextView idUser;
+    private TextView asalUser;
+    private TextView namaUser;
+    private TextView xpUser;
+    private TextView dateUser;
+    private ImageView imageUser;
+    private RecyclerView rvMyLearnProgressUser;
+    private RecyclerView rvMyLearnTersediaForProfil;
+
+    @Override
+    public void setViewForProfilFragment(ImageView imageUser, TextView emailUser, TextView idUser, TextView asalUser, TextView xpUser, TextView dateUser, TextView namaUser, RecyclerView rvMyLearnProgressUser, RecyclerView rvMyLearnTersediaForProfil) {
+        this.imageUser = imageUser;
+        this.emailUser = emailUser;
+        this.idUser = idUser;
+        this.asalUser = asalUser;
+        this.xpUser = xpUser;
+        this.dateUser = dateUser;
+        this.namaUser = namaUser;
+        this.rvMyLearnProgressUser = rvMyLearnProgressUser;
+        this.rvMyLearnTersediaForProfil = rvMyLearnTersediaForProfil;
+    }
+
+    @Override
+    public void initDataMyLearnList(String userId) {
+        RetroServer.getInstance().getMyLearnList(userId).enqueue(new Callback<ResponseListMyLearn>() {
+            @Override
+            public void onResponse(Call<ResponseListMyLearn> call, Response<ResponseListMyLearn> response) {
+                List<DataListMyLearnItem> list = response.body().getDataListMyLearn();
+                ArrayList<DataListMyLearnItem> dataMyLearnList = new ArrayList<>();
+                for (int i=0; i<list.size(); i++){
+                    dataMyLearnList.add(new DataListMyLearnItem(list.get(i).getPmbyBukti(),list.get(i).getPmbyId(),list.get(i).getMateriPlatform(),
+                            list.get(i).getPmbyTanggal(),list.get(i).getMateriNama(),list.get(i).getUserId(),list.get(i).getPmbyBatas(),
+                            list.get(i).getMateriId(),list.get(i).getPmbyStatus(),list.get(i).getMateriGambar()));
+                }
+                initDataMyLearnListToRvMyLearnProfil(dataMyLearnList);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseListMyLearn> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void initDataMyLearnListToRvMyLearnProfil(ArrayList<DataListMyLearnItem> dataMyLearnList) {
+        AdapterMyLearnListForProfil adapterMyLearnListForProfil = new AdapterMyLearnListForProfil(context, dataMyLearnList);
+        rvMyLearnTersediaForProfil.setLayoutManager(new LinearLayoutManager(context){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+        rvMyLearnTersediaForProfil.setAdapter(adapterMyLearnListForProfil);
+        rvMyLearnTersediaForProfil.setHasFixedSize(true);
+    }
+
+    @Override
+    public void initDataMyLearnListProgress(String userId) {
+        RetroServer.getInstance().getMyLearnProgress(userId).enqueue(new Callback<ResponseMyLearnProgress>() {
+            @Override
+            public void onResponse(Call<ResponseMyLearnProgress> call, Response<ResponseMyLearnProgress> response) {
+                List<DataMyLearnProgressItem> list = response.body().getDataMyLearn();
+                ArrayList<DataMyLearnProgressItem> dataMyLearnProgress = new ArrayList<>();
+                for (int i=0; i<list.size(); i++){
+                    dataMyLearnProgress.add(new DataMyLearnProgressItem(
+                            list.get(i).getBelajarStatus(),
+                            list.get(i).getMateriXp(),
+                            list.get(i).getMateriWaktu(),
+                            list.get(i).getProgressModul(),
+                            list.get(i).getLastSeen(),
+                            list.get(i).getMateriNama(),
+                            list.get(i).getMateriDiskon(),
+                            list.get(i).getMateriLevel(),
+                            list.get(i).getMateriGambar(),
+                            list.get(i).getBelajarDeadline(),
+                            list.get(i).getMateriRating(),
+                            list.get(i).getMateriPlatform(),
+                            list.get(i).getMateriDeskripsi(),
+                            list.get(i).getMateriTgl(),
+                            list.get(i).getBelajarMulai(),
+                            list.get(i).getMateriJmlModul(),
+                            list.get(i).getMateriJumSiswa(),
+                            list.get(i).getMateriId(),
+                            list.get(i).getMitraId(),
+                            list.get(i).getMateriVideo(),
+                            list.get(i).getJenisKelasId(),
+                            list.get(i).getMateriDeadline(),
+                            list.get(i).getBelajarId(),
+                            list.get(i).getUserId(),
+                            list.get(i).getMateriHarga()));
+                }
+                initDataMyLearnToRvMyLearnProgressProfil(dataMyLearnProgress);
+            }
+
+            @Override
+            public void onFailure(Call<ResponseMyLearnProgress> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void initDataMyLearnToRvMyLearnProgressProfil(ArrayList<DataMyLearnProgressItem> dataMyLearnProgress) {
+        AdapterMyLearnProgressForProfil adapterMyLearnProgressForProfil = new AdapterMyLearnProgressForProfil(context, dataMyLearnProgress);
+        rvMyLearnProgressUser.setAdapter(adapterMyLearnProgressForProfil);
+        rvMyLearnProgressUser.setHasFixedSize(true);
+        rvMyLearnProgressUser.setLayoutManager(new LinearLayoutManager(context){
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////I_MYLEARN
+
+    private RecyclerView rvMyLearn;
+    @Override
+    public void setViewForMyLearn(RecyclerView rvMyLearn) {
+        this.rvMyLearn = rvMyLearn;
+    }
+
+    @Override
+    public void initDataMyLearn(String userId) {
+        RetroServer.getInstance().getDetailPmbyByIdUser(sessionManager.getUserId()).enqueue(new Callback<ResponseDetailPembayaranUser>() {
+            @Override
+            public void onResponse(Call<ResponseDetailPembayaranUser> call, Response<ResponseDetailPembayaranUser> response) {
+                if (response.isSuccessful()){
+                    assert response.body() != null;
+                    List<DataDetailPembayaranUserItem> data = response.body().getDataDetailPembayaranUser();
+                    ArrayList<DataDetailPembayaranUserItem> listDataDetailPembayaranUser = new ArrayList<>();
+                    assert data != null;
+                    for (int i=0; i<data.size(); i++){
+                        listDataDetailPembayaranUser.add(new DataDetailPembayaranUserItem(
+                                data.get(0).getPmbyBukti(),
+                                data.get(0).getMateriXp(),
+                                data.get(0).getMateriWaktu(),
+                                data.get(0).getUserPassword(),
+                                data.get(0).getMateriNama(),
+                                data.get(0).getMateriDiskon(),
+                                data.get(0).getMateriLevel(),
+                                data.get(0).getMateriGambar(),
+                                data.get(0).getUserName(),
+                                data.get(0).getPmbyStatus(),
+                                data.get(0).getMateriRating(),
+                                data.get(0).getMateriPlatform(),
+                                data.get(0).getMateriDeskripsi(),
+                                data.get(0).getUserXp(),
+                                data.get(0).getUserDate(),
+                                data.get(0).getMateriTgl(),
+                                data.get(0).getMateriJmlModul(),
+                                data.get(0).getUserEmail(),
+                                data.get(0).getPmbyBatas(),
+                                data.get(0).getMateriJumSiswa(),
+                                data.get(0).getUserImage(),
+                                data.get(0).getUserAsal(),
+                                data.get(0).getMateriId(),
+                                data.get(0).getMitraId(),
+                                data.get(0).getMateriVideo(),
+                                data.get(0).getJenisKelasId(),
+                                data.get(0).getMateriDeadline(),
+                                data.get(0).getPmbyId(),
+                                data.get(0).getPmbyTanggal(),
+                                data.get(0).getUserId(),
+                                data.get(0).getMateriHarga()));
+                    }
+                    initDataToRvMyLearn(listDataDetailPembayaranUser);
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseDetailPembayaranUser> call, Throwable t) {
+
+            }
+        });
+    }
+
+
+    private void initDataToRvMyLearn(ArrayList<DataDetailPembayaranUserItem> listDataDetailPembayaranUser) {
+        AdapterMyLearn adapter = new AdapterMyLearn(context, listDataDetailPembayaranUser);
+        rvMyLearn.setAdapter(adapter);
+        rvMyLearn.setLayoutManager(new LinearLayoutManager(context));
+        rvMyLearn.setHasFixedSize(true);
+    }
 }

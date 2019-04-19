@@ -27,27 +27,20 @@ import butterknife.Unbinder;
 /**
  * A simple {@link Fragment} subclass.
  */
-//public class LearnFragment extends MyFunctionFragment implements AdapterLearn.onItemClick{
 public class LearnFragment extends MyFunctionFragment{
 
-    //I_LearnFragment.Main test;
+    private MainInterface.I_LearnFragment i_learnFragment;
+
     @BindView(R.id.rv_learn)
     RecyclerView rvLearn;
     @BindView(R.id.ed_search)
     EditText edSearch;
 
-    Unbinder unbinder;
-    AdapterLearn adapter;
-    View view;
-    ArrayList<DataMateriItem> list = new ArrayList<>();
+    private ArrayList<DataMateriItem> list = new ArrayList<>();
 
-    MainInterface.I_LearnFragment i_learnFragment;
-
-    public static void myOnClickAdapter(DataMateriItem mList){
-        Intent intent = new Intent(contextFragment, DetailMateri.class);
-        intent.putExtra(DetailMateri.DATA, mList);
-        contextFragment.startActivity(intent);
-    }
+    private AdapterLearn adapter;
+    private Unbinder unbinder;
+    private View view;
 
     public LearnFragment() {
         // Required empty public constructor
@@ -67,12 +60,11 @@ public class LearnFragment extends MyFunctionFragment{
         adapter = new AdapterLearn(contextFragment, list, true);
         i_learnFragment.setRecyclerViewLearn(rvLearn);
         i_learnFragment.setAdapterFirst(adapter);
-        i_learnFragment.startShimmer();
+        i_learnFragment.startShimmerLearnFragment();
         i_learnFragment.searchFunction(edSearch);
 
         return view;
     }
-
 
     @Override
     public void onStart() {
@@ -86,5 +78,10 @@ public class LearnFragment extends MyFunctionFragment{
         unbinder.unbind();
     }
 
+    public static void myOnClickAdapter(DataMateriItem mList){
+        Intent intent = new Intent(contextFragment, DetailMateri.class);
+        intent.putExtra(DetailMateri.DATA, mList);
+        contextFragment.startActivity(intent);
+    }
 
 }

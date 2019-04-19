@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gzeinnumer.class_koding.R;
+import com.gzeinnumer.class_koding.activity.MyLearn;
 import com.gzeinnumer.class_koding.activity.Parent;
 import com.gzeinnumer.class_koding.model.DataDetailPembayaranUserItem;
 
@@ -48,8 +49,7 @@ public class AdapterMyLearn extends RecyclerView.Adapter<AdapterMyLearn.MyHolder
             myHolder.btnGetLihatKelas.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent intent = new Intent(context, Parent.class);
-                    context.startActivity(intent);
+                    MyLearn.myOnCLickAdapterHome();
                 }
             });
         } else if(list.get(i).getPmbyStatus().equals("lunas")){
@@ -57,7 +57,7 @@ public class AdapterMyLearn extends RecyclerView.Adapter<AdapterMyLearn.MyHolder
             myHolder.btnGetLihatKelas.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    
+                    MyLearn.myOnCLickAdapterLihatKelas();
                 }
             });
         }

@@ -16,9 +16,10 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class BuyActivity extends MyFunction {
-    private static final String TAG = "BuyActivity";
 
+    private static final String TAG = "BuyActivity";
     public static final String DATA = "data";
+    private MainInterface.I_BuyActivity i_buyActivity;
 
     @BindView(R.id.jum_modul)
     TextView jumModul;
@@ -49,10 +50,7 @@ public class BuyActivity extends MyFunction {
     @BindView(R.id.beli)
     Button beli;
 
-    MainInterface.I_BuyActivity i_buyActivity;
-
-    DataMateriItem dataMateriItem;
-    SessionManager sessionManager;
+    private DataMateriItem dataMateriItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,13 +58,8 @@ public class BuyActivity extends MyFunction {
         setContentView(R.layout.activity_buy);
         ButterKnife.bind(this);
         setTitle(TAG);
-
-
         dataMateriItem = getIntent().getParcelableExtra(DATA);
-
-        sessionManager = new SessionManager(context);
         i_buyActivity = new MainPresenter(context);
-
         i_buyActivity.setViewForBuyActivity(dataMateriItem,
                 jumModul,
                 xp,
@@ -81,7 +74,6 @@ public class BuyActivity extends MyFunction {
                 materiPlatform,
                 descripsi,
                 harga);
-
         beli.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -90,12 +82,5 @@ public class BuyActivity extends MyFunction {
                 startActivity(intent);
             }
         });
-
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
 }

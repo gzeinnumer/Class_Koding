@@ -30,18 +30,88 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/logo_gw2" />
 
-            <TextView
-                android:id="@+id/nama_kelas_my_profil"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="hay" />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/platform_my_profil"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hay" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="51dp"
+                        android:layout_height="wrap_content"
+                        android:text="Kelas" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:text=":" />
+
+                    <TextView
+                        android:id="@+id/nama_kelas_my_profil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hay" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="51dp"
+                        android:layout_height="wrap_content"
+                        android:text="Platfom" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:text=":" />
+
+                    <TextView
+                        android:id="@+id/platform_my_profil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hay" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="51dp"
+                        android:layout_height="wrap_content"
+                        android:text="Status" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:text=":" />
+
+                    <TextView
+                        android:id="@+id/pembayaran_my_profil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hay" />
+                </LinearLayout>
+            </LinearLayout>
+
 
             <Button
                 android:id="@+id/show_class"

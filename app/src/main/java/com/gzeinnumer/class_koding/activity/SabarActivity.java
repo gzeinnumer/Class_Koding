@@ -12,10 +12,11 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class SabarActivity extends MyFunction {
+
     private static final String TAG = "SabarActivity";
 
-    @BindView(R.id.btn_kembali)
-    Button btnKembali;
+    @BindView(R.id.btn_to_my_learn)
+    Button btnToMyLearn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +25,7 @@ public class SabarActivity extends MyFunction {
         ButterKnife.bind(this);
         setTitle(TAG);
 
-
-        btnKembali.setOnClickListener(new View.OnClickListener() {
+        btnToMyLearn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(context, MyLearn.class);

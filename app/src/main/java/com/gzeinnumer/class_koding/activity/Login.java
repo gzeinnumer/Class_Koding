@@ -16,9 +16,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class Login extends MyFunction {
-    private static final String TAG = "Login";
 
-    MainInterface.I_Login i_login;
+    private static final String TAG = "Login";
+    private MainInterface.I_Login i_login;
 
     @BindView(R.id.email)
     TextInputEditText email;
@@ -34,10 +34,9 @@ public class Login extends MyFunction {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+        setTitle(TAG);
         i_login = new MainPresenter(this);
         i_login.setHighLightSingUp(register);
-        setTitle(TAG);
-
     }
 
     @OnClick({R.id.login, R.id.register})

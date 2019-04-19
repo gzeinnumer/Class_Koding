@@ -40,23 +40,22 @@ import retrofit2.Response;
 public class UploadStruckActivity extends MyFunction {
 
     private static final String TAG = "UploadStruckActivity";
-
     public static final String DATA = "data";
+    private SessionManager sessionManager;
+    private int PICK_IMAGE_REQUEST = 1;
+    private static final int STORAGE_PERMISSION_CODE = 123;
 
     @BindView(R.id.image_chooser)
     ImageView imageChooser;
     @BindView(R.id.btn_kirim)
     Button btnKirim;
 
+    private DataMateriItem dataMateriItem;
+
     private Uri filePath;
     private String path;
 
-    private int PICK_IMAGE_REQUEST = 1;
-    private static final int STORAGE_PERMISSION_CODE = 123;
 
-    DataMateriItem dataMateriItem;
-
-    SessionManager sessionManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

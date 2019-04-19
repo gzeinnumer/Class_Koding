@@ -21,18 +21,56 @@
             android:layout_height="wrap_content"
             android:padding="4dp">
 
-            <TextView
-                android:id="@+id/nama_kelas_my_profil"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <LinearLayout
                 android:layout_weight="1"
-                android:text="hay" />
-
-            <TextView
-                android:id="@+id/platform_my_profil"
+                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="hay"/>
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="51dp"
+                        android:layout_height="wrap_content"
+                        android:text="Kelas" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:text=":" />
+                    <TextView
+                        android:id="@+id/nama_kelas_my_profil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="hay" />
+                </LinearLayout>
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:layout_width="51dp"
+                        android:layout_height="wrap_content"
+                        android:text="Platfom" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="3dp"
+                        android:layout_marginEnd="3dp"
+                        android:text=":" />
+                    <TextView
+                        android:id="@+id/platform_my_profil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="hay"/>
+                </LinearLayout>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/progress_my_profil"

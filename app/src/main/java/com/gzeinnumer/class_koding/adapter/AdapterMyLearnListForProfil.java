@@ -44,6 +44,7 @@ public class AdapterMyLearnListForProfil extends RecyclerView.Adapter<AdapterMyL
         Picasso.get().load(list.get(i).getMateriGambar()).into(myHolder.gambarKelasMyProfil);
         myHolder.namaKelasMyProfil.setText(list.get(i).getMateriNama());
         myHolder.platformMyProfil.setText(list.get(i).getMateriPlatform());
+        myHolder.pembayaranMyProfil.setText(list.get(i).getPmbyStatus());
         myHolder.showClass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +65,9 @@ public class AdapterMyLearnListForProfil extends RecyclerView.Adapter<AdapterMyL
         @BindView(R.id.nama_kelas_my_profil)
         TextView namaKelasMyProfil;
         @BindView(R.id.platform_my_profil)
-        TextView platformMyProfil;
+        TextView platformMyProfil;;
+        @BindView(R.id.pembayaran_my_profil)
+        TextView pembayaranMyProfil;
         @BindView(R.id.show_class)
         Button showClass;
 

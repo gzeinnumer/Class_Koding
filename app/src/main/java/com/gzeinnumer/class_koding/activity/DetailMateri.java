@@ -14,8 +14,6 @@ import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.helper.MyFunction;
 import com.gzeinnumer.class_koding.helper.SessionManager;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
-import com.gzeinnumer.class_koding.model.ResponseBuyViewed;
-import com.gzeinnumer.class_koding.network.RetroServer;
 import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
 
@@ -23,14 +21,13 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class DetailMateri extends MyFunction {
-    private static final String TAG = "DetailMateri";
 
+    private static final String TAG = "DetailMateri";
     public static String DATA = "data";
+    private MainInterface.I_DetailLearn i_detailLearn;
+    private SessionManager sessionManager;
 
     @BindView(R.id.gambar_detail_item)
     ImageView gambarDetailItem;
@@ -59,10 +56,8 @@ public class DetailMateri extends MyFunction {
     @BindView(R.id.sabar_detail_item)
     Button sabarDetailItem;
 
-    DataMateriItem current;
-    SessionManager sessionManager;
-    ArrayList<DataMateriItem> list;
-    MainInterface.I_DetailLearn i_detailLearn;
+    private ArrayList<DataMateriItem> list =new ArrayList<>();
+    private DataMateriItem current;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -71,16 +66,10 @@ public class DetailMateri extends MyFunction {
         setContentView(R.layout.activity_detail_materi);
         ButterKnife.bind(this);
         setTitle(TAG);
-
         sessionManager = new SessionManager(context);
+        current = getIntent().getParcelableExtra(DATA);
         i_detailLearn = new MainPresenter(context);
-
-        list = new ArrayList<>();
-
-        final Intent intent = getIntent();
-        current = intent.getParcelableExtra(DATA);
-
-        i_detailLearn.initViewDataDetail(current,
+        i_detailLearn.setViewDataDetail(current,
                 gambarDetailItem,
                 judulDetailItem,
                 descDetailItem,
@@ -134,21 +123,6 @@ public class DetailMateri extends MyFunction {
     protected void onStart() {
         super.onStart();
         i_detailLearn.videoViewFunction(videoDetailItem, current);
-        onBuyLearnViewed(current.getMateriId(), sessionManager.getUserId(), current.getMateriHarga());
+        i_detailLearn.onBuyLearnViewed(current.getMateriId(), sessionManager.getUserId(), current.getMateriHarga());
     }
-
-    private void onBuyLearnViewed(String materiId, String userId, String materiHarga) {
-        RetroServer.getInstance().setOnBuyLearnViewed(materiId, userId, materiHarga).enqueue(new Callback<ResponseBuyViewed>() {
-            @Override
-            public void onResponse(Call<ResponseBuyViewed> call, Response<ResponseBuyViewed> response) {
-                shortToast(response.body().getPesan());
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBuyViewed> call, Throwable t) {
-                shortToast(t.getMessage());
-            }
-        });
-    }
-
 }

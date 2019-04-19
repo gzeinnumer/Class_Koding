@@ -22,8 +22,9 @@ import butterknife.ButterKnife;
 public class PayActivity extends MyFunction {
 
     private static final String TAG = "PayActivity";
-
     public static final String DATA = "data";
+    private MainInterface.I_PayActivity i_payActivity;
+    private SessionManager sessionManager;
 
     @BindView(R.id.btn_upload_bukti)
     Button btnOploadBukti;
@@ -38,14 +39,8 @@ public class PayActivity extends MyFunction {
     @BindView(R.id.time_req)
     TextView timeReq;
 
-    MainInterface.I_PayActivity i_payActivity;
-
-    DataMateriItem dataMateriItem;
-    List<DataDetailPembayaranItem> list;
-
-    SessionManager sessionManager;
-
-
+    private DataMateriItem dataMateriItem;
+    private List<DataDetailPembayaranItem> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +48,11 @@ public class PayActivity extends MyFunction {
         setContentView(R.layout.activity_pay);
         ButterKnife.bind(this);
         setTitle(TAG);
-
-        i_payActivity = new MainPresenter(context);
-
         sessionManager = new SessionManager(context);
-
         dataMateriItem = getIntent().getParcelableExtra(DATA);
-
+        i_payActivity = new MainPresenter(context);
         i_payActivity.setViewForPayActivity(kodeBankReq, noReq, namaReq, totalReq, timeReq);
-
         i_payActivity.initDataForViewPayActivity(dataMateriItem.getMateriId(), sessionManager.getUserId());
-
         list = i_payActivity.getListPembayaran();
 
         btnOploadBukti.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +65,4 @@ public class PayActivity extends MyFunction {
         });
 
     }
-
-
 }

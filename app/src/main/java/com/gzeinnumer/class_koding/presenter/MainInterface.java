@@ -16,15 +16,12 @@ import com.facebook.shimmer.ShimmerFrameLayout;
 import com.gzeinnumer.class_koding.activity.Register;
 import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
-import com.gzeinnumer.class_koding.adapter.AdapterModulList;
 import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
 import com.gzeinnumer.class_koding.model.DataDetailPembayaranItem;
-import com.gzeinnumer.class_koding.model.DataListModulByModulIdItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.helper.sliderevent.SliderView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public interface MainInterface {
@@ -42,7 +39,6 @@ public interface MainInterface {
                             TextInputEditText pass,
                             TextInputEditText cPass,
                             TextInputEditText asal);
-
         void setHighLightLogin(EmphasisTextView login);
     }
 
@@ -50,25 +46,26 @@ public interface MainInterface {
         void setAdapterLearn(AdapterLearn adapter);
         void setRecyclerViewLearn(RecyclerView rvLearn);
         void setAdapterFirst(AdapterLearn adapter);
-        void startShimmer();
+        void startShimmerLearnFragment();
         void searchFunction(EditText edSearch);
     }
 
     interface I_DetailLearn {
         void videoViewFunction(WebView videoDetailItem,
                                DataMateriItem current);
-        void initViewDataDetail(DataMateriItem current,
-                                ImageView gambarDetailItem,
-                                TextView judulDetailItem,
-                                TextView descDetailItem,
-                                Button beliDetailItem,
-                                Button mulaiDetailItem,
-                                TextView olehDetailItem,
-                                TextView platDetailItem,
-                                TextView levelDetailItem,
-                                TextView bonusDetailItem,
-                                TextView waktuJamDetailItem,
-                                TextView deadlineDetailItem, Button sabarDetailItem);
+        void setViewDataDetail(DataMateriItem current,
+                               ImageView gambarDetailItem,
+                               TextView judulDetailItem,
+                               TextView descDetailItem,
+                               Button beliDetailItem,
+                               Button mulaiDetailItem,
+                               TextView olehDetailItem,
+                               TextView platDetailItem,
+                               TextView levelDetailItem,
+                               TextView bonusDetailItem,
+                               TextView waktuJamDetailItem,
+                               TextView deadlineDetailItem, Button sabarDetailItem);
+        void onBuyLearnViewed(String materiId, String userId, String materiHarga);
     }
 
     interface I_HomeFragment {
@@ -79,27 +76,23 @@ public interface MainInterface {
         void setLinearForSliderIndikatorIklanEvent(LinearLayout mLinearLayout);
         void iniDataEvent();
 
-
         void setRecyclerViewNewLearn(RecyclerView rvMateriTerbaru);
         void setAdapterNewLearn(AdapterNewLearn adapterNewLearn);
         void setAdapterFirstNewLearn(AdapterNewLearn adapter);
         void startShimmerNewLearn();
-        ArrayList<DataMateriItem> getListNewLearn();
 
         void setRecyclerViewFreeLearn(RecyclerView rvFreeLearn);
         void setAdapterFreeLearn(AdapterFreeLearn adapterFreeLearn);
         void setAdapterFirstFreeLearn(AdapterFreeLearn adapterFreeLearn);
         void startShimmerFreeLearn();
-        ArrayList<DataMateriItem> getListFreeLearn();
 
         void setRecyclerViewPayLearn(RecyclerView rvPayLearn);
         void setAdapterPayLearn(AdapterPayLearn adapterPayLearn);
         void setAdapterFirstPayLearn(AdapterPayLearn adapterPayLearn);
         void startShimmerPayLearn();
-        ArrayList<DataMateriItem> getListPayLearn();
     }
 
-    interface I_StartLearning{
+    interface I_StartLearning {
         void setRecyclerViewContentByIdModul(RecyclerView rvContentByIdModul);
         void initDataContentList(String modul_id);
     }
@@ -121,7 +114,7 @@ public interface MainInterface {
                                    TextView harga);
     }
 
-    interface I_PayActivity{
+    interface I_PayActivity {
         void setViewForPayActivity(TextView kodeBankReq,
                                    TextView noReq,
                                    TextView namaReq,
@@ -131,10 +124,28 @@ public interface MainInterface {
         List<DataDetailPembayaranItem> getListPembayaran();
     }
 
-    interface I_DaftarModul{
-        void setRecyclerViewListModulMateri(RecyclerView rvListModulMateri);
+    interface I_DaftarModul {
+        void setViewForDaftarModul(RecyclerView rvListModulMateri);
         void initDataModulList(String materiId);
-        ArrayList<DataListModulByModulIdItem> getListDataListModul();
-        AdapterModulList getAdapterModulList();
+    }
+
+    interface I_ProfilFragment {
+        void initDataUserForProfile(String userId);
+        void setViewForProfilFragment(ImageView imageUser,
+                                      TextView emailUser,
+                                      TextView idUser,
+                                      TextView asalUser,
+                                      TextView xpUser,
+                                      TextView dateUser,
+                                      TextView namaUser,
+                                      RecyclerView rvMyLearnProgressUser,
+                                      RecyclerView rvMyLearnTersediaForProfil);
+        void initDataMyLearnList(String userId);
+        void initDataMyLearnListProgress(String userId);
+    }
+
+    interface I_MyLearn {
+        void initDataMyLearn(String userId);
+        void setViewForMyLearn(RecyclerView rvMyLearn);
     }
 }
