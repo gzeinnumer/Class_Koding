@@ -57,7 +57,7 @@ public class AdapterModulList extends RecyclerView.Adapter<AdapterModulList.MyHo
                 myHolder.cek.setVisibility(View.INVISIBLE);
             }
         } else {
-            myHolder.cek.setVisibility(View.VISIBLE);
+            myHolder.cek.setVisibility(View.INVISIBLE);
         }
 
 

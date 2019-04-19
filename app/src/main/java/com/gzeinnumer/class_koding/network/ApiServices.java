@@ -15,6 +15,9 @@ import com.gzeinnumer.class_koding.model.ResponseMyLearnProgress;
 import com.gzeinnumer.class_koding.model.ResponsePembayaran;
 import com.gzeinnumer.class_koding.model.ResponseRegisToTableBelajar;
 import com.gzeinnumer.class_koding.model.ResponseRegister;
+import com.gzeinnumer.class_koding.model.ResponseSaveProgress;
+import com.gzeinnumer.class_koding.model.ResponseUpdateProgress;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import retrofit2.Call;
@@ -94,4 +97,15 @@ public interface ApiServices {
     Call<ResponseRegisToTableBelajar> regisToTableBelajar(@Field("user_id") String user_id,
                                                           @Field("materi_id") String materi_id);
 
+    @FormUrlEncoded
+    @POST("save_progress_to_table")
+    Call<ResponseSaveProgress> saveProgress(@Field("user_id") String user_id,
+                                            @Field("materi_id") String materi_id,
+                                            @Field("modul_id") String modul_id);
+
+    @FormUrlEncoded
+    @POST("update_progress_to_table")
+    Call<ResponseUpdateProgress> updateProgress(@Field("user_id") String user_id,
+                                                @Field("materi_id") String materi_id,
+                                                @Field("modul_id") String modul_id);
 }

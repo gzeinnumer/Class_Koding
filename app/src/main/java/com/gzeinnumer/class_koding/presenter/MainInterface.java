@@ -100,7 +100,7 @@ public interface MainInterface {
     }
 
     interface I_StartLearning {
-        void setRecyclerViewContentByIdModul(RecyclerView rvContentByIdModul);
+        void setViewForContent(RecyclerView rvContentByIdModul);
         void initDataContentList(String modul_id);
     }
 

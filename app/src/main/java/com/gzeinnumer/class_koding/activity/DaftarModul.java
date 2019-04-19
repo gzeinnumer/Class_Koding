@@ -46,6 +46,7 @@ public class DaftarModul extends MyFunction {
     public static void myOnClickAdapter(DataListModulByModulIdItem mList){
         Intent intent = new Intent(context, StartLearning.class);
         intent.putExtra(StartLearning.DATA,mList.getModulId());
+        intent.putExtra(StartLearning.DATA_MATERI_ID,mList.getMateriId());
         context.startActivity(intent);
     }
 }

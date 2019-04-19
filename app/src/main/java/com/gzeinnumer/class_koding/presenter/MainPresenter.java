@@ -93,12 +93,13 @@ public class MainPresenter implements
         MainInterface.I_PayActivity,
         MainInterface.I_DaftarModul,
         MainInterface.I_ProfilFragment,
-        MainInterface.I_MyLearn{
+        MainInterface.I_MyLearn {
 
     private Context context;
     private AdapterLearn adapterLearn;
 
     private SessionManager sessionManager;
+
     public MainPresenter(Context context) {
         this.context = context;
         sessionManager = new SessionManager(context);
@@ -114,6 +115,7 @@ public class MainPresenter implements
     private void intent(Class destination) {
         context.startActivity(new Intent(context, destination));
     }
+
     /**
      * end global function
      */
@@ -146,10 +148,10 @@ public class MainPresenter implements
                                  TextInputEditText pass,
                                  String temp1,
                                  String temp2) {
-        if(TextUtils.isEmpty(temp1)){
+        if (TextUtils.isEmpty(temp1)) {
             email.setError(context.getString(R.string.isEmpty));
             email.requestFocus();
-        } else if(TextUtils.isEmpty(temp2)){
+        } else if (TextUtils.isEmpty(temp2)) {
             pass.setError(context.getString(R.string.isEmpty));
             pass.requestFocus();
         } else {
@@ -162,7 +164,7 @@ public class MainPresenter implements
         RetroServer.getInstance().login(temp1, temp2).enqueue(new Callback<ResponseLogin>() {
             @Override
             public void onResponse(Call<ResponseLogin> call, Response<ResponseLogin> response) {
-                if (response.body().isSukses()){
+                if (response.body().isSukses()) {
                     SessionManager mSession = new SessionManager(context);
 
                     mSession.setUserEmail(response.body().getDataLogin().get(0).getUserEmail());
@@ -193,7 +195,7 @@ public class MainPresenter implements
                                TextInputEditText pass,
                                TextInputEditText cPass,
                                TextInputEditText asal) {
-        isValidateRegister(username, email, pass,cPass, asal);
+        isValidateRegister(username, email, pass, cPass, asal);
 
     }
 
@@ -207,19 +209,19 @@ public class MainPresenter implements
         String temp3 = pass.getText().toString().trim();
         String temp3_1 = cPass.getText().toString().trim();
         String temp4 = asal.getText().toString().trim();
-        if (TextUtils.isEmpty(temp1)){
+        if (TextUtils.isEmpty(temp1)) {
             username.setError(context.getString(R.string.isEmpty));
             username.requestFocus();
-        } else if (TextUtils.isEmpty(temp2)){
+        } else if (TextUtils.isEmpty(temp2)) {
             email.setError(context.getString(R.string.isEmpty));
             email.requestFocus();
-        } else if (TextUtils.isEmpty(temp3)){
+        } else if (TextUtils.isEmpty(temp3)) {
             pass.setError(context.getString(R.string.isEmpty));
             pass.requestFocus();
-        } else if (!temp3.equals(temp3_1)){
+        } else if (!temp3.equals(temp3_1)) {
             cPass.setError("Not Match");
             cPass.requestFocus();
-        } else if (TextUtils.isEmpty(temp4)){
+        } else if (TextUtils.isEmpty(temp4)) {
             asal.setError(context.getString(R.string.isEmpty));
             asal.requestFocus();
         } else {
@@ -234,7 +236,7 @@ public class MainPresenter implements
         RetroServer.getInstance().register(temp1, temp2, temp3, temp4).enqueue(new Callback<ResponseRegister>() {
             @Override
             public void onResponse(Call<ResponseRegister> call, Response<ResponseRegister> response) {
-                if (response.body().isSukses()){
+                if (response.body().isSukses()) {
                     shortToast("SuksesDaftar");
                     intent(Login.class);
                 } else {
@@ -271,7 +273,7 @@ public class MainPresenter implements
 
     @Override
     public void setRecyclerViewLearn(RecyclerView rvLearn) {
-        this.rvLearn=rvLearn;
+        this.rvLearn = rvLearn;
     }
 
     @Override
@@ -369,18 +371,20 @@ public class MainPresenter implements
     public void videoViewFunction(WebView videoDetailItem,
                                   DataMateriItem current) {
         videoDetailItem.getSettings().setJavaScriptEnabled(true);
-        videoDetailItem.loadData("<iframe width=\"100%\" height=\"100%\" src=\""+current.getMateriVideo()+"\" frameborder=\"0\" allowfullscreen></iframe>","text/html","utf-8");
+        videoDetailItem.loadData("<iframe width=\"100%\" height=\"100%\" src=\"" + current.getMateriVideo() + "\" frameborder=\"0\" allowfullscreen></iframe>", "text/html", "utf-8");
         videoDetailItem.setWebViewClient(new WebViewClient() {
             //TODO cek dulu
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 shortToast("URL ERROR");
             }
+
             //TODO start page
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
 
             }
+
             //TODO finish page
             @Override
             public void onPageFinished(WebView view, String url) {
@@ -410,9 +414,9 @@ public class MainPresenter implements
         olehDetailItem.setText(current.getMitraId());
         platDetailItem.setText(current.getMateriPlatform());
         levelDetailItem.setText(current.getMateriLevel());
-        bonusDetailItem.setText(current.getMateriXp()+" Xp");
-        waktuJamDetailItem.setText("Durasi total video "+current.getMateriWaktu() + " Jam");
-        deadlineDetailItem.setText("Deadline pengerjaan Modul "+current.getMateriDeadline() + " Hari");
+        bonusDetailItem.setText(current.getMateriXp() + " Xp");
+        waktuJamDetailItem.setText("Durasi total video " + current.getMateriWaktu() + " Jam");
+        deadlineDetailItem.setText("Deadline pengerjaan Modul " + current.getMateriDeadline() + " Hari");
 
         initVisibilitiButtonForDetail(current, mulaiDetailItem, beliDetailItem, sabarDetailItem);
 
@@ -434,16 +438,16 @@ public class MainPresenter implements
     }
 
     private void initVisibilitiButtonForDetail(DataMateriItem current, final Button mulaiDetailItem, final Button beliDetailItem, final Button sabarDetailItem) {
-        if (current.getMateriHarga().equals("0")){
+        if (current.getMateriHarga().equals("0")) {
             mulaiDetailItem.setVisibility(View.VISIBLE);
         } else {
             RetroServer.getInstance().getDetailPmbyById(current.getMateriId(), sessionManager.getUserId()).enqueue(new Callback<ResponseGetPembayaran>() {
                 @Override
                 public void onResponse(Call<ResponseGetPembayaran> call, Response<ResponseGetPembayaran> response) {
                     assert response.body() != null;
-                    if (response.body().getDataDetailPembayaran().get(0).getPmbyStatus().equals("lunas")){
+                    if (response.body().getDataDetailPembayaran().get(0).getPmbyStatus().equals("lunas")) {
                         mulaiDetailItem.setVisibility(View.VISIBLE);
-                    } else if(response.body().getDataDetailPembayaran().get(0).getPmbyStatus().equals("cek")){
+                    } else if (response.body().getDataDetailPembayaran().get(0).getPmbyStatus().equals("cek")) {
                         sabarDetailItem.setVisibility(View.VISIBLE);
                     } else {
                         beliDetailItem.setVisibility(View.VISIBLE);
@@ -510,7 +514,7 @@ public class MainPresenter implements
                                 list.get(i).getEventId(),
                                 list.get(i).getEventTiket(),
                                 list.get(i).getEventKota()));
-                        fragmentsListIklanEvent.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(),list.get(i).getEventNama()));
+                        fragmentsListIklanEvent.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(), list.get(i).getEventNama()));
                     }
                     iniDataIklanEventToFlipper();
                 }
@@ -582,7 +586,7 @@ public class MainPresenter implements
                                 list.get(i).getEventId(),
                                 list.get(i).getEventTiket(),
                                 list.get(i).getEventKota()));
-                        fragmentsListIklanMateri.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(),list.get(i).getEventNama()));
+                        fragmentsListIklanMateri.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(), list.get(i).getEventNama()));
                     }
                     iniDataMateriEventToFlipper();
                 }
@@ -653,7 +657,7 @@ public class MainPresenter implements
                                 list.get(i).getEventId(),
                                 list.get(i).getEventTiket(),
                                 list.get(i).getEventKota()));
-                        fragmentsListIklanKomersial.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(),list.get(i).getEventNama()));
+                        fragmentsListIklanKomersial.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(), list.get(i).getEventNama()));
                     }
                     iniDataMateriKomersialToFlipper();
                 }
@@ -681,7 +685,6 @@ public class MainPresenter implements
         mIndicatorIklanKomersial.setPageCount(fragmentsListIklanKomersial.size());
         mIndicatorIklanKomersial.show();
     }
-
 
 
     private RecyclerView rvNewLearn;
@@ -727,7 +730,7 @@ public class MainPresenter implements
 
                 if (response.body().isSukses()) {
                     for (int i = 0; i < listData.size(); i++) {
-                        if(i >= (listData.size()-3)){
+                        if (i >= (listData.size() - 3)) {
                             listNewLearn.add(new DataMateriItem(listData.get(i).getMateriJmlModul(),
                                     listData.get(i).getMateriXp(),
                                     listData.get(i).getMateriWaktu(),
@@ -814,7 +817,7 @@ public class MainPresenter implements
 
                 if (response.body().isSukses()) {
                     for (int i = 0; i < listData.size(); i++) {
-                        if(listData.get(i).getMateriHarga().equals("0")){
+                        if (listData.get(i).getMateriHarga().equals("0")) {
                             listFreeLearn.add(new DataMateriItem(listData.get(i).getMateriJmlModul(),
                                     listData.get(i).getMateriXp(),
                                     listData.get(i).getMateriWaktu(),
@@ -900,7 +903,7 @@ public class MainPresenter implements
 
                 if (response.body().isSukses()) {
                     for (int i = 0; i < listData.size(); i++) {
-                        if(!listData.get(i).getMateriHarga().equals("0")){
+                        if (!listData.get(i).getMateriHarga().equals("0")) {
                             listPayLearn.add(new DataMateriItem(listData.get(i).getMateriJmlModul(),
                                     listData.get(i).getMateriXp(),
                                     listData.get(i).getMateriWaktu(),
@@ -949,7 +952,7 @@ public class MainPresenter implements
     private RecyclerView rvContentByIdModul;
 
     @Override
-    public void setRecyclerViewContentByIdModul(RecyclerView rvContentByIdModul) {
+    public void setViewForContent(RecyclerView rvContentByIdModul) {
         this.rvContentByIdModul = rvContentByIdModul;
     }
 
@@ -981,7 +984,12 @@ public class MainPresenter implements
     private void initDataToRecyclerContentModul() {
         adapterContentList = new AdapterContentList(context, listContentByModul);
         rvContentByIdModul.setAdapter(adapterContentList);
-        rvContentByIdModul.setLayoutManager(new LinearLayoutManager(context));
+        rvContentByIdModul.setLayoutManager(new LinearLayoutManager(context) {
+            @Override
+            public boolean canScrollVertically() {
+                return false;
+            }
+        });
         rvContentByIdModul.setHasFixedSize(true);
     }
 
@@ -1084,7 +1092,7 @@ public class MainPresenter implements
         RetroServer.getInstance().regisToTableBelajar(userId, materiId).enqueue(new Callback<ResponseRegisToTableBelajar>() {
             @Override
             public void onResponse(Call<ResponseRegisToTableBelajar> call, Response<ResponseRegisToTableBelajar> response) {
-                if (response.body().isSukses()){
+                if (response.body().isSukses()) {
                     shortToast(response.body().getPesan());
                 } else {
                     shortToast(response.body().getPesan());
@@ -1116,13 +1124,13 @@ public class MainPresenter implements
                 List<DataListModulByModulIdStatusItem> list1 = response.body().getDataListModulByModulIdStatus();
                 ArrayList<DataListModulByModulIdItem> listDataListModul = new ArrayList<>();
                 ArrayList<DataListModulByModulIdStatusItem> listDataListModulStatus = new ArrayList<>();
-                if (response.body().isSukses()){
-                    for (int i=0; i<list.size(); i++)   {
+                if (response.body().isSukses()) {
+                    for (int i = 0; i < list.size(); i++) {
                         listDataListModul.add(new DataListModulByModulIdItem(
                                 list.get(i).getMateriId(),
                                 list.get(i).getModulId(),
                                 list.get(i).getModulJudul()));
-                        if (i>(list1.size()-1)){
+                        if (i > (list1.size() - 1)) {
                             listDataListModulStatus.add(new DataListModulByModulIdStatusItem(
                                     "",
                                     "",
@@ -1139,7 +1147,7 @@ public class MainPresenter implements
                         }
 
                     }
-                    initDataToRecyclerListModulMateri(listDataListModul,listDataListModulStatus);
+                    initDataToRecyclerListModulMateri(listDataListModul, listDataListModulStatus);
                 } else {
                     shortToast("Data tidak ada!!!");
                 }
@@ -1234,10 +1242,10 @@ public class MainPresenter implements
             public void onResponse(Call<ResponseListMyLearn> call, Response<ResponseListMyLearn> response) {
                 List<DataListMyLearnItem> list = response.body().getDataListMyLearn();
                 ArrayList<DataListMyLearnItem> dataMyLearnList = new ArrayList<>();
-                for (int i=0; i<list.size(); i++){
-                    dataMyLearnList.add(new DataListMyLearnItem(list.get(i).getPmbyBukti(),list.get(i).getPmbyId(),list.get(i).getMateriPlatform(),
-                            list.get(i).getPmbyTanggal(),list.get(i).getMateriNama(),list.get(i).getUserId(),list.get(i).getPmbyBatas(),
-                            list.get(i).getMateriId(),list.get(i).getPmbyStatus(),list.get(i).getMateriGambar()));
+                for (int i = 0; i < list.size(); i++) {
+                    dataMyLearnList.add(new DataListMyLearnItem(list.get(i).getPmbyBukti(), list.get(i).getPmbyId(), list.get(i).getMateriPlatform(),
+                            list.get(i).getPmbyTanggal(), list.get(i).getMateriNama(), list.get(i).getUserId(), list.get(i).getPmbyBatas(),
+                            list.get(i).getMateriId(), list.get(i).getPmbyStatus(), list.get(i).getMateriGambar()));
                 }
                 initDataMyLearnListToRvMyLearnProfil(dataMyLearnList);
             }
@@ -1251,7 +1259,7 @@ public class MainPresenter implements
 
     private void initDataMyLearnListToRvMyLearnProfil(ArrayList<DataListMyLearnItem> dataMyLearnList) {
         AdapterMyLearnListForProfil adapterMyLearnListForProfil = new AdapterMyLearnListForProfil(context, dataMyLearnList);
-        rvMyLearnTersediaForProfil.setLayoutManager(new LinearLayoutManager(context){
+        rvMyLearnTersediaForProfil.setLayoutManager(new LinearLayoutManager(context) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -1268,7 +1276,7 @@ public class MainPresenter implements
             public void onResponse(Call<ResponseMyLearnProgress> call, Response<ResponseMyLearnProgress> response) {
                 List<DataMyLearnProgressItem> list = response.body().getDataMyLearn();
                 ArrayList<DataMyLearnProgressItem> dataMyLearnProgress = new ArrayList<>();
-                for (int i=0; i<list.size(); i++){
+                for (int i = 0; i < list.size(); i++) {
                     dataMyLearnProgress.add(new DataMyLearnProgressItem(
                             list.get(i).getBelajarStatus(),
                             list.get(i).getMateriXp(),
@@ -1310,7 +1318,7 @@ public class MainPresenter implements
         AdapterMyLearnProgressForProfil adapterMyLearnProgressForProfil = new AdapterMyLearnProgressForProfil(context, dataMyLearnProgress);
         rvMyLearnProgressUser.setAdapter(adapterMyLearnProgressForProfil);
         rvMyLearnProgressUser.setHasFixedSize(true);
-        rvMyLearnProgressUser.setLayoutManager(new LinearLayoutManager(context){
+        rvMyLearnProgressUser.setLayoutManager(new LinearLayoutManager(context) {
             @Override
             public boolean canScrollVertically() {
                 return false;
@@ -1321,6 +1329,7 @@ public class MainPresenter implements
     ////////////////////////////////////////////////////////////////////////////////////////////////I_MYLEARN
 
     private RecyclerView rvMyLearn;
+
     @Override
     public void setViewForMyLearn(RecyclerView rvMyLearn) {
         this.rvMyLearn = rvMyLearn;
@@ -1331,12 +1340,12 @@ public class MainPresenter implements
         RetroServer.getInstance().getDetailPmbyByIdUser(sessionManager.getUserId()).enqueue(new Callback<ResponseDetailPembayaranUser>() {
             @Override
             public void onResponse(Call<ResponseDetailPembayaranUser> call, Response<ResponseDetailPembayaranUser> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     assert response.body() != null;
                     List<DataDetailPembayaranUserItem> data = response.body().getDataDetailPembayaranUser();
                     ArrayList<DataDetailPembayaranUserItem> listDataDetailPembayaranUser = new ArrayList<>();
                     assert data != null;
-                    for (int i=0; i<data.size(); i++){
+                    for (int i = 0; i < data.size(); i++) {
                         listDataDetailPembayaranUser.add(new DataDetailPembayaranUserItem(
                                 data.get(0).getPmbyBukti(),
                                 data.get(0).getMateriXp(),
