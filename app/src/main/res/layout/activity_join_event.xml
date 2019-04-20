@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:padding="16dp"
+    android:gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.JoinEvent">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableRow android:weightSum="10">
+
+            <TextView
+                android:layout_weight="1"
+                android:text="Nama" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text=":" />
+
+            <TextView android:id="@+id/user_name_join" />
+        </TableRow>
+
+        <TableRow android:weightSum="10">
+
+            <TextView
+                android:layout_weight="1"
+                android:text="Email" />
+
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text=":" />
+
+            <TextView android:id="@+id/email_join" />
+        </TableRow>
+    </TableLayout>
+
+    <Button
+        android:layout_gravity="end"
+        android:id="@+id/btn_join_now"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="join Now" />
+</LinearLayout>

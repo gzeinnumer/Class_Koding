@@ -34,6 +34,8 @@ import com.gzeinnumer.class_koding.activity.Login;
 import com.gzeinnumer.class_koding.activity.Parent;
 import com.gzeinnumer.class_koding.activity.Register;
 import com.gzeinnumer.class_koding.adapter.AdapterContentList;
+import com.gzeinnumer.class_koding.adapter.AdapterEvent;
+import com.gzeinnumer.class_koding.adapter.AdapterEventHome;
 import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterModulList;
@@ -60,6 +62,7 @@ import com.gzeinnumer.class_koding.model.ResponseDataUser;
 import com.gzeinnumer.class_koding.model.ResponseDetailPembayaranUser;
 import com.gzeinnumer.class_koding.model.ResponseEvent;
 import com.gzeinnumer.class_koding.model.ResponseGetPembayaran;
+import com.gzeinnumer.class_koding.model.ResponseJoinEvent;
 import com.gzeinnumer.class_koding.model.ResponseListModul;
 import com.gzeinnumer.class_koding.model.ResponseListMyLearn;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
@@ -94,7 +97,9 @@ public class MainPresenter implements
         MainInterface.I_DaftarModul,
         MainInterface.I_ProfilFragment,
         MainInterface.I_MyLearn,
-        MainInterface.I_EventFragment {
+        MainInterface.I_EventFragment,
+        MainInterface.I_DetailEvent,
+        MainInterface.I_JoinEvent {
 
     private Context context;
 
@@ -115,7 +120,6 @@ public class MainPresenter implements
     private void intent(Class destination) {
         context.startActivity(new Intent(context, destination));
     }
-
     /**
      * end global function
      */
@@ -263,7 +267,6 @@ public class MainPresenter implements
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_LEARNFRAGMENT
     private AdapterLearn adapterLearn;
-    private ArrayList<DataMateriItem> listMateri = new ArrayList<>();
     private RecyclerView rvLearn;
 
     @Override
@@ -300,6 +303,7 @@ public class MainPresenter implements
             @Override
             public void onResponse(Call<ResponseMateri> call, Response<ResponseMateri> response) {
                 List<DataMateriItem> listData = response.body().getDataMateri();
+                ArrayList<DataMateriItem> listMateri = new ArrayList<>();
                 listMateri = new ArrayList<>();
 
                 if (response.body().isSukses()) {
@@ -325,7 +329,7 @@ public class MainPresenter implements
                     }
                 }
                 if (listMateri.size() > 0) {
-                    initToRecyclerLearn();
+                    initToRecyclerLearn(listMateri);
                 } else {
                     shortToast("data tidak ada!!");
                 }
@@ -338,7 +342,7 @@ public class MainPresenter implements
         });
     }
 
-    private void initToRecyclerLearn() {
+    private void initToRecyclerLearn(ArrayList<DataMateriItem> listMateri) {
         adapterLearn = new AdapterLearn(context, listMateri, false);
         rvLearn.setAdapter(adapterLearn);
         rvLearn.setHasFixedSize(true);
@@ -366,12 +370,11 @@ public class MainPresenter implements
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_EVENTFRAGMENT
-    private ArrayList<DataMateriItem> listEvent = new ArrayList<>();
-    private AdapterLearn adapterEvent;
+    private AdapterEvent adapterEvent;
     private RecyclerView rvEvent;
 
     @Override
-    public void setAdapterEvent(AdapterLearn adapter) {
+    public void setAdapterEvent(AdapterEvent adapter) {
         this.adapterEvent = adapter;
     }
 
@@ -382,7 +385,7 @@ public class MainPresenter implements
     }
 
     @Override
-    public void setAdapterFirstEvent(AdapterLearn adapter) {
+    public void setAdapterFirstEvent(AdapterEvent adapter) {
         rvEvent.setAdapter(adapter);
         rvEvent.setHasFixedSize(true);
         rvEvent.setLayoutManager(new GridLayoutManager(context, 3));
@@ -393,59 +396,52 @@ public class MainPresenter implements
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                initDataEvent();
+                initDataEventFragment();
                 adapterEvent.isShimmer = false;
                 adapterEvent.notifyDataSetChanged();
             }
         }, 4999);
     }
 
-    private void initDataEvent() {
-        RetroServer.getInstance().getAllMateri().enqueue(new Callback<ResponseMateri>() {
-            @Override
-            public void onResponse(Call<ResponseMateri> call, Response<ResponseMateri> response) {
-                List<DataMateriItem> listData = response.body().getDataMateri();
-                listEvent = new ArrayList<>();
 
+    private void initDataEventFragment() {
+        RetroServer.getInstance().getAllEvent().enqueue(new Callback<ResponseEvent>() {
+            @Override
+            public void onResponse(Call<ResponseEvent> call, Response<ResponseEvent> response) {
+                List<DataEventItem> list = response.body().getDataEvent();
+                ArrayList<DataEventItem> listDataEventFragment = new ArrayList();
                 if (response.body().isSukses()) {
-                    for (int i = 0; i < listData.size(); i++) {
-                        listEvent.add(new DataMateriItem(listData.get(i).getMateriJmlModul(),
-                                listData.get(i).getMateriXp(),
-                                listData.get(i).getMateriWaktu(),
-                                listData.get(i).getMateriNama(),
-                                listData.get(i).getMateriDiskon(),
-                                listData.get(i).getMateriLevel(),
-                                listData.get(i).getMateriJumSiswa(),
-                                listData.get(i).getMateriGambar(),
-                                listData.get(i).getMateriId(),
-                                listData.get(i).getMitraId(),
-                                listData.get(i).getMateriVideo(),
-                                listData.get(i).getMateriRating(),
-                                listData.get(i).getJenisKelasId(),
-                                listData.get(i).getMateriDeadline(),
-                                listData.get(i).getMateriPlatform(),
-                                listData.get(i).getMateriDeskripsi(),
-                                listData.get(i).getMateriHarga(),
-                                listData.get(i).getMateriTgl()));
+                    for (int i = 0; i < list.size(); i++) {
+                        listDataEventFragment.add(new DataEventItem(
+                                list.get(i).getEventGambar(),
+                                list.get(i).getEventVideo(),
+                                list.get(i).getEventNama(),
+                                list.get(i).getEventTglMulai(),
+                                list.get(i).getMitraId(),
+                                list.get(i).getEventTglSelesai(),
+                                list.get(i).getEventXp(),
+                                list.get(i).getEventAlamat(),
+                                list.get(i).getEventDeskripsi(),
+                                list.get(i).getEventKuota(),
+                                list.get(i).getEventJenis(),
+                                list.get(i).getEventId(),
+                                list.get(i).getEventTiket(),
+                                list.get(i).getEventKota()));
                     }
-                }
-                if (listEvent.size() > 0) {
-                    initToRecyclerEvent();
-                } else {
-                    shortToast("data tidak ada!!");
+                    initListDataEventToEventFragment(listDataEventFragment);
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseMateri> call, Throwable t) {
-                shortToast("response tidak ada!!");
+            public void onFailure(Call<ResponseEvent> call, Throwable t) {
+
             }
         });
     }
 
-    private void initToRecyclerEvent() {
-        adapterEvent = new AdapterLearn(context, listEvent, false);
-        rvEvent.setAdapter(adapterEvent);
+    private void initListDataEventToEventFragment(ArrayList<DataEventItem> listDataEventFragment) {
+        AdapterEvent adapter = new AdapterEvent(context, listDataEventFragment, false);
+        rvEvent.setAdapter(adapter);
         rvEvent.setHasFixedSize(true);
         rvEvent.setLayoutManager(new GridLayoutManager(context, 3));
     }
@@ -468,7 +464,6 @@ public class MainPresenter implements
                 adapterEvent.getFilter().filter(String.valueOf(s));
             }
         });
-
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_DETAILMATERI
@@ -529,7 +524,9 @@ public class MainPresenter implements
     }
 
     @Override
-    public void onBuyLearnViewed(String materiId, String userId, String materiHarga) {
+    public void onBuyLearnViewed(String materiId,
+                                 String userId,
+                                 String materiHarga) {
         RetroServer.getInstance().setOnBuyLearnViewed(materiId, userId, materiHarga).enqueue(new Callback<ResponseBuyViewed>() {
             @Override
             public void onResponse(Call<ResponseBuyViewed> call, Response<ResponseBuyViewed> response) {
@@ -543,7 +540,10 @@ public class MainPresenter implements
         });
     }
 
-    private void initVisibilitiButtonForDetail(DataMateriItem current, final Button mulaiDetailItem, final Button beliDetailItem, final Button sabarDetailItem) {
+    private void initVisibilitiButtonForDetail(DataMateriItem current,
+                                               final Button mulaiDetailItem,
+                                               final Button beliDetailItem,
+                                               final Button sabarDetailItem) {
         if (current.getMateriHarga().equals("0")) {
             mulaiDetailItem.setVisibility(View.VISIBLE);
         } else {
@@ -571,7 +571,6 @@ public class MainPresenter implements
     ////////////////////////////////////////////////////////////////////////////////////////////////I_HOMEFRAGMENT
 
     private SliderView sliderIklanEvent;
-    private List<Fragment> fragmentsListIklanEvent;
     private ArrayList<DataEventItem> listIklanEvent;
     private ShimmerFrameLayout shimmerIklanEventItem;
 
@@ -582,27 +581,30 @@ public class MainPresenter implements
     private LinearLayout mLinearLayoutIklanEvent;
 
     @Override
-    public void setViewForIklanEventHomeFragment(SliderView sliderIklanEvent, ShimmerFrameLayout shimmerEventItem, LinearLayout pagesContainerEvent) {
+    public void setViewForIklanEventHomeFragment(SliderView sliderIklanEvent,
+                                                 ShimmerFrameLayout shimmerEventItem,
+                                                 LinearLayout pagesContainerEvent) {
         this.sliderIklanEvent = sliderIklanEvent;
         this.shimmerIklanEventItem = shimmerEventItem;
         this.mLinearLayoutIklanEvent = pagesContainerEvent;
     }
 
     @Override
-    public void setContexForIklanEventHomeFragment(FragmentManager fragmentManager, FragmentActivity activity) {
+    public void setContexForIklanEventHomeFragment(FragmentManager fragmentManager,
+                                                   FragmentActivity activity) {
         this.fragmentManager = fragmentManager;
         this.fragmentActivity = activity;
     }
 
     @Override
-    public void iniDataEvent() {
+    public void iniDataEventHome() {
         RetroServer.getInstance().getAllEvent().enqueue(new Callback<ResponseEvent>() {
             @Override
             public void onResponse(Call<ResponseEvent> call, Response<ResponseEvent> response) {
                 List<DataEventItem> list = response.body().getDataEvent();
                 listIklanEvent = new ArrayList();
                 sliderIklanEvent.setDurationScroll(1000);
-                fragmentsListIklanEvent = new ArrayList<>();
+                List<Fragment> fragmentsListIklanEvent = new ArrayList<>();
                 if (response.body().isSukses()) {
                     for (int i = 0; i < list.size(); i++) {
                         listIklanEvent.add(new DataEventItem(
@@ -622,7 +624,7 @@ public class MainPresenter implements
                                 list.get(i).getEventKota()));
                         fragmentsListIklanEvent.add(FragmentSlider.newInstance(MyConstant.IMAGE_URL_EVENT + list.get(i).getEventGambar(), list.get(i).getEventNama()));
                     }
-                    iniDataIklanEventToFlipper();
+                    iniDataIklanEventToFlipper(fragmentsListIklanEvent);
                 }
             }
 
@@ -633,7 +635,7 @@ public class MainPresenter implements
         });
     }
 
-    private void iniDataIklanEventToFlipper() {
+    private void iniDataIklanEventToFlipper(List<Fragment> fragmentsListIklanEvent) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -659,7 +661,9 @@ public class MainPresenter implements
     private LinearLayout mLinearLayoutIklanMateri;
 
     @Override
-    public void setViewForIklanMateriHomeFragment(SliderView sliderIklanMateri, ShimmerFrameLayout shimmerMateriItem, LinearLayout pagesContainerMateri) {
+    public void setViewForIklanMateriHomeFragment(SliderView sliderIklanMateri,
+                                                  ShimmerFrameLayout shimmerMateriItem,
+                                                  LinearLayout pagesContainerMateri) {
         this.sliderIklanMateri = sliderIklanMateri;
         this.shimmerIklanMateriItem = shimmerMateriItem;
         this.mLinearLayoutIklanMateri = pagesContainerMateri;
@@ -731,7 +735,9 @@ public class MainPresenter implements
     private LinearLayout mLinearLayoutIklanKomersial;
 
     @Override
-    public void setViewForIklanKomersialHomeFragment(SliderView sliderIklanKomersial, ShimmerFrameLayout shimmerKomersialItem, LinearLayout pagesContainerKomersial) {
+    public void setViewForIklanKomersialHomeFragment(SliderView sliderIklanKomersial,
+                                                     ShimmerFrameLayout shimmerKomersialItem,
+                                                     LinearLayout pagesContainerKomersial) {
         this.sliderIklanKomersial = sliderIklanKomersial;
         this.shimmerIklanKomersialItem = shimmerKomersialItem;
         this.mLinearLayoutIklanKomersial = pagesContainerKomersial;
@@ -1045,6 +1051,82 @@ public class MainPresenter implements
         });
     }
 
+    private RecyclerView rvEventHome;
+    private AdapterEventHome adapterEventHome;
+    private ArrayList<DataEventItem> listEventHome = new ArrayList<>();
+
+    @Override
+    public void setViewEventForHome(RecyclerView rvEventHome) {
+        this.rvEventHome = rvEventHome;
+    }
+
+    @Override
+    public void setAdapterEventHome(AdapterEventHome adapterEventHome) {
+        this.adapterEventHome = adapterEventHome;
+    }
+
+    @Override
+    public void setAdapterFirstEventHome(AdapterEventHome adapter) {
+        rvEventHome.setAdapter(adapter);
+        rvEventHome.setHasFixedSize(true);
+        rvEventHome.setLayoutManager(new GridLayoutManager(context, 3));
+    }
+
+    @Override
+    public void startShimmerEventHome() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                initDataEventHome();
+                adapterEventHome.isShimmer = false;
+                adapterEventHome.notifyDataSetChanged();
+            }
+        }, 4999);
+    }
+
+    private void initDataEventHome() {
+        RetroServer.getInstance().getAllEvent().enqueue(new Callback<ResponseEvent>() {
+            @Override
+            public void onResponse(Call<ResponseEvent> call, Response<ResponseEvent> response) {
+                List<DataEventItem> list = response.body().getDataEvent();
+                listEventHome = new ArrayList();
+                if (response.body().isSukses()) {
+                    for (int i = 0; i < list.size(); i++) {
+                        listEventHome.add(new DataEventItem(
+                                list.get(i).getEventGambar(),
+                                list.get(i).getEventVideo(),
+                                list.get(i).getEventNama(),
+                                list.get(i).getEventTglMulai(),
+                                list.get(i).getMitraId(),
+                                list.get(i).getEventTglSelesai(),
+                                list.get(i).getEventXp(),
+                                list.get(i).getEventAlamat(),
+                                list.get(i).getEventDeskripsi(),
+                                list.get(i).getEventKuota(),
+                                list.get(i).getEventJenis(),
+                                list.get(i).getEventId(),
+                                list.get(i).getEventTiket(),
+                                list.get(i).getEventKota()));
+                    }
+                    initListDataEventToEventHome(listEventHome);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseEvent> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void initListDataEventToEventHome(ArrayList<DataEventItem> listEventHome) {
+        AdapterEventHome adapter = new AdapterEventHome(context, listEventHome, false);
+        rvEventHome.setAdapter(adapter);
+        rvEventHome.setHasFixedSize(true);
+        rvEventHome.setLayoutManager(new GridLayoutManager(context, 3));
+    }
+
+
     private void initToRecyclerPayLearn() {
         adapterPayLearn = new AdapterPayLearn(context, listPayLearn, false);
         rvPayLearn.setAdapter(adapterPayLearn);
@@ -1266,7 +1348,8 @@ public class MainPresenter implements
         });
     }
 
-    private void initDataToRecyclerListModulMateri(ArrayList<DataListModulByModulIdItem> listDataListModul, ArrayList<DataListModulByModulIdStatusItem> listDataListModulStatus) {
+    private void initDataToRecyclerListModulMateri(ArrayList<DataListModulByModulIdItem> listDataListModul,
+                                                   ArrayList<DataListModulByModulIdStatusItem> listDataListModulStatus) {
         AdapterModulList adapterModulList = new AdapterModulList(context, listDataListModul, listDataListModulStatus);
         rvListModulMateri.setAdapter(adapterModulList);
         rvListModulMateri.setHasFixedSize(true);
@@ -1329,7 +1412,15 @@ public class MainPresenter implements
     private RecyclerView rvMyLearnTersediaForProfil;
 
     @Override
-    public void setViewForProfilFragment(ImageView imageUser, TextView emailUser, TextView idUser, TextView asalUser, TextView xpUser, TextView dateUser, TextView namaUser, RecyclerView rvMyLearnProgressUser, RecyclerView rvMyLearnTersediaForProfil) {
+    public void setViewForProfilFragment(ImageView imageUser,
+                                         TextView emailUser,
+                                         TextView idUser,
+                                         TextView asalUser,
+                                         TextView xpUser,
+                                         TextView dateUser,
+                                         TextView namaUser,
+                                         RecyclerView rvMyLearnProgressUser,
+                                         RecyclerView rvMyLearnTersediaForProfil) {
         this.imageUser = imageUser;
         this.emailUser = emailUser;
         this.idUser = idUser;
@@ -1505,5 +1596,93 @@ public class MainPresenter implements
         rvMyLearn.setHasFixedSize(true);
     }
 
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////I_DETAILEVENT
+
+    private ImageView eventGambar;
+    private WebView eventVideo;
+    private TextView eventNama;
+    private TextView eventTglMulai;
+    private TextView eventMitraId;
+    private TextView eventTglSelesai;
+    private TextView eventXp;
+    private TextView eventAlamat;
+    private TextView eventDeskripsi;
+    private TextView eventKuota;
+    private TextView eventJenis;
+    private TextView eventId;
+    private ImageView eventTiket;
+    private TextView eventKota;
+
+    @Override
+    public void setViewForDetailEvent(ImageView eventGambar,
+                                      WebView eventVideo,
+                                      TextView eventNama,
+                                      TextView eventTglMulai,
+                                      TextView eventMitraId,
+                                      TextView eventTglSelesai,
+                                      TextView eventXp,
+                                      TextView eventAlamat,
+                                      TextView eventDeskripsi,
+                                      TextView eventKuota,
+                                      TextView eventJenis,
+                                      TextView eventId,
+                                      ImageView eventTiket,
+                                      TextView eventKota) {
+        this.eventGambar = eventGambar;
+        this.eventVideo = eventVideo;
+        this.eventNama = eventNama;
+        this.eventTglMulai = eventTglMulai;
+        this.eventMitraId = eventMitraId;
+        this.eventTglSelesai = eventTglSelesai;
+        this.eventXp = eventXp;
+        this.eventAlamat = eventAlamat;
+        this.eventDeskripsi = eventDeskripsi;
+        this.eventKuota = eventKuota;
+        this.eventJenis = eventJenis;
+        this.eventId = eventId;
+        this.eventTiket = eventTiket;
+        this.eventKota = eventKota;
+
+    }
+
+    @Override
+    public void setValueForDetailEvent(DataEventItem dataEventItem) {
+//        eventGambar
+//        eventVideo
+        eventNama.setText(dataEventItem.getEventNama());
+        eventTglMulai.setText(dataEventItem.getEventTglMulai());
+        eventMitraId.setText(dataEventItem.getMitraId());
+        eventTglSelesai.setText(dataEventItem.getEventTglSelesai());
+        eventXp.setText(dataEventItem.getEventXp());
+        eventAlamat.setText(dataEventItem.getEventAlamat());
+        eventDeskripsi.setText(dataEventItem.getEventDeskripsi());
+        eventKuota.setText(dataEventItem.getEventKuota());
+        eventJenis.setText(dataEventItem.getEventJenis());
+        eventId.setText(dataEventItem.getEventId());
+//        eventTiket
+        eventKota.setText(dataEventItem.getEventKota());
+
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////I_JOINEVENT
+
+    @Override
+    public void regisToTableJoinEvent(String userId, String event_id) {
+        RetroServer.getInstance().joinEvent(userId, event_id).enqueue(new Callback<ResponseJoinEvent>() {
+            @Override
+            public void onResponse(Call<ResponseJoinEvent> call, Response<ResponseJoinEvent> response) {
+                shortToast(response.body().getPesan());
+                if (response.body().isSukses()) {
+                    intent(Parent.class);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseJoinEvent> call, Throwable t) {
+
+            }
+        });
+    }
 
 }

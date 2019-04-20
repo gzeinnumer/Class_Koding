@@ -1,8 +1,11 @@
 package com.gzeinnumer.class_koding.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.google.gson.annotations.SerializedName;
 
-public class DataEventItem{
+public class DataEventItem implements Parcelable {
 
 	@SerializedName("event_gambar")
 	private String eventGambar;
@@ -62,6 +65,35 @@ public class DataEventItem{
 		this.eventTiket = eventTiket;
 		this.eventKota = eventKota;
 	}
+
+	protected DataEventItem(Parcel in) {
+		eventGambar = in.readString();
+		eventVideo = in.readString();
+		eventNama = in.readString();
+		eventTglMulai = in.readString();
+		mitraId = in.readString();
+		eventTglSelesai = in.readString();
+		eventXp = in.readString();
+		eventAlamat = in.readString();
+		eventDeskripsi = in.readString();
+		eventKuota = in.readString();
+		eventJenis = in.readString();
+		eventId = in.readString();
+		eventTiket = in.readString();
+		eventKota = in.readString();
+	}
+
+	public static final Creator<DataEventItem> CREATOR = new Creator<DataEventItem>() {
+		@Override
+		public DataEventItem createFromParcel(Parcel in) {
+			return new DataEventItem(in);
+		}
+
+		@Override
+		public DataEventItem[] newArray(int size) {
+			return new DataEventItem[size];
+		}
+	};
 
 	public void setEventGambar(String eventGambar){
 		this.eventGambar = eventGambar;
@@ -173,5 +205,28 @@ public class DataEventItem{
 
 	public String getEventKota(){
 		return eventKota;
+	}
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(eventGambar);
+		dest.writeString(eventVideo);
+		dest.writeString(eventNama);
+		dest.writeString(eventTglMulai);
+		dest.writeString(mitraId);
+		dest.writeString(eventTglSelesai);
+		dest.writeString(eventXp);
+		dest.writeString(eventAlamat);
+		dest.writeString(eventDeskripsi);
+		dest.writeString(eventKuota);
+		dest.writeString(eventJenis);
+		dest.writeString(eventId);
+		dest.writeString(eventTiket);
+		dest.writeString(eventKota);
 	}
 }

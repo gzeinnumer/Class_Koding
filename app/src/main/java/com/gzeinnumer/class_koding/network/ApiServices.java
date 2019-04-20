@@ -6,6 +6,7 @@ import com.gzeinnumer.class_koding.model.ResponseDataUser;
 import com.gzeinnumer.class_koding.model.ResponseDetailPembayaranUser;
 import com.gzeinnumer.class_koding.model.ResponseEvent;
 import com.gzeinnumer.class_koding.model.ResponseGetPembayaran;
+import com.gzeinnumer.class_koding.model.ResponseJoinEvent;
 import com.gzeinnumer.class_koding.model.ResponseListModul;
 import com.gzeinnumer.class_koding.model.ResponseListMyLearn;
 import com.gzeinnumer.class_koding.model.ResponseLogin;
@@ -108,4 +109,10 @@ public interface ApiServices {
     Call<ResponseUpdateProgress> updateProgress(@Field("user_id") String user_id,
                                                 @Field("materi_id") String materi_id,
                                                 @Field("modul_id") String modul_id);
+
+    @FormUrlEncoded
+    @POST("join_event")
+    Call<ResponseJoinEvent> joinEvent(@Field("user_id") String user_id,
+                                      @Field("event_id") String event_id);
+
 }

@@ -1,6 +1,7 @@
 package com.gzeinnumer.class_koding.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
@@ -10,8 +11,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import com.gzeinnumer.class_koding.R;
+import com.gzeinnumer.class_koding.activity.DetailEvent;
+import com.gzeinnumer.class_koding.adapter.AdapterEvent;
 import com.gzeinnumer.class_koding.adapter.AdapterLearn;
 import com.gzeinnumer.class_koding.helper.MyFunctionFragment;
+import com.gzeinnumer.class_koding.model.DataEventItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
@@ -35,13 +39,19 @@ public class EventFragment extends MyFunctionFragment {
     RecyclerView rvEvent;
     Unbinder unbinder;
 
-    private ArrayList<DataMateriItem> list = new ArrayList<>();
-    private AdapterLearn adapter;
+    private ArrayList<DataEventItem> list = new ArrayList<>();
+    private AdapterEvent adapter;
 
     private View view;
 
     public EventFragment() {
         // Required empty public constructor
+    }
+
+    public static void myOnClickAdapter(DataEventItem dataEventItem) {
+        Intent intent = new Intent(contextFragment, DetailEvent.class);
+        intent.putExtra(DetailEvent.DATA, dataEventItem);
+        contextFragment.startActivity(intent);
     }
 
 
@@ -55,7 +65,7 @@ public class EventFragment extends MyFunctionFragment {
 
         i_eventFragment = new MainPresenter(contextFragment);
 
-        adapter = new AdapterLearn(contextFragment, list, true);
+        adapter = new AdapterEvent(contextFragment, list, true);
         i_eventFragment.setRecyclerViewEvent(rvEvent);
         i_eventFragment.setAdapterFirstEvent(adapter);
         i_eventFragment.startShimmerEventFragmentEvent();

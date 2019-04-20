@@ -211,5 +211,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"/>
+
+
+        <TextView
+            style="@style/FontTheme.SubTitleHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Event" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_event_home"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
     </LinearLayout>
 </ScrollView>

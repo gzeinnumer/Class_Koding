@@ -11,12 +11,15 @@ import android.widget.RelativeLayout;
 
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.gzeinnumer.class_koding.R;
+import com.gzeinnumer.class_koding.activity.DetailEvent;
 import com.gzeinnumer.class_koding.activity.DetailMateri;
+import com.gzeinnumer.class_koding.adapter.AdapterEventHome;
 import com.gzeinnumer.class_koding.adapter.AdapterFreeLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterNewLearn;
 import com.gzeinnumer.class_koding.adapter.AdapterPayLearn;
 import com.gzeinnumer.class_koding.helper.MyFunctionFragment;
 import com.gzeinnumer.class_koding.helper.sliderevent.SliderView;
+import com.gzeinnumer.class_koding.model.DataEventItem;
 import com.gzeinnumer.class_koding.model.DataMateriItem;
 import com.gzeinnumer.class_koding.presenter.MainInterface;
 import com.gzeinnumer.class_koding.presenter.MainPresenter;
@@ -67,20 +70,30 @@ public class HomeFragment extends MyFunctionFragment {
     RecyclerView rvFreeLearn;
     @BindView(R.id.rv_pay_learn)
     RecyclerView rvPayLearn;
+    @BindView(R.id.rv_event_home)
+    RecyclerView rvEventHome;
 
     private ArrayList<DataMateriItem> listNewLearn = new ArrayList<>();
     private ArrayList<DataMateriItem> listFreeLearn = new ArrayList<>();
     private ArrayList<DataMateriItem> listPayLearn = new ArrayList<>();
+    private ArrayList<DataEventItem> listEvent = new ArrayList<>();
 
     private AdapterNewLearn adapterNewLearn;
     private AdapterFreeLearn adapterFreeLearn;
     private AdapterPayLearn adapterPayLearn;
+    private AdapterEventHome adapterEventHome;
 
     private View view;
     private Unbinder unbinder;
 
     public HomeFragment() {
         // Required empty public constructor
+    }
+
+    public static void myOnClickAdapterEvent(DataEventItem dataEventItem) {
+        Intent intent = new Intent(contextFragment, DetailEvent.class);
+        intent.putExtra(DetailEvent.DATA, dataEventItem);
+        contextFragment.startActivity(intent);
     }
 
     @Override
@@ -99,7 +112,7 @@ public class HomeFragment extends MyFunctionFragment {
         //SLIDER IKLAN EVENT
         i_homeFragment.setViewForIklanEventHomeFragment(sliderIklanEvent, shimmerEventItem, pagesContainerEvent);
         i_homeFragment.setContexForIklanEventHomeFragment(getFragmentManager(), getActivity());
-        i_homeFragment.iniDataEvent();
+        i_homeFragment.iniDataEventHome();
 
         //SLIDER IKLAN MATERI
         i_homeFragment.setViewForIklanMateriHomeFragment(sliderIklanMateri, shimmerMateriItem, pagesContainerMateri);
@@ -127,6 +140,10 @@ public class HomeFragment extends MyFunctionFragment {
         i_homeFragment.setAdapterFirstPayLearn(adapterPayLearn);
         i_homeFragment.startShimmerPayLearn();
 
+        adapterEventHome = new AdapterEventHome(contextFragment, listEvent, true);
+        i_homeFragment.setViewEventForHome(rvEventHome);
+        i_homeFragment.setAdapterFirstEventHome(adapterEventHome);
+        i_homeFragment.startShimmerEventHome();
 
         return view;
     }
@@ -142,6 +159,8 @@ public class HomeFragment extends MyFunctionFragment {
 
         //RECYCLERVIEW MATERI BERBAYAR
         i_homeFragment.setAdapterPayLearn(adapterPayLearn);
+
+        i_homeFragment.setAdapterEventHome(adapterEventHome);
 
     }
 
