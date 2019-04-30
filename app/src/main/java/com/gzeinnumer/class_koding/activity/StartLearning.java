@@ -3,6 +3,7 @@ package com.gzeinnumer.class_koding.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -40,6 +41,11 @@ public class StartLearning extends MyFunction {
     private String materi_id;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start_learning);
@@ -70,6 +76,7 @@ public class StartLearning extends MyFunction {
             public void onResponse(Call<ResponseUpdateProgress> call, Response<ResponseUpdateProgress> response) {
                 Intent intent = new Intent(context, DaftarModul.class);
                 intent.putExtra(DaftarModul.DATA, materi_id);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
                 finish();
             }
@@ -85,8 +92,8 @@ public class StartLearning extends MyFunction {
         RetroServer.getInstance().saveProgress(userId, materi_id, modul_id).enqueue(new Callback<ResponseSaveProgress>() {
             @Override
             public void onResponse(Call<ResponseSaveProgress> call, Response<ResponseSaveProgress> response) {
-
-
+                shortToast("sukses");
+                shortToast(response.body().getPesan());
             }
 
             @Override
@@ -94,5 +101,13 @@ public class StartLearning extends MyFunction {
                 shortToast(t.getMessage());
             }
         });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK)) {
+            finish();
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

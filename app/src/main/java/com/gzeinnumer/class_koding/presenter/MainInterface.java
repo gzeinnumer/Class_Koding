@@ -188,11 +188,10 @@ public interface MainInterface {
     }
 
     interface I_DaftarModul {
-        void regisToTableBelajar(String userId, String materiId);
-
         void setViewForDaftarModul(RecyclerView rvListModulMateri);
 
-        void initDataModulList(String materiId);
+        void regisToTableBelajar(String userId, String materiId);
+
     }
 
     interface I_ProfilFragment {

@@ -1,8 +1,11 @@
 package com.gzeinnumer.class_koding.activity;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.widget.TextView;
 
 import com.gzeinnumer.class_koding.R;
@@ -21,6 +24,8 @@ public class DaftarModul extends MyFunction {
     public static final String DATA = "materi_id";
     private MainInterface.I_DaftarModul i_daftarModul;
     private SessionManager sessionManager;
+    @SuppressLint("StaticFieldLeak")
+    public static Activity activity = null;
 
     @BindView(R.id.title_materi)
     TextView titleMateri;
@@ -30,23 +35,30 @@ public class DaftarModul extends MyFunction {
     private String materiId;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_daftar_modul);
         ButterKnife.bind(this);
         setTitle(TAG);
+        activity = this;
         sessionManager = new SessionManager(context);
         materiId = getIntent().getStringExtra(DATA);
         i_daftarModul = new MainPresenter(context);
-        i_daftarModul.regisToTableBelajar(sessionManager.getUserId(),materiId);
         i_daftarModul.setViewForDaftarModul(rvListModulMateri);
-        i_daftarModul.initDataModulList(materiId);
+        i_daftarModul.regisToTableBelajar(sessionManager.getUserId(),materiId);
     }
 
     public static void myOnClickAdapter(DataListModulByModulIdItem mList){
         Intent intent = new Intent(context, StartLearning.class);
         intent.putExtra(StartLearning.DATA,mList.getModulId());
         intent.putExtra(StartLearning.DATA_MATERI_ID,mList.getMateriId());
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         context.startActivity(intent);
     }
 }

@@ -241,7 +241,7 @@ public class MainPresenter implements
             @Override
             public void onResponse(Call<ResponseRegister> call, Response<ResponseRegister> response) {
                 if (response.body().isSukses()) {
-                    shortToast("SuksesDaftar");
+//                    shortToast("SuksesDaftar");
                     intent(Login.class);
                 } else {
                     shortToast("Failed");
@@ -530,7 +530,7 @@ public class MainPresenter implements
         RetroServer.getInstance().setOnBuyLearnViewed(materiId, userId, materiHarga).enqueue(new Callback<ResponseBuyViewed>() {
             @Override
             public void onResponse(Call<ResponseBuyViewed> call, Response<ResponseBuyViewed> response) {
-                shortToast(response.body().getPesan());
+//                shortToast(response.body().getPesan());
             }
 
             @Override
@@ -1276,14 +1276,16 @@ public class MainPresenter implements
     ////////////////////////////////////////////////////////////////////////////////////////////////I_DAFTARMODUL
 
     @Override
-    public void regisToTableBelajar(String userId, String materiId) {
-        RetroServer.getInstance().regisToTableBelajar(userId, materiId).enqueue(new Callback<ResponseRegisToTableBelajar>() {
+    public void regisToTableBelajar(String userId, final String materiId) {
+        RetroServer.getInstance().regisToTableBelajar(sessionManager.getUserId(), materiId).enqueue(new Callback<ResponseRegisToTableBelajar>() {
             @Override
             public void onResponse(Call<ResponseRegisToTableBelajar> call, Response<ResponseRegisToTableBelajar> response) {
                 if (response.body().isSukses()) {
-                    shortToast(response.body().getPesan());
+//                    shortToast(response.body().getPesan());
+                    initDataModulList(materiId);
+
                 } else {
-                    shortToast(response.body().getPesan());
+//                    shortToast(response.body().getPesan());
                 }
             }
 
@@ -1302,8 +1304,7 @@ public class MainPresenter implements
         this.rvListModulMateri = rvListModulMateri;
     }
 
-    @Override
-    public void initDataModulList(final String materiId) {
+    private void initDataModulList(final String materiId) {
         RetroServer.getInstance().getAllListModul(materiId, sessionManager.getUserId()).enqueue(new Callback<ResponseListModul>() {
             @Override
             public void onResponse(Call<ResponseListModul> call, Response<ResponseListModul> response) {
@@ -1667,12 +1668,13 @@ public class MainPresenter implements
 
     ////////////////////////////////////////////////////////////////////////////////////////////////I_JOINEVENT
 
+    //ini
     @Override
     public void regisToTableJoinEvent(String userId, String event_id) {
         RetroServer.getInstance().joinEvent(userId, event_id).enqueue(new Callback<ResponseJoinEvent>() {
             @Override
             public void onResponse(Call<ResponseJoinEvent> call, Response<ResponseJoinEvent> response) {
-                shortToast(response.body().getPesan());
+//                shortToast(response.body().getPesan());
                 if (response.body().isSukses()) {
                     intent(Parent.class);
                 }
