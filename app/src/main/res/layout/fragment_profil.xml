@@ -26,10 +26,10 @@
                 android:padding="4dp">
 
                 <ImageView
-                    android:layout_marginBottom="13dp"
                     android:id="@+id/image_user"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="13dp"
                     android:adjustViewBounds="true"
                     android:src="@drawable/logo_gw2" />
 
@@ -43,11 +43,11 @@
                     app:cardCornerRadius="11dp">
 
                     <LinearLayout
-                        android:padding="4dp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:padding="4dp">
 
                         <TextView
                             android:id="@+id/nama_user"

@@ -14,9 +14,7 @@ import com.bumptech.glide.Glide;
 import com.gzeinnumer.class_koding.R;
 
 
-/**
- * Created by bagicode on 12/04/17.
- */
+//done
 
 public class FragmentSliderMateri extends Fragment {
 

@@ -1,5 +1,5 @@
 package com.gzeinnumer.class_koding.helper.sliderevent;
-
+//done
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.CardView;
@@ -13,10 +13,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.gzeinnumer.class_koding.R;
 
-
-/**
- * Created by bagicode on 12/04/17.
- */
 
 public class FragmentSlider extends Fragment {
 

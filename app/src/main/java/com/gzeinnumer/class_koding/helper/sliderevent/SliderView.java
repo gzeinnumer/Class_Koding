@@ -9,10 +9,8 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Scroller;
 
 import java.lang.reflect.Field;
+//done
 
-/**
- * Created by bagicode on 12/04/17.
- */
 
 public class SliderView extends ViewPager {
 

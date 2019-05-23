@@ -1,5 +1,5 @@
 package com.gzeinnumer.class_koding.adapter;
-
+//done
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +17,33 @@ import android.widget.TextView;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.activity.DetailMateri;
+import com.gzeinnumer.class_koding.fragment.HomeFragment;
+import com.gzeinnumer.class_koding.helper.MyConstant;
+import com.gzeinnumer.class_koding.model.DataMateriItem;
+import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Filterable;
+import android.widget.ImageView;
+import android.widget.RatingBar;
+import android.widget.TextView;
+
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.gzeinnumer.class_koding.R;
 import com.gzeinnumer.class_koding.fragment.HomeFragment;
 import com.gzeinnumer.class_koding.helper.MyConstant;
 import com.gzeinnumer.class_koding.model.DataMateriItem;

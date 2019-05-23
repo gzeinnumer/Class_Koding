@@ -10,9 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
 
-/**
- * Created by bagicode on 12/04/17.
- */
+//done
+
 
 public class SliderIndicatorMateri implements ViewPager.OnPageChangeListener {
     private Context mContext;

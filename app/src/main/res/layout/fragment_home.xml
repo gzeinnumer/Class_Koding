@@ -7,11 +7,11 @@
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        android:padding="4dp"
         android:id="@+id/activity_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:padding="4dp"
         tools:context=".fragment.HomeFragment">
 
         <com.facebook.shimmer.ShimmerFrameLayout
@@ -67,7 +67,6 @@
         </com.facebook.shimmer.ShimmerFrameLayout>
 
 
-
         <com.facebook.shimmer.ShimmerFrameLayout
             android:id="@+id/shimmer_materi_item"
             android:layout_width="match_parent"
@@ -121,12 +120,11 @@
         </com.facebook.shimmer.ShimmerFrameLayout>
 
 
-
         <com.facebook.shimmer.ShimmerFrameLayout
-            android:visibility="gone"
             android:id="@+id/shimmer_komersial_item"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -182,10 +180,10 @@
             android:text="Materi Terbaru" />
 
         <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_materi_terbaru"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"/>
+            android:id="@+id/rv_materi_terbaru"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
 
         <TextView
             style="@style/FontTheme.SubTitleHome"
@@ -197,8 +195,7 @@
             android:id="@+id/rv_free_learn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"/>
-
+            android:layout_marginBottom="8dp" />
 
         <TextView
             style="@style/FontTheme.SubTitleHome"
@@ -210,7 +207,7 @@
             android:id="@+id/rv_pay_learn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"/>
+            android:layout_marginBottom="8dp" />
 
 
         <TextView

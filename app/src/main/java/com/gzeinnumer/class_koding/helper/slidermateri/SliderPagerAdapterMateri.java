@@ -6,9 +6,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 
 import java.util.List;
 
-/**
- * Created by bagicode on 12/04/17.
- */
+//done
 
 public class SliderPagerAdapterMateri extends FragmentStatePagerAdapter {
 
